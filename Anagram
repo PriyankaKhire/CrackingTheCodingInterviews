@@ -1,0 +1,18 @@
+4) Write a method to decide if 2 strings are anagrams or not.
+
+
+Approach1:- sort both the strings and check if they are equal O(nlogn)+O(n)
+----------------------------------------------------------------------------------------------------------------------------
+Approach2:- go over first string and for occurrence of each letter put it in alphabet array
+example:- string1 = “aaabbccde”
+alphabetArray[0] = 3; alphabetArray[1] = 2; alphabetArray[2] = 2; alphabetArray[3] = 1;
+alphabetArray[4] = 1;
+rest all entries in alphabetArray = 0;
+
+now go over second string and for every occourance of letter subctract that from alphabet array
+example: string2 = “abcabcabcde”
+alphabetArray[0] = 3 - 3 = 0; alphabetArray[1] = 2 - 3 = -1; alphabetArray[2] = 2 - 3 = -1 alphabetArray[3] = 1 - 1 = 0; alphabetArray[4] = 1 - 1 =0;
+
+then add all the entries of the alphabet Array if its = 0 then the strings are anagrams if not then the strings are not anagrams time complexity O(n)+O(n)+O(26)
+----------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------
