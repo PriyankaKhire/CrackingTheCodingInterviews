@@ -1,0 +1,47 @@
+3)  Design an algorithm and write code to remove duplicate characters in a string without using any additional buffers. NOTE: One or two additional variables are fine.
+An extra copy of the array is not.
+FOLLOW UP
+Write the test cases for this method.
+
+Example:- str = aabbccabc
+//Q: is caps == small ??
+//A: caps == small
+//Q: string unicode or ascii
+//A: ascii
+Approach1:-  use hash tables or bool array of 26
+map<key, value> HashMap;
+for(int i = 0; i < strlen(str); i++)
+{
+	if(HashMap[str[i]] = false)
+	{
+		HashMap[str[i]] = true;
+	}
+	else
+	{
+		//Duplicate character found
+		for(int j = i; j < strlen(str); j++)
+		{
+			str[j] = str[j+1];
+		}
+	}
+}
+Time Complexity:- O(n^2)
+----------------------------------------------------------------------------------------------------------------------------
+Approach2:- Sort it and then remove Duplicates in place
+Given MergeSort to sort strings;
+RemoveDuplicates(string SortedString)
+{
+	int j = 1;
+	for(int i = 0; i < strlen(SortedString); i++)
+	{
+		if(SortedString[i] != SortedString[i+1])
+		{
+			SortedString[j] = SortedString[i+1];
+			j++;
+		}
+	}
+	SortedString[j] = ‘\0’;
+}
+Time Complexity:- O(nlogn)
+----------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------
