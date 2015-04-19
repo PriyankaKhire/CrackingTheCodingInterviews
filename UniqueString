@@ -1,0 +1,71 @@
+Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures.
+
+Example:- string str = aabbccdd;
+
+Approach1:- use hash table 
+for(i =0 to strlen(str))
+{
+	if (str[i] not present in HashMap)
+	{
+		HashMap[str[i]] = true; 
+	}
+	else
+	{
+		cout<<”string is not unique”;
+		break;
+	}
+}
+----------------------------------------------------------------------------------------------------------------------------
+Approach2:- use bool array of 26 alphabets
+bool aplhabets[26];
+//Make all the entries in the array as false
+for(int i =0; i<26; i++)
+{
+	alphabets[i] = false;
+}
+//iterate over string
+for(int i = 0; i<strlen(str); i++)
+{
+	//question : does capital letter equal to small letter ?
+	//Assumption: caps == small
+	//Q: string unicode or ascii ?
+	//A: string ASCII
+	//Q: what about special characters ?
+	//A: no special characters in string.
+	int ASCIIvalue = (int)str[i];
+	//checking for caps letter
+	if(ASCIIvalue <= 65 || ASCIIvalue >= 90)
+	{
+		ASCIIvalue = ASCIIvalue - 65;
+	}
+	//check for small letter
+	else if(ASCIIvalue <= 97 || ASCIIvalue >= 122)	
+	{
+		ASCIIvalue = ASCIIvalue - 97;
+	}
+
+	//put true in the bool array in the place of the letter
+	if(aplhabets[ASCIIvalue] == false)
+	{
+		aplhabets[ASCIIvalue] = true;
+	}
+	else
+	{
+		cout<<”String not unique”;
+		break;
+	}
+
+}
+----------------------------------------------------------------------------------------------------------------------------
+Approach3:- bubble sort
+for(int i =0; i < strlen(str)-1;  i++)
+{
+	for(int j = i+1; j < strlen(str);  j++)
+	{
+		if(str[i] == str[j])
+		{
+			cout<<”String not unique”;
+			break;
+		}
+	}
+}
