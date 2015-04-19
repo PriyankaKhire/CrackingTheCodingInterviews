@@ -1,0 +1,14 @@
+2) Writer a code to reverse a C-Style string (C-String means that “abcd” is represented as 5 characters including the null character.)
+
+//A: strlen(“abcd”) = 5
+Approach1:- exchange the first and the last letter of the string
+for(int i = 0; i < strlen(str)/2;  i++)
+{
+	char temp;
+	temp = str[i];
+	str[i] = str[strlen(str)-1-1-i];
+	str[strlen(str)-1-1-i] = temp;
+}
+
+----------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------
