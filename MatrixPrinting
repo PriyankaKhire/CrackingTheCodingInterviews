@@ -1,0 +1,145 @@
+void swap(int &a, int &b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+int main()
+{
+    static const int N = 3;
+    int matrix[N][N] = {{1,2,3},
+        {4,5,6},
+        {7,8,9}
+    };
+    
+    //Printing matrix
+    cout<<"The matrix\n";
+    for(int i = 0; i < N; i ++)
+    {
+        for(int j = 0; j < N; j++)
+        {
+            cout<<matrix[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    //Printing diagonal
+    cout<<"Diagonal elements\n";
+    for(int i = 0; i < N; i ++)
+    {
+        for(int j = 0; j < N; j++)
+        {
+            if(i == j)
+            {
+                cout<<matrix[i][j]<<" ";
+            }
+        }
+    }
+    
+    //Printing upper triangle
+    cout<<"\nUpper triangle\n";
+    int row = 0, col = 1;
+    while(row != N)
+    {
+        if(row !=col)
+        {
+            if(col > row)
+            {
+                if(col != N) //N = 3 but col can be 0,1,2 so it won't reach 3
+                {
+                    cout<<matrix[row][col]<<" ";
+                    col++;
+                }
+                if(col == N)
+                {
+                    row++;
+                    col = row+1;
+                }
+            }
+        }
+    }
+    
+    //Printing Lower Triangle
+    cout<<"\nLower triangle\n";
+    row = 1;
+    col = 0;
+    while(row != N)
+    {
+        if(row != col)
+        {
+            if(col < row)
+            {
+                cout<<matrix[row][col]<<" ";
+                col++;
+            }
+        }
+        else if(row == col)
+        {
+            row++;
+            col = 0;
+        }
+    }
+
+    //Transpose Matrix 1
+    row = 0;
+    col = 1;
+    while(row != N)
+    {
+        if(row !=col)
+        {
+            if(col > row)
+            {
+                if(col != N) //N = 3 but col can be 0,1,2 so it won't reach 3
+                {
+                    swap(matrix[row][col], matrix[col][row]);
+                    col++;
+                }
+                if(col == N)
+                {
+                    row++;
+                    col = row+1;
+                }
+            }
+        }
+    }
+    
+    cout<<"\nThe Transpose -> 1\n";
+    for(int i = 0; i < N; i ++)
+    {
+        for(int j = 0; j < N; j++)
+        {
+            cout<<matrix[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    
+    //Transpose Matrix 2
+    row = 1;
+    col = 0;
+    while(row != N)
+    {
+        if(row != col)
+        {
+            if(col < row)
+            {
+                swap(matrix[row][col],matrix[col][row]);
+                col++;
+            }
+        }
+        else if(row == col)
+        {
+            row++;
+            col = 0;
+        }
+    }
+    
+    cout<<"\nThe Transpose -> 2\n";
+    for(int i = 0; i < N; i ++)
+    {
+        for(int j = 0; j < N; j++)
+        {
+            cout<<matrix[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
