@@ -1,0 +1,168 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\froman\fcharset0 Times-Roman;}
+{\colortbl;\red255\green255\blue255;\red170\green12\blue145;\red224\green224\blue224;\red26\green26\blue26;
+\red92\green38\blue153;\red28\green2\blue207;\red38\green71\blue75;\red46\green13\blue110;\red196\green26\blue22;
+\red15\green116\blue1;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 \expnd0\expndtw0\kerning0
+/*\
+\pard\pardeftab720\sa240
+
+\f1\i\fs26 \cf0 \cb3 \expnd0\expndtw0\kerning0
+Write a function that reverses the order of the words in a string. For example, your function should transform the string "Do or do not, there is no try." to "try. no is there not, do or Do". Assume that all words are space delim- ited and treat punctuation the same as letters. 
+\f0\i0\fs22 \cf2 \cb1 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720
+\cf2 */\
+\
+void\cf4 \expnd0\expndtw0\kerning0
+ SwapChar(\cf2 \expnd0\expndtw0\kerning0
+char\cf4 \expnd0\expndtw0\kerning0
+ &a, \cf2 \expnd0\expndtw0\kerning0
+char\cf4 \expnd0\expndtw0\kerning0
+ &b)\
+\{\
+\'a0 \'a0 \cf2 \expnd0\expndtw0\kerning0
+char\cf4 \expnd0\expndtw0\kerning0
+ temp = a;\
+\'a0 \'a0 a = b;\
+\'a0 \'a0 b = temp;\
+\}\
+\
+\cf2 \expnd0\expndtw0\kerning0
+void\cf4 \expnd0\expndtw0\kerning0
+ ReverseString(\cf2 \expnd0\expndtw0\kerning0
+int\cf4 \expnd0\expndtw0\kerning0
+ StartPos, \cf2 \expnd0\expndtw0\kerning0
+int\cf4 \expnd0\expndtw0\kerning0
+ EndPos, \cf5 \expnd0\expndtw0\kerning0
+string\cf4 \expnd0\expndtw0\kerning0
+ &input)\
+\{\
+\'a0 \'a0 \cf2 \expnd0\expndtw0\kerning0
+int\cf4 \expnd0\expndtw0\kerning0
+ Length = EndPos - StartPos + \cf6 \expnd0\expndtw0\kerning0
+1\cf4 \expnd0\expndtw0\kerning0
+;\
+\'a0 \'a0 \cf2 \expnd0\expndtw0\kerning0
+for\cf4 \expnd0\expndtw0\kerning0
+(\cf2 \expnd0\expndtw0\kerning0
+int\cf4 \expnd0\expndtw0\kerning0
+ k = \cf6 \expnd0\expndtw0\kerning0
+0\cf4 \expnd0\expndtw0\kerning0
+; k < Length/\cf6 \expnd0\expndtw0\kerning0
+2\cf4 \expnd0\expndtw0\kerning0
+; k++)\
+\'a0 \'a0 \{\
+\'a0 \'a0 \'a0 \'a0 \cf7 \expnd0\expndtw0\kerning0
+SwapChar\cf4 \expnd0\expndtw0\kerning0
+(input[\cf8 \expnd0\expndtw0\kerning0
+StartPos\cf4 \expnd0\expndtw0\kerning0
++\cf8 \expnd0\expndtw0\kerning0
+k\cf4 \expnd0\expndtw0\kerning0
+], input[\cf8 \expnd0\expndtw0\kerning0
+StartPos\cf4 \expnd0\expndtw0\kerning0
++(\cf8 \expnd0\expndtw0\kerning0
+Length\cf4 \expnd0\expndtw0\kerning0
+-\cf6 \expnd0\expndtw0\kerning0
+1\cf4 \expnd0\expndtw0\kerning0
+)-\cf8 \expnd0\expndtw0\kerning0
+k\cf4 \expnd0\expndtw0\kerning0
+]);\
+\'a0 \'a0 \}\
+\}\
+\
+\cf2 \expnd0\expndtw0\kerning0
+int\cf4 \expnd0\expndtw0\kerning0
+ main()\
+\{\
+\'a0 \'a0 \cf5 \expnd0\expndtw0\kerning0
+string\cf4 \expnd0\expndtw0\kerning0
+ input = \cf9 \expnd0\expndtw0\kerning0
+"abc def 123"\cf4 \expnd0\expndtw0\kerning0
+;\
+\'a0\'a0 \'a0\
+\'a0 \'a0 \cf2 \expnd0\expndtw0\kerning0
+int\cf4 \expnd0\expndtw0\kerning0
+ i = \cf6 \expnd0\expndtw0\kerning0
+0\cf4 \expnd0\expndtw0\kerning0
+, j = \cf6 \expnd0\expndtw0\kerning0
+0\cf4 \expnd0\expndtw0\kerning0
+;\
+\'a0\'a0 \'a0\
+\'a0 \'a0 \cf2 \expnd0\expndtw0\kerning0
+while\cf4 \expnd0\expndtw0\kerning0
+(i < input.\cf8 \expnd0\expndtw0\kerning0
+length\cf4 \expnd0\expndtw0\kerning0
+())\
+\'a0 \'a0 \{\
+\'a0 \'a0 \'a0 \'a0 \cf2 \expnd0\expndtw0\kerning0
+if\cf4 \expnd0\expndtw0\kerning0
+(input[\cf8 \expnd0\expndtw0\kerning0
+i\cf4 \expnd0\expndtw0\kerning0
+] == \cf6 \expnd0\expndtw0\kerning0
+' '\cf4 \expnd0\expndtw0\kerning0
+)\
+\'a0 \'a0 \'a0 \'a0 \{\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 \cf7 \expnd0\expndtw0\kerning0
+ReverseString\cf4 \expnd0\expndtw0\kerning0
+(j, i-\cf6 \expnd0\expndtw0\kerning0
+1\cf4 \expnd0\expndtw0\kerning0
+, input);\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 i++;\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 j = i;\
+\'a0 \'a0 \'a0 \'a0 \}\
+\'a0 \'a0 \'a0 \'a0 \cf2 \expnd0\expndtw0\kerning0
+else\cf4 \expnd0\expndtw0\kerning0
+\
+\'a0 \'a0 \'a0 \'a0 \{\
+\'a0 \'a0 \'a0 \'a0 \'a0 \'a0 i++;\
+\'a0 \'a0 \'a0 \'a0 \}\
+\'a0 \'a0 \}\
+\'a0\'a0 \'a0\
+\pard\pardeftab720
+\cf10 \expnd0\expndtw0\kerning0
+\'a0 \'a0 \expnd0\expndtw0\kerning0
+//Perform one last swap for the last word\
+\pard\pardeftab720
+\cf4 \expnd0\expndtw0\kerning0
+\'a0 \'a0 \cf7 \expnd0\expndtw0\kerning0
+ReverseString\cf4 \expnd0\expndtw0\kerning0
+(j, input.\cf8 \expnd0\expndtw0\kerning0
+length\cf4 \expnd0\expndtw0\kerning0
+()-\cf6 \expnd0\expndtw0\kerning0
+1\cf4 \expnd0\expndtw0\kerning0
+, input);\
+\'a0\'a0 \'a0\
+\'a0 \'a0 \cf5 \expnd0\expndtw0\kerning0
+cout\cf4 \expnd0\expndtw0\kerning0
+<<input<<\cf8 \expnd0\expndtw0\kerning0
+endl\cf4 \expnd0\expndtw0\kerning0
+;\
+\'a0\'a0 \'a0\
+\pard\pardeftab720
+\cf10 \expnd0\expndtw0\kerning0
+\'a0 \'a0 \expnd0\expndtw0\kerning0
+//Reverse the whole thing\
+\pard\pardeftab720
+\cf4 \expnd0\expndtw0\kerning0
+\'a0 \'a0 \cf7 \expnd0\expndtw0\kerning0
+ReverseString\cf4 \expnd0\expndtw0\kerning0
+(\cf6 \expnd0\expndtw0\kerning0
+0\cf4 \expnd0\expndtw0\kerning0
+, input.\cf8 \expnd0\expndtw0\kerning0
+length\cf4 \expnd0\expndtw0\kerning0
+()-\cf6 \expnd0\expndtw0\kerning0
+1\cf4 \expnd0\expndtw0\kerning0
+, input);\
+\'a0\'a0 \'a0\
+\'a0 \'a0 \cf5 \expnd0\expndtw0\kerning0
+cout\cf4 \expnd0\expndtw0\kerning0
+<<input<<\cf8 \expnd0\expndtw0\kerning0
+endl\cf4 \expnd0\expndtw0\kerning0
+;\
+\'a0\'a0 \'a0\
+\}}

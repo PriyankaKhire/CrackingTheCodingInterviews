@@ -1,0 +1,69 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red170\green13\blue145;\red92\green38\blue153;\red0\green116\blue0;
+\red28\green0\blue207;\red63\green110\blue116;\red46\green13\blue110;\red196\green26\blue22;\red38\green71\blue75;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf0 \CocoaLigature0 \
+\cf2 class\cf0  Tower\
+\{\
+    \
+\cf2 private\cf0 :\
+    \cf3 stack\cf0 <\cf2 int\cf0 > eachTower;\
+    \cf3 string\cf0  nameOfTower;\
+    \
+\cf2 public\cf0 :\
+    Tower()\
+    \{\
+        \cf4 //Just normal constructor which does nothing\cf0 \
+    \}\
+    Tower(\cf3 string\cf0  TowerName, \cf2 int\cf0  numberOfDiscsInTower)\
+    \{\
+        \cf4 //Put the discs in reverse order in tower which is made up of stack\cf0 \
+        \cf4 //Since the tower is made up of stack the largest disc will go down and smallest will come up\cf0 \
+        \cf2 for\cf0 (\cf2 int\cf0  i = numberOfDiscsInTower; i > \cf5 0\cf0 ; i--)\
+        \{\
+            \cf6 eachTower\cf0 .\cf7 push\cf0 (i);\
+            \cf4 //Remember each tower is made up of a stack\cf0 \
+        \}\
+        \cf6 nameOfTower\cf0  = TowerName; \cf4 //Temporary, destinaion or source\cf0 \
+    \}\
+    ~Tower()\
+    \{\
+        \cf4 //Distructor\cf0 \
+    \}\
+    \cf2 void\cf0  MoveTopDiscTo(\cf6 Tower\cf0  &targetTower) \cf4 //Passing class by reference\cf0 \
+    \{\
+        \cf2 if\cf0 (!\cf6 eachTower\cf0 .\cf7 empty\cf0 ()) \cf4 //if this particular tower is not empty\cf0 \
+        \{\
+            \cf2 int\cf0  temp;\
+            temp = \cf6 eachTower\cf0 .\cf7 top\cf0 ();\
+            \cf6 eachTower\cf0 .\cf7 pop\cf0 ();\
+            targetTower.\cf6 eachTower\cf0 .\cf7 push\cf0 (temp);\
+            \cf3 cout\cf0 <<\cf6 nameOfTower\cf0 <<\cf8 " -> "\cf0 <<targetTower.\cf6 nameOfTower\cf0 <<\cf7 endl\cf0 ;\
+        \}\
+    \}\
+\};\
+\
+\cf2 void\cf0  hanoi(\cf2 int\cf0  n, \cf6 Tower\cf0  &source, \cf6 Tower\cf0  &temp, \cf6 Tower\cf0  &destination)\
+\{\
+    \cf2 if\cf0 (n>\cf5 0\cf0 )\
+    \{\
+        \cf9 hanoi\cf0 (n-\cf5 1\cf0 , source, destination, temp);\
+        source.\cf9 MoveTopDiscTo\cf0 (destination);\
+        \cf9 hanoi\cf0 (n-\cf5 1\cf0 , temp, source, destination);\
+    \}\
+\}\
+\cf2 int\cf0  main()\
+\{\
+    \cf2 int\cf0  n = \cf5 3\cf0 ;\
+    \cf6 Tower\cf0  towers[\cf5 3\cf0 ];\
+    towers[\cf5 0\cf0 ] = \cf6 Tower\cf0 (\cf8 "source"\cf0 , n);\
+    towers[\cf5 1\cf0 ] = \cf6 Tower\cf0 (\cf8 "Temporary"\cf0 , \cf5 0\cf0 );\
+    towers[\cf5 2\cf0 ] = \cf6 Tower\cf0 (\cf8 "Destination"\cf0 , \cf5 0\cf0 );\
+    \
+    \cf9 hanoi\cf0 (n, towers[\cf5 0\cf0 ], towers[\cf5 1\cf0 ], towers[\cf5 2\cf0 ]);\
+\}}

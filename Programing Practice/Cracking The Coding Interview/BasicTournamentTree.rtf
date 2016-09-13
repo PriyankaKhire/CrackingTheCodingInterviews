@@ -1,0 +1,53 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red28\green0\blue207;
+\red92\green38\blue153;\red196\green26\blue22;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf0 \CocoaLigature0 \
+\cf2 /*\
+simple best player Tournament tree\
+*/\cf0 \
+\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf3 const\cf0  \cf3 static\cf0  \cf3 int\cf0  n = \cf4 8\cf0 ;\
+    \cf3 int\cf0  Player[n] = \{\cf4 1\cf0 ,\cf4 2\cf0 ,\cf4 3\cf0 ,\cf4 8\cf0 ,\cf4 5\cf0 ,\cf4 6\cf0 ,\cf4 7\cf0 ,\cf4 4\cf0 \};\
+    \cf3 int\cf0  TournamentTree[n+n-\cf4 1\cf0 ];\
+    \
+    \cf3 int\cf0  MainTournamentTreePointer = \cf4 0\cf0 ;\
+    \cf3 int\cf0  LeafPointrt = \cf4 0\cf0 ;\
+    \
+    \cf2 //Fill all leaves\cf0 \
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i <n; i ++)\
+    \{\
+        TournamentTree[i] = Player[i];\
+        MainTournamentTreePointer = i;\
+    \}\
+    MainTournamentTreePointer++;\
+    \
+    \cf3 while\cf0 (LeafPointrt < n+n-\cf4 1\cf0 )\
+    \{\
+        \cf3 int\cf0  L1 = LeafPointrt;\
+        LeafPointrt++;\
+        \cf3 int\cf0  L2 = LeafPointrt;\
+        LeafPointrt++;\
+        \cf3 if\cf0 (TournamentTree[L1] > TournamentTree[L2])\
+        \{\
+            TournamentTree[MainTournamentTreePointer] = TournamentTree[L1];\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            TournamentTree[MainTournamentTreePointer] = TournamentTree[L2];\
+        \}\
+        MainTournamentTreePointer++;\
+    \}\
+    \
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < n+n-\cf4 1\cf0 ; i++)\
+    \{\
+        \cf5 cout\cf0 <<TournamentTree[i]<<\cf6 " "\cf0 ;\
+    \}\
+\}}

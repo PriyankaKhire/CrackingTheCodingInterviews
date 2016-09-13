@@ -1,0 +1,85 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red92\green38\blue153;\red170\green13\blue145;\red196\green26\blue22;
+\red63\green110\blue116;\red46\green13\blue110;\red28\green0\blue207;\red38\green71\blue75;\red0\green116\blue0;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf0 \CocoaLigature0 \
+\cf2 stack\cf0 <\cf3 int\cf0 > Source;\
+\cf2 stack\cf0 <\cf3 int\cf0 > Temp;\
+\cf2 stack\cf0 <\cf3 int\cf0 > Destination;\
+\
+\cf3 void\cf0  move(\cf2 string\cf0  source, \cf2 string\cf0  destination)\
+\{\
+    \cf3 int\cf0  n;\
+    \
+    \cf3 if\cf0 (source == \cf4 "Source"\cf0 )\
+    \{\
+        n = \cf5 Source\cf0 .\cf6 top\cf0 ();\
+        \cf5 Source\cf0 .\cf6 pop\cf0 ();\
+    \}\
+    \cf3 else\cf0  \cf3 if\cf0 (source == \cf4 "Temp"\cf0 )\
+    \{\
+        n = \cf5 Temp\cf0 .\cf6 top\cf0 ();\
+        \cf5 Temp\cf0 .\cf6 pop\cf0 ();\
+    \}\
+    \cf3 else\cf0  \cf3 if\cf0 (source == \cf4 "Destination"\cf0 )\
+    \{\
+        n = \cf5 Destination\cf0 .\cf6 top\cf0 ();\
+        \cf5 Destination\cf0 .\cf6 pop\cf0 ();\
+    \}\
+    \
+    \cf3 if\cf0 (destination == \cf4 "Source"\cf0 )\
+    \{\
+        \cf5 Source\cf0 .\cf6 push\cf0 (n);\
+    \}\
+    \cf3 else\cf0  \cf3 if\cf0 (destination == \cf4 "Temp"\cf0 )\
+    \{\
+        \cf5 Temp\cf0 .\cf6 push\cf0 (n);\
+    \}\
+    \cf3 else\cf0  \cf3 if\cf0 (destination == \cf4 "Destination"\cf0 )\
+    \{\
+        \cf5 Destination\cf0 .\cf6 push\cf0 (n);\
+    \}\
+    \
+    \cf2 cout\cf0 <<n<<\cf4 " was pushed from "\cf0 <<source<<\cf4 " to "\cf0 <<destination<<\cf6 endl\cf0 ;\
+    \
+\}\
+\
+\cf3 void\cf0  hanoi(\cf3 int\cf0  n, \cf2 string\cf0  source, \cf2 string\cf0  temp, \cf2 string\cf0  destination)\
+\{\
+    \cf3 if\cf0 (n == \cf7 0\cf0 )\
+    \{\
+        \cf3 return\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf8 hanoi\cf0 (n-\cf7 1\cf0 , source, destination, temp);\
+        \cf8 move\cf0 (source, destination);\
+        \cf8 hanoi\cf0 (n-\cf7 1\cf0 , temp, source, destination);\
+    \}\
+\}\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf9 //Populate source with n\cf0 \
+    \cf3 int\cf0  n = \cf7 3\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = n; i >= \cf7 1\cf0 ; i--)\
+    \{\
+        \cf5 Source\cf0 .\cf6 push\cf0 (i);\
+    \}\
+    \
+    \cf9 /*\
+    while(!Source.empty())\
+    \{\
+        int top = Source.top();\
+        cout<<top<<endl;\
+        Source.pop();\
+    \}\
+     */\cf0 \
+    \
+    \cf8 hanoi\cf0 (n, \cf4 "Source"\cf0 , \cf4 "Temp"\cf0 , \cf4 "Destination"\cf0 );\
+\}}

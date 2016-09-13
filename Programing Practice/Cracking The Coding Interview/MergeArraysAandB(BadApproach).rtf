@@ -1,0 +1,68 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red28\green0\blue207;
+\red38\green71\blue75;\red92\green38\blue153;\red196\green26\blue22;\red46\green13\blue110;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 /*\
+ You are given two sorted arrays, A and B, where A has a large enough buffer at the\
+ end to hold B.Write a method to merge B into A in sorted order.\
+*/\cf3 \
+\
+void\cf0  shift(\cf3 int\cf0  bpp, \cf3 int\cf0  &count, \cf3 int\cf0  ap, \cf3 int\cf0  a[])\
+\{\
+    \cf3 for\cf0 (\cf3 int\cf0  i = count; i >= ap; i--)\
+    \{\
+        a[i+bpp] = a[i];\
+    \}\
+    count = count+bpp;\
+\}\
+\
+\cf3 void\cf0  merget(\cf3 int\cf0  a[], \cf3 int\cf0  b[], \cf3 int\cf0  &count)\
+\{\
+    \cf3 int\cf0  bp = \cf4 0\cf0 , bpp = \cf4 0\cf0 ;\
+    \cf3 int\cf0  ap = \cf4 0\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < \cf4 10\cf0 ; i++)\
+    \{\
+        \cf3 while\cf0 (b[bp+bpp] < a[ap])\
+        \{\
+            bpp++;\
+        \}\
+        \cf2 //bpp has number of elements less than a[ap]\cf0 \
+        \cf5 shift\cf0 (bpp, count, ap, a);\
+        \cf2 //Copy elements from B to A\cf0 \
+        \cf3 for\cf0 (\cf3 int\cf0  i = bp; i < bp+bpp; i++)\
+        \{\
+            a[ap] = b[i];\
+            ap++;\
+        \}\
+        bp = bp+bpp;\
+        bpp = \cf4 0\cf0 ;\
+    \}\
+    \
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < \cf4 10\cf0 ; i++)\
+    \{\
+        \cf6 cout\cf0 <<a[i]<<\cf7 " "\cf0 ;\
+    \}\
+    \cf6 cout\cf0 <<\cf8 endl\cf0 ;\
+\}\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf3 int\cf0  a[\cf4 10\cf0 ]=\{\cf4 1\cf0 , \cf4 3\cf0 , \cf4 5\cf0 , \cf4 7\cf0 , \cf4 9\cf0 \};\
+    \cf3 int\cf0  b[\cf4 5\cf0 ]=\{\cf4 2\cf0 , \cf4 4\cf0 , \cf4 6\cf0 , \cf4 8\cf0 , \cf4 10\cf0 \};\
+    \
+    \cf2 //Lets pretend that i dont know how many elements are present in A\cf0 \
+    \cf2 //Number of elements in A\cf0 \
+    \cf3 int\cf0  count = \cf4 0\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < \cf4 10\cf0 ; i++)\
+    \{\
+        \cf3 if\cf0 (a[i] != \cf4 0\cf0 ) \cf2 // Assuming zero is null condition\cf0 \
+        \{\
+            count++;\
+        \}\
+    \}\
+    \cf5 merget\cf0 (a, b, count);\
+\}}

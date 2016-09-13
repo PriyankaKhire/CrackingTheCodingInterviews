@@ -1,0 +1,261 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red92\green38\blue153;\red170\green13\blue145;
+\red28\green0\blue207;\red196\green26\blue22;\red63\green110\blue116;\red46\green13\blue110;\red38\green71\blue75;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf0 \CocoaLigature0 \
+\cf2 /*\
+ 1. Calculate the total number of moves required i.e. "pow(2, n) - 1" here n is number of disks.\
+ 2. If number of disks (i.e. n) is even then interchange destination pole and auxiliary pole.\
+ 3. for i = 1 to total number of moves:\
+ if i%3 == 1:\
+ "legal" movement of top disk between source pole and\
+ destination pole\
+ if i%3 == 2:\
+ "legal" movement top disk between source pole and\
+ auxiliary pole\
+ if i%3 == 0:\
+ "legal" movement top disk between auxiliary pole\
+ and destination pole\
+ */\cf0 \
+\
+\pard\tx529\pardeftab529\pardirnatural
+\cf3 stack\cf0 <\cf4 int\cf0 >s,d,t;\
+\
+\pard\tx529\pardeftab529\pardirnatural
+\cf4 int\cf0  move(\cf3 string\cf0  source, \cf3 string\cf0  destination)\
+\{\
+    \cf4 int\cf0  top1 = \cf5 0\cf0 ;\
+    \cf4 int\cf0  top2 = \cf5 0\cf0 ;\
+    \cf4 bool\cf0  emptyFlag1 = \cf4 false\cf0 ;\
+    \cf4 bool\cf0  emptyFlag2 = \cf4 false\cf0 ;\
+    \cf4 if\cf0 (source == \cf6 "Source"\cf0 )\
+    \{\
+        \cf4 if\cf0 (!\cf7 s\cf0 .\cf8 empty\cf0 ())\
+        \{\
+            emptyFlag1 = \cf4 false\cf0 ;\
+            top1 = \cf7 s\cf0 .\cf8 top\cf0 ();\
+            \cf7 s\cf0 .\cf8 pop\cf0 ();\
+        \}\
+        \cf4 else\cf0 \
+        \{\
+            emptyFlag1 = \cf4 true\cf0 ;\
+        \}\
+    \}\
+    \cf4 if\cf0 (source == \cf6 "Temp"\cf0 )\
+    \{\
+        \cf4 if\cf0 (!\cf7 t\cf0 .\cf8 empty\cf0 ())\
+        \{\
+            emptyFlag1 = \cf4 false\cf0 ;\
+            top1 = \cf7 t\cf0 .\cf8 top\cf0 ();\
+            \cf7 t\cf0 .\cf8 pop\cf0 ();\
+        \}\
+        \cf4 else\cf0 \
+        \{\
+            emptyFlag1 = \cf4 true\cf0 ;\
+        \}\
+    \}\
+    \cf4 if\cf0 (source == \cf6 "Destination"\cf0 )\
+    \{\
+        \cf4 if\cf0 (!\cf7 d\cf0 .\cf8 empty\cf0 ())\
+        \{\
+            emptyFlag1 = \cf4 false\cf0 ;\
+            top1 = \cf7 d\cf0 .\cf8 top\cf0 ();\
+            \cf7 d\cf0 .\cf8 pop\cf0 ();\
+        \}\
+        \cf4 else\cf0 \
+        \{\
+            emptyFlag1 = \cf4 true\cf0 ;\
+        \}\
+    \}\
+    \
+    \
+    \cf4 if\cf0 (destination == \cf6 "Source"\cf0 )\
+    \{\
+        \cf4 if\cf0 (!\cf7 s\cf0 .\cf8 empty\cf0 ())\
+        \{\
+            emptyFlag2 = \cf4 false\cf0 ;\
+            top2 = \cf7 s\cf0 .\cf8 top\cf0 ();\
+            \cf7 s\cf0 .\cf8 pop\cf0 ();\
+        \}\
+        \cf4 else\cf0 \
+        \{\
+            emptyFlag2 = \cf4 true\cf0 ;\
+        \}\
+    \}\
+    \cf4 if\cf0 (destination == \cf6 "Temp"\cf0 )\
+    \{\
+        \cf4 if\cf0 (!\cf7 t\cf0 .\cf8 empty\cf0 ())\
+        \{\
+            emptyFlag2 = \cf4 false\cf0 ;\
+            top2 = \cf7 t\cf0 .\cf8 top\cf0 ();\
+            \cf7 t\cf0 .\cf8 pop\cf0 ();\
+        \}\
+        \cf4 else\cf0 \
+        \{\
+            emptyFlag2 = \cf4 true\cf0 ;\
+        \}\
+    \}\
+    \cf4 if\cf0 (destination == \cf6 "Destination"\cf0 )\
+    \{\
+        \cf4 if\cf0 (!\cf7 d\cf0 .\cf8 empty\cf0 ())\
+        \{\
+            emptyFlag2 = \cf4 false\cf0 ;\
+            top2 = \cf7 d\cf0 .\cf8 top\cf0 ();\
+            \cf7 d\cf0 .\cf8 pop\cf0 ();\
+        \}\
+        \cf4 else\cf0 \
+        \{\
+            emptyFlag2 = \cf4 true\cf0 ;\
+        \}\
+    \}\
+    \
+    \cf2 //Which stack is empty\cf0 \
+    \cf4 if\cf0 (emptyFlag1 == \cf4 true\cf0  && emptyFlag2 == \cf4 true\cf0 )\
+    \{\
+        \cf2 //Both stacks are empty\cf0 \
+        \cf4 return\cf0  -\cf5 1\cf0 ;\
+    \}\
+    \cf4 else\cf0 \
+        \cf4 if\cf0 (emptyFlag1 == \cf4 true\cf0  && emptyFlag2 == \cf4 false\cf0 )\
+        \{\
+            \cf2 //Source empty so there wont be no top1 only top2\cf0 \
+            \cf2 //Push top2 onto source\cf0 \
+            \cf4 if\cf0 (source == \cf6 "Source"\cf0 )\
+            \{\
+                \cf7 s\cf0 .\cf8 push\cf0 (top2);\
+                \cf4 return\cf0  top2;\
+            \}\
+            \cf4 if\cf0 (source == \cf6 "Temp"\cf0 )\
+            \{\
+                \cf7 t\cf0 .\cf8 push\cf0 (top2);\
+                \cf4 return\cf0  top2;\
+            \}\
+            \cf4 if\cf0 (source == \cf6 "Destination"\cf0 )\
+            \{\
+                \cf7 d\cf0 .\cf8 push\cf0 (top2);\
+                \cf4 return\cf0  top2;\
+            \}\
+        \}\
+    \cf4 else\cf0 \
+        \cf4 if\cf0 (emptyFlag1 == \cf4 false\cf0  && emptyFlag2 == \cf4 true\cf0 )\
+        \{\
+            \cf2 //Destination empty\cf0 \
+            \cf4 if\cf0 (destination == \cf6 "Source"\cf0 )\
+            \{\
+                \cf7 s\cf0 .\cf8 push\cf0 (top1);\
+                \cf4 return\cf0  top1;\
+            \}\
+            \cf4 if\cf0 (destination == \cf6 "Temp"\cf0 )\
+            \{\
+                \cf7 t\cf0 .\cf8 push\cf0 (top1);\
+                \cf4 return\cf0  top1;\
+            \}\
+            \cf4 if\cf0 (destination == \cf6 "Destination"\cf0 )\
+            \{\
+                \cf7 d\cf0 .\cf8 push\cf0 (top1);\
+                \cf4 return\cf0  top1;\
+            \}\
+        \}\
+    \cf4 else\cf0 \
+    \{\
+        \cf2 //Both are full\cf0 \
+        \cf2 //Compare top1 and top2 and which ever is smaller one push it to stack;\cf0 \
+        \cf4 if\cf0 (top1 < top2)\
+        \{\
+            \cf2 //top1 belongs to source so it should get pushed onto destination\cf0 \
+            \cf2 //First we push top2 and then top1\cf0 \
+            \cf4 if\cf0 (destination == \cf6 "Source"\cf0 )\
+            \{\
+                \cf7 s\cf0 .\cf8 push\cf0 (top2);\
+                \cf7 s\cf0 .\cf8 push\cf0 (top1);\
+                \cf4 return\cf0  top1;\
+            \}\
+            \cf4 if\cf0 (destination == \cf6 "Temp"\cf0 )\
+            \{\
+                \cf7 t\cf0 .\cf8 push\cf0 (top2);\
+                \cf7 t\cf0 .\cf8 push\cf0 (top1);\
+                \cf4 return\cf0  top1;\
+            \}\
+            \cf4 if\cf0 (destination == \cf6 "Destination"\cf0 )\
+            \{\
+                \cf7 d\cf0 .\cf8 push\cf0 (top2);\
+                \cf7 d\cf0 .\cf8 push\cf0 (top1);\
+                \cf4 return\cf0  top1;\
+            \}\
+        \}\
+        \cf4 else\cf0 \
+        \{\
+            \cf4 if\cf0 (source == \cf6 "Source"\cf0 )\
+            \{\
+                \cf7 s\cf0 .\cf8 push\cf0 (top1);\
+                \cf7 s\cf0 .\cf8 push\cf0 (top2);\
+                \cf4 return\cf0  top2;\
+            \}\
+            \cf4 if\cf0 (source == \cf6 "Temp"\cf0 )\
+            \{\
+                \cf7 t\cf0 .\cf8 push\cf0 (top1);\
+                \cf7 t\cf0 .\cf8 push\cf0 (top2);\
+                \cf4 return\cf0  top2;\
+            \}\
+            \cf4 if\cf0 (source == \cf6 "Destination"\cf0 )\
+            \{\
+                \cf7 d\cf0 .\cf8 push\cf0 (top1);\
+                \cf7 d\cf0 .\cf8 push\cf0 (top2);\
+                \cf4 return\cf0  top2;\
+            \}\
+        \}\
+    \}\
+    \
+    \cf4 return\cf0  -\cf5 1\cf0 ;\
+\}\
+\
+\cf4 int\cf0  main()\
+\{\
+    \cf4 int\cf0  n = \cf5 3\cf0 ;\
+    \cf4 for\cf0 (\cf4 int\cf0  i = n; i>\cf5 0\cf0 ; i--)\
+    \{\
+        \cf7 s\cf0 .\cf8 push\cf0 (i);\
+    \}\
+    \
+    \cf2 //Calculate the total number of moves required i.e. "pow(2, n) - 1" here n is number of disks.\cf0 \
+    \cf4 int\cf0  TotalMovesRequired = \cf8 pow\cf0 (\cf5 2\cf0 , n) - \cf5 1\cf0 ;\
+    \
+    \cf3 string\cf0  s,t,d;\
+    s = \cf6 "Source"\cf0 ;\
+    t = \cf6 "Temp"\cf0 ;\
+    d = \cf6 "Destination"\cf0 ;\
+    \
+    \cf4 if\cf0 (n%\cf5 2\cf0  == \cf5 0\cf0 )\
+    \{\
+        \cf2 //If number of disks (i.e. n) is even then interchange destination pole and auxiliary pole.\cf0 \
+        d = \cf6 "Temp"\cf0 ;\
+        t = \cf6 "Destination"\cf0 ;\
+    \}\
+    \
+    \cf4 int\cf0  top = \cf5 0\cf0 ;\
+    \
+    \cf4 for\cf0 (\cf4 int\cf0  i = \cf5 1\cf0 ; i <= TotalMovesRequired; i++)\
+    \{\
+        \cf4 if\cf0 (i%\cf5 3\cf0  == \cf5 1\cf0 )\
+        \{\
+            top = \cf9 move\cf0 (s,d);\
+            \cf3 cout\cf0 <<\cf6 "Move "\cf0 <<top<<\cf6 " from "\cf0 <<s<<\cf6 " to "\cf0 <<d<<\cf8 endl\cf0 ;\
+        \}\
+        \cf4 if\cf0 (i%\cf5 3\cf0  == \cf5 2\cf0 )\
+        \{\
+            top = \cf9 move\cf0 (s,t);\
+            \cf3 cout\cf0 <<\cf6 "Move "\cf0 <<top<<\cf6 " from "\cf0 <<s<<\cf6 " to "\cf0 <<t<<\cf8 endl\cf0 ;\
+        \}\
+        \cf4 if\cf0 (i%\cf5 3\cf0  == \cf5 0\cf0 )\
+        \{\
+            top = \cf9 move\cf0 (t, d);\
+            \cf3 cout\cf0 <<\cf6 "Move "\cf0 <<top<<\cf6 " from "\cf0 <<t<<\cf6 " to "\cf0 <<d<<\cf8 endl\cf0 ;\
+        \}\
+    \}\
+    \
+\}}

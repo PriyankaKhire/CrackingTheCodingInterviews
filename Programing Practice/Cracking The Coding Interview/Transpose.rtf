@@ -1,0 +1,97 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red170\green13\blue145;\red28\green0\blue207;\red0\green116\blue0;
+\red92\green38\blue153;\red196\green26\blue22;\red46\green13\blue110;}
+\paperw11905\paperh16837\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf0 \CocoaLigature0 \
+\cf2 int\cf0  main()\
+\{\
+    \cf2 int\cf0  a[\cf3 5\cf0 ][\cf3 5\cf0 ] = \{ \{\cf3 1\cf0 , \cf3 2\cf0 , \cf3 3\cf0 , \cf3 4\cf0 ,\cf3 5\cf0 \},\
+                    \{\cf3 6\cf0 , \cf3 7\cf0 , \cf3 8\cf0 , \cf3 9\cf0 , \cf3 10\cf0 \},\
+                    \{\cf3 11\cf0 ,\cf3 12\cf0 ,\cf3 13\cf0 ,\cf3 14\cf0 ,\cf3 15\cf0 \},\
+                    \{\cf3 16\cf0 ,\cf3 17\cf0 ,\cf3 18\cf0 ,\cf3 19\cf0 ,\cf3 20\cf0 \},\
+                    \{\cf3 21\cf0 ,\cf3 22\cf0 ,\cf3 23\cf0 ,\cf3 24\cf0 ,\cf3 25\cf0 \}\};\
+    \cf2 int\cf0  N = \cf3 5\cf0 ;\
+    \cf2 int\cf0  something = \cf3 0\cf0 ; \cf4 //Notice something is j-1\cf0 \
+    \cf2 int\cf0  i = \cf3 1\cf0 ;\
+    \cf2 int\cf0  j = \cf3 1\cf0 ;\
+    \cf2 int\cf0  temp = \cf3 0\cf0 ;\
+    \cf2 while\cf0 (i <= N && j <= N)\
+    \{\
+        \cf2 if\cf0 (i+something != N)\
+        \{\
+        temp = a[i+something][j-\cf3 1\cf0 ];\
+        a[i+something][j-\cf3 1\cf0 ] = a[j-\cf3 1\cf0 ][i+something];\
+        a[j-\cf3 1\cf0 ][i+something] = temp;\
+        i++;\
+        \}\
+        \cf2 else\cf0 \
+        \{\
+            something++;\
+            j++;\
+            i = \cf3 1\cf0 ;\
+        \}\
+    \}\
+    \
+    \
+    \
+    \
+    \cf2 for\cf0 (\cf2 int\cf0  k = \cf3 0\cf0 ;k<N;k++)\
+    \{\
+        \cf2 for\cf0 (\cf2 int\cf0  l = \cf3 0\cf0 ; l<N; l++)\
+        \{\
+            \cf5 cout\cf0 <<a[k][l]<<\cf6 " "\cf0 ;\
+        \}\
+        \cf5 cout\cf0 <<\cf7 endl\cf0 ;\
+    \}\
+    \
+    \
+    \
+\}\
+\
+\
+\
+\
+//Alternate\
+\
+\cf2 int\cf0  main()\
+\{\
+    \cf2 int\cf0  a[\cf3 3\cf0 ][\cf3 3\cf0 ] = \{\{\cf3 1\cf0 ,\cf3 2\cf0 ,\cf3 3\cf0 \},\{\cf3 4\cf0 ,\cf3 5\cf0 ,\cf3 6\cf0 \},\{\cf3 7\cf0 ,\cf3 8\cf0 ,\cf3 9\cf0 \}\};\
+    \
+    \cf2 int\cf0  i = \cf3 0\cf0 ;\
+    \cf2 int\cf0  j = i+\cf3 1\cf0 ;\
+    \cf2 int\cf0  N = \cf3 3\cf0 ;\
+    \cf2 while\cf0 (i < N && j < N)\
+    \{\
+        \cf2 if\cf0 (j == N-\cf3 1\cf0 )\
+        \{\
+            \cf2 int\cf0  temp = a[i][j];\
+            a[i][j] = a[j][i];\
+            a[j][i] = temp;\
+            i++;\
+            j = i+\cf3 1\cf0 ;\
+        \}\
+        \cf2 else\cf0 \
+        \{\
+            \cf2 int\cf0  temp = a[i][j];\
+            a[i][j] = a[j][i];\
+            a[j][i] = temp;\
+            j++;\
+        \}\
+    \}\
+    \
+    \
+    \
+    \cf2 for\cf0 (\cf2 int\cf0  i = \cf3 0\cf0 ; i < N; i++)\
+    \{\
+        \cf2 for\cf0 (\cf2 int\cf0  j = \cf3 0\cf0 ; j < N; j++)\
+        \{\
+            \cf5 cout\cf0 <<a[i][j]<<\cf6 " "\cf0 ;\
+        \}\
+        \cf5 cout\cf0 <<\cf7 endl\cf0 ;\
+    \}\
+    \
+\}}

@@ -1,0 +1,200 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red92\green38\blue153;\red170\green13\blue145;
+\red28\green0\blue207;\red196\green26\blue22;\red38\green71\blue75;\red46\green13\blue110;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 /*\
+ spell out actual numbers\
+ */\cf0 \
+\
+\cf3 string\cf0  units(\cf4 int\cf0  number)\
+\{\
+    \cf4 switch\cf0  (number)\
+    \{\
+        \cf4 case\cf0  \cf5 1\cf0 :\
+            \cf4 return\cf0  \cf6 "one"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 2\cf0 :\
+            \cf4 return\cf0  \cf6 "two"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 3\cf0 :\
+            \cf4 return\cf0  \cf6 "three"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 4\cf0 :\
+            \cf4 return\cf0  \cf6 "four"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 5\cf0 :\
+            \cf4 return\cf0  \cf6 "five"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 6\cf0 :\
+            \cf4 return\cf0  \cf6 "six"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 7\cf0 :\
+            \cf4 return\cf0  \cf6 "seven"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 8\cf0 :\
+            \cf4 return\cf0  \cf6 "eight"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 9\cf0 :\
+            \cf4 return\cf0  \cf6 "nine"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 0\cf0 :\
+            \cf4 return\cf0  \cf6 "tens!!!"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 default\cf0 :\
+            \cf4 return\cf0  \cf6 ""\cf0 ;\
+            \cf4 break\cf0 ;\
+        \}\
+\}\
+\
+\cf3 string\cf0  tens(\cf4 int\cf0  number)\
+\{\
+    \cf4 switch\cf0  (number)\
+    \{\
+        \cf4 case\cf0  \cf5 11\cf0 :\
+            \cf4 return\cf0  \cf6 "eleven"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 12\cf0 :\
+            \cf4 return\cf0  \cf6 "twelve"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 13\cf0 :\
+            \cf4 return\cf0  \cf6 "thirteen"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 14\cf0 :\
+            \cf4 return\cf0  \cf6 "fourteen"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 15\cf0 :\
+            \cf4 return\cf0  \cf6 "fifteen"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 16\cf0 :\
+            \cf4 return\cf0  \cf6 "sixteen"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 17\cf0 :\
+            \cf4 return\cf0  \cf6 "seventeen"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 18\cf0 :\
+            \cf4 return\cf0  \cf6 "eighteen"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 19\cf0 :\
+            \cf4 return\cf0  \cf6 "nineteen"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 default\cf0 :\
+            \cf4 return\cf0  \cf6 ""\cf0 ;\
+            \cf4 break\cf0 ;\
+    \}\
+\}\
+\
+\cf3 string\cf0  ties(\cf4 int\cf0  number)\
+\{\
+    \cf4 switch\cf0  (number)\
+    \{\
+        \cf4 case\cf0  \cf5 10\cf0 :\
+            \cf4 return\cf0  \cf6 "ten"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 20\cf0 :\
+            \cf4 return\cf0  \cf6 "twenty"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 30\cf0 :\
+            \cf4 return\cf0  \cf6 "thirty"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 40\cf0 :\
+            \cf4 return\cf0  \cf6 "fourty"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 50\cf0 :\
+            \cf4 return\cf0  \cf6 "fifty"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 60\cf0 :\
+            \cf4 return\cf0  \cf6 "sixty"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 70\cf0 :\
+            \cf4 return\cf0  \cf6 "seventy"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 80\cf0 :\
+            \cf4 return\cf0  \cf6 "eighty"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 90\cf0 :\
+            \cf4 return\cf0  \cf6 "ninety"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 default\cf0 :\
+            \cf4 return\cf0  \cf6 ""\cf0 ;\
+            \cf4 break\cf0 ;\
+    \}\
+\}\
+\
+\cf4 void\cf0  ElevenToNinetynine(\cf4 int\cf0  n)\
+\{\
+    \cf4 int\cf0  remainder = n%\cf5 10\cf0 ;\
+    \cf4 int\cf0  carry = n/\cf5 10\cf0 ;\
+    \cf4 if\cf0 (\cf7 units\cf0 (remainder) == \cf6 "tens!!!"\cf0 )\
+    \{\
+        \cf3 cout\cf0 <<\cf7 ties\cf0 (n)<<\cf8 endl\cf0 ;\
+        \cf8 exit\cf0 (\cf5 0\cf0 );\
+    \}\
+    \cf4 else\cf0 \
+    \{\
+        \cf4 if\cf0 (carry == \cf5 1\cf0 )\
+        \{\
+            \cf3 cout\cf0 <<\cf7 tens\cf0 (n)<<\cf8 endl\cf0 ;\
+        \}\
+        \cf4 else\cf0 \
+        \{\
+            \cf3 cout\cf0 <<\cf7 ties\cf0 (carry*\cf5 10\cf0 )<<\cf6 " "\cf0 <<\cf7 units\cf0 (remainder)<<\cf8 endl\cf0 ;\
+        \}\
+    \}\
+\}\
+\
+\cf3 string\cf0  placeOfDigit(\cf4 int\cf0  digit)\
+\{\
+    \cf4 switch\cf0 (digit)\
+    \{\
+        \cf4 case\cf0  \cf5 3\cf0 :\
+            \cf4 return\cf0  \cf6 "hundred"\cf0 ;\
+            \cf4 break\cf0 ;\
+        \cf4 case\cf0  \cf5 4\cf0 :\
+            \cf4 return\cf0  \cf6 "thousand"\cf0 ;\
+            \cf4 break\cf0 ;\
+    \}\
+\}\
+\
+\cf4 int\cf0  main()\
+\{\
+    \cf4 int\cf0  n = \cf5 87\cf0 ;\
+    \cf4 int\cf0  remainder = n;\
+    \cf4 int\cf0  digits = \cf5 0\cf0 ;\
+    \cf4 while\cf0 (remainder > \cf5 0\cf0 )\
+    \{\
+        digits++;\
+        remainder = remainder/\cf5 10\cf0 ;\
+    \}\
+    \
+    \cf4 if\cf0 (digits == \cf5 1\cf0 )\
+    \{\
+        \cf4 if\cf0 (n == \cf5 0\cf0 )\
+        \{\
+            \cf3 cout\cf0 <<\cf6 "zero"\cf0 ;\
+        \}\
+        \cf4 else\cf0 \
+        \{\
+            \cf3 cout\cf0 <<\cf7 units\cf0 (n)<<\cf8 endl\cf0 ;\
+        \}\
+    \}\
+    \cf4 else\cf0 \
+        \cf4 if\cf0 (digits == \cf5 2\cf0 )\
+    \{\
+        \cf7 ElevenToNinetynine\cf0 (n);\
+    \}\
+    \cf4 else\cf0 \
+    \{\
+        \cf4 int\cf0  num = n;\
+        \cf4 int\cf0  d = digits;\
+        \cf4 while\cf0 ( d > \cf5 2\cf0 )\
+        \{\
+            \
+        \}\
+    \}\
+    \cf3 cout\cf0 <<\cf5 123\cf0 /\cf5 100\cf0 ;\
+    \
+\}}

@@ -1,0 +1,386 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Consolas;\f2\fnil\fcharset0 Menlo-Regular;
+}
+{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red247\green247\blue247;\red0\green116\blue0;
+\red92\green38\blue153;\red170\green13\blue145;\red28\green0\blue207;\red63\green110\blue116;\red38\green71\blue75;
+\red196\green26\blue22;\red46\green13\blue110;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sl660\sa100
+
+\f0\fs56 \cf0 \cb2 Median in a stream of integers (running integers)\
+\pard\pardeftab720\sl440\sa200
+
+\fs26 \cf0 Given that integers are read from a data stream. Find median of elements read so for in efficient way. For simplicity assume there are no duplicates. For example, let us consider the stream 5, 15, 1, 3 \'85\
+\pard\pardeftab720\sl360
+
+\f1\fs24 \cf0 \cb3 After reading 1st element of stream - 5 -> median - 5\
+After reading 2nd element of stream - 5, 15 -> median - 10\
+After reading 3rd element of stream - 5, 15, 1 -> median - 5\
+After reading 4th element of stream - 5, 15, 1, 3 -> median - 4, so on...\
+\pard\pardeftab720\sl440\sa200
+
+\f0\fs26 \cf0 \cb2 Making it clear, when the input size is odd, we take the middle element of sorted data. If the input size is even, we pick average of middle two elements in sorted stream.\
+Note that output is 
+\i effective median
+\i0  of integers read from the stream so far. Such an algorithm is called online algorithm. Any algorithm that can guarantee output of 
+\i i
+\i0 -elements after processing 
+\i i
+\i0 -th element, is said to be 
+\i\b online algorithm
+\i0\b0 . Let us discuss three solutions for the above problem.\
+\pard\pardeftab720\sl440\sa200
+
+\b \cf0 Method 1:
+\b0  Insertion Sort\
+If we can sort the data as it appears, we can easily locate median element. 
+\i Insertion Sort
+\i0  is one such online algorithm that sorts the data appeared so far. At any instance of sorting, say after sorting 
+\i i
+\i0 -th element, the first 
+\i i
+\i0 elements of array are sorted. The insertion sort doesn\'92t depend on future data to sort data input till that point. In other words, insertion sort considers data sorted so far while inserting next element. This is the key part of insertion sort that makes it an\'a0online algorithm.\
+However, insertion sort takes O(n
+\fs20 2
+\fs26 ) time to sort 
+\i n
+\i0  elements. Perhaps we can use\'a0
+\i binary search
+\i0  on 
+\i insertion sort
+\i0  to find location of next element in O(log n) time. Yet, we can\'92t do data movement in O(log n) time. No matter how efficient the implementation is, it takes polynomial time in case of insertion sort.\
+Interested reader can try implementation of Method 1.\
+
+\b Method 2:
+\b0 \'a0Augmented\'a0self balanced binary search tree (AVL, RB, etc\'85)\
+At every node of BST, maintain number of elements in the subtree rooted at that node. We can use a node as root of simple binary tree, whose left child is self balancing BST with elements less than root and\'a0right child is self balancing BST with elements greater than root. The root element always holds 
+\i effective median
+\i0 .\
+If left and right subtrees contain same number of elements, root node holds average of left and right subtree root data. Otherwise, root contains same data as the root of subtree which is having more elements. After processing an incoming element, the left and right subtrees (BST) are differed utmost by\'a01.\
+Self balancing BST is costly in managing balancing factor of BST. However, they provide sorted data which we don\'92t need. We need median only. The next method make use of Heaps to trace median.\
+
+\b Method 3:
+\b0 \'a0Heaps\
+Similar to balancing BST in Method 2 above, we can use a max heap on left side to represent elements that are less than 
+\i effective median
+\i0 , and a min heap on right side to represent elements that are greater than 
+\i effective median
+\i0 .\
+After processing an incoming element, the number of elements in heaps differ utmost by 1 element.\'a0When both heaps contain same number of elements, we pick average of heaps root data as 
+\i effective median
+\i0 .\'a0When the heaps are not balanced, we select 
+\i effective median
+\i0  from the root of heap containing more elements.\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\fs24 \cf0 \cb1 \
+\
+\
+\
+\pard\tx529\pardeftab529\pardirnatural
+
+\f2\fs22 \cf4 \CocoaLigature0 /*\
+ Problem Statement\
+ \
+ The median of a finite list of numbers can be found by arranging all the integers from lowest to highest value and picking the middle one. For example, the median of \{3,3,5,9,11\} is 5. If there is an even number of integers, then there is no single middle value, and the median is then usually defined to be the mean of the two middle values. For examples, the median of \{3,5,7,9\} is (5+7)2=6.\
+ \
+ Given that integers are read from a data stream, find the median of elements read so far in an efficient way.\
+ \
+ Input Format\
+ \
+ The first line of input will contain integer N, i.e. the number of integers in the data stream.\
+ The next N lines will contain an integer ai each in order.\
+ Constraints\
+ 1\uc0\u8804 N\u8804 105\
+ 0\uc0\u8804 ai\u8804 105\
+ Output Format\
+ \
+ Print N integers, i.e. the median after each of the input. Report it with precision up to 10\uc0\u8722 1.\
+ */\cf0 \
+\
+\cf5 stack\cf0 <\cf6 int\cf0 > stk;\
+\cf6 static\cf0  \cf6 const\cf0  \cf6 int\cf0  n = \cf7 10\cf0 ;\
+\cf6 int\cf0  heap[\cf8 n\cf0 ];\
+\cf6 int\cf0  numberOfElements = \cf7 0\cf0 ;\
+\cf6 int\cf0  HeapPointer = \cf7 0\cf0 ;\
+\
+\cf6 bool\cf0  isFull()\
+\{\
+    \cf6 if\cf0 (\cf8 numberOfElements\cf0  == \cf8 n\cf0 )\
+    \{\
+        \cf6 return\cf0  \cf6 true\cf0 ;\
+    \}\
+    \cf6 return\cf0  \cf6 false\cf0 ;\
+\}\
+\
+\cf6 bool\cf0  isEmpty()\
+\{\
+    \cf6 if\cf0 (\cf8 numberOfElements\cf0  == \cf7 0\cf0 )\
+    \{\
+        \cf6 return\cf0  \cf6 true\cf0 ;\
+    \}\
+    \cf6 return\cf0  \cf6 false\cf0 ;\
+\}\
+\
+\cf6 int\cf0  LeftChildIndex(\cf6 int\cf0  parentIndex)\
+\{\
+    \cf6 return\cf0  (\cf7 2\cf0 *parentIndex)+\cf7 1\cf0 ;\
+\}\
+\
+\cf6 int\cf0  RightChildIndex(\cf6 int\cf0  parentIndex)\
+\{\
+    \cf6 return\cf0  (\cf7 2\cf0 *parentIndex)+\cf7 2\cf0 ;\
+\}\
+\
+\cf6 int\cf0  ParentIndex(\cf6 int\cf0  childIndex)\
+\{\
+    \cf6 if\cf0 (childIndex%\cf7 2\cf0  == \cf7 0\cf0 )\
+    \{\
+        \cf4 //Right Child\cf0 \
+        \cf6 return\cf0  (childIndex-\cf7 2\cf0 )/\cf7 2\cf0 ;\
+    \}\
+    \cf6 else\cf0 \
+    \{\
+        \cf4 //Left Child\cf0 \
+        \cf6 return\cf0  (childIndex-\cf7 1\cf0 )/\cf7 2\cf0 ;\
+    \}\
+\}\
+\
+\cf6 void\cf0  swap(\cf6 int\cf0  &a, \cf6 int\cf0  &b)\
+\{\
+    \cf6 int\cf0  temp = a;\
+    a = b;\
+    b = temp;\
+\}\
+\
+\cf6 void\cf0  BottomHeapify(\cf6 int\cf0  childIndex)\
+\{\
+    \cf6 if\cf0 (childIndex > \cf7 0\cf0 )\
+    \{\
+        \cf6 int\cf0  parentIndex = \cf9 ParentIndex\cf0 (childIndex);\
+        \cf6 if\cf0 (\cf8 heap\cf0 [parentIndex] > \cf8 heap\cf0 [childIndex])\
+        \{\
+            \cf9 swap\cf0 (\cf8 heap\cf0 [parentIndex], \cf8 heap\cf0 [childIndex]);\
+            \cf9 BottomHeapify\cf0 (parentIndex);\
+        \}\
+    \}\
+\}\
+\
+\cf6 void\cf0  TopHeapify(\cf6 int\cf0  parentIndex)\
+\{\
+    \cf6 if\cf0 (parentIndex == \cf7 0\cf0  && \cf8 HeapPointer\cf0  != \cf7 1\cf0 )\
+    \{\
+        \cf6 if\cf0 (\cf8 heap\cf0 [parentIndex] > \cf8 heap\cf0 [parentIndex+\cf7 1\cf0 ])\
+        \{\
+            \cf9 swap\cf0 (\cf8 heap\cf0 [parentIndex], \cf8 heap\cf0 [parentIndex+\cf7 1\cf0 ]);\
+        \}\
+    \}\
+    \cf6 if\cf0 (parentIndex < \cf8 HeapPointer\cf0 )\
+    \{\
+        \cf6 int\cf0  rChildIndex = \cf9 RightChildIndex\cf0 (parentIndex);\
+        \cf6 int\cf0  lChildIndex = \cf9 LeftChildIndex\cf0 (parentIndex);\
+        \
+        \cf6 if\cf0 (rChildIndex < \cf8 HeapPointer\cf0  && lChildIndex < \cf8 HeapPointer\cf0 )\
+        \{\
+            \cf6 if\cf0 (\cf8 heap\cf0 [rChildIndex] < \cf8 heap\cf0 [lChildIndex])\
+            \{\
+                \cf4 //Right Child big\cf0 \
+                \cf6 if\cf0 (\cf8 heap\cf0 [parentIndex] > \cf8 heap\cf0 [rChildIndex])\
+                \{\
+                    \cf9 swap\cf0 (\cf8 heap\cf0 [rChildIndex], \cf8 heap\cf0 [parentIndex]);\
+                    \cf9 TopHeapify\cf0 (rChildIndex);\
+                \}\
+            \}\
+            \cf6 else\cf0 \
+                \cf6 if\cf0 (\cf8 heap\cf0 [rChildIndex] > \cf8 heap\cf0 [lChildIndex])\
+                \{\
+                    \cf4 //Left child big\cf0 \
+                    \cf6 if\cf0 (\cf8 heap\cf0 [parentIndex] > \cf8 heap\cf0 [lChildIndex])\
+                    \{\
+                        \cf9 swap\cf0 (\cf8 heap\cf0 [lChildIndex], \cf8 heap\cf0 [parentIndex]);\
+                        \cf9 TopHeapify\cf0 (lChildIndex);\
+                    \}\
+                \}\
+        \}\
+    \}\
+\}\
+\
+\cf6 int\cf0  del()\
+\{\
+    \cf6 if\cf0 (\cf9 isEmpty\cf0 ())\
+    \{\
+        \cf5 cout\cf0 <<\cf10 "Heap is empty\\n"\cf0 ;\
+        \cf6 return\cf0  -\cf7 999\cf0 ;\
+    \}\
+    \cf6 else\cf0 \
+    \{\
+        \cf8 numberOfElements\cf0 --;\
+        \cf8 HeapPointer\cf0 --;\
+        \cf6 int\cf0  top = \cf8 heap\cf0 [\cf7 0\cf0 ];\
+        \cf8 heap\cf0 [\cf7 0\cf0 ] = \cf8 heap\cf0 [\cf8 HeapPointer\cf0 ];\
+        \cf8 heap\cf0 [\cf8 HeapPointer\cf0 ] = \cf7 0\cf0 ;\
+        \cf9 TopHeapify\cf0 (\cf7 0\cf0 );\
+        \cf6 return\cf0  top;\
+    \}\
+\}\
+\
+\cf6 void\cf0  insert(\cf6 int\cf0  data)\
+\{\
+    \cf6 if\cf0 (\cf9 isFull\cf0 ())\
+    \{\
+        \cf5 cout\cf0 <<\cf10 "Heap is Full\\n"\cf0 ;\
+        \cf6 return\cf0 ;\
+    \}\
+    \cf6 else\cf0 \
+    \{\
+        \cf8 numberOfElements\cf0 ++;\
+        \cf8 heap\cf0 [\cf8 HeapPointer\cf0 ] = data;\
+        \cf9 BottomHeapify\cf0 (\cf8 HeapPointer\cf0 );\
+        \cf8 HeapPointer\cf0 ++;\
+    \}\
+\}\
+\
+\cf6 void\cf0  display()\
+\{\
+    \cf6 int\cf0  j = \cf7 0\cf0 ;\
+    \cf6 int\cf0  l = \cf7 0\cf0 ;\
+    \cf6 while\cf0 (j< \cf8 HeapPointer\cf0 )\
+    \{\
+        \cf6 int\cf0  numberOfNodesAtEachLevel = \cf11 pow\cf0 (\cf7 2\cf0 , l);\
+        \cf6 int\cf0  NodeCount = \cf7 0\cf0 ;\
+        \cf6 while\cf0 (NodeCount < numberOfNodesAtEachLevel && j<\cf8 HeapPointer\cf0 )\
+        \{\
+            NodeCount++;\
+            \cf5 cout\cf0 <<\cf8 heap\cf0 [j]<<\cf10 " "\cf0 ;\
+            j++;\
+        \}\
+        l++;\
+        \cf5 cout\cf0 <<\cf11 endl\cf0 ;\
+    \}\
+    \cf5 cout\cf0 <<\cf10 "\\n------------------\\n"\cf0 ;\
+\}\
+\
+\cf6 void\cf0  ArrayDispaly()\
+\{\
+    \cf6 for\cf0 (\cf6 int\cf0  i = \cf7 0\cf0 ; i < \cf8 HeapPointer\cf0 ; i++)\
+    \{\
+        \cf5 cout\cf0 <<\cf8 heap\cf0 [i]<<\cf10 " "\cf0 ;\
+    \}\
+    \cf5 cout\cf0 <<\cf11 endl\cf0 ;\
+\}\
+\
+\cf6 void\cf0  SortHeapify(\cf6 int\cf0  parentIndex, \cf6 int\cf0  n)\
+\{\
+    \cf4 //Basicall same as top heapify but with bound as n and not HeapPointer\cf0 \
+    \cf6 if\cf0 (parentIndex <= n)\
+    \{\
+        \cf6 int\cf0  rChildIndex = \cf9 RightChildIndex\cf0 (parentIndex);\
+        \cf6 int\cf0  lChildIndex = \cf9 LeftChildIndex\cf0 (parentIndex);\
+        \
+        \cf6 if\cf0 (rChildIndex <= n && lChildIndex <= n)\
+        \{\
+            \cf6 if\cf0 (\cf8 heap\cf0 [rChildIndex] < \cf8 heap\cf0 [lChildIndex])\
+            \{\
+                \cf4 //Right Child big\cf0 \
+                \cf6 if\cf0 (\cf8 heap\cf0 [parentIndex] > \cf8 heap\cf0 [rChildIndex])\
+                \{\
+                    \cf9 swap\cf0 (\cf8 heap\cf0 [rChildIndex], \cf8 heap\cf0 [parentIndex]);\
+                    \cf9 SortHeapify\cf0 (rChildIndex, n);\
+                \}\
+            \}\
+            \cf6 else\cf0 \
+                \cf6 if\cf0 (\cf8 heap\cf0 [rChildIndex] > \cf8 heap\cf0 [lChildIndex])\
+                \{\
+                    \cf4 //Left child big\cf0 \
+                    \cf6 if\cf0 (\cf8 heap\cf0 [parentIndex] > \cf8 heap\cf0 [lChildIndex])\
+                    \{\
+                        \cf9 swap\cf0 (\cf8 heap\cf0 [lChildIndex], \cf8 heap\cf0 [parentIndex]);\
+                        \cf9 SortHeapify\cf0 (lChildIndex, n);\
+                    \}\
+                \}\
+        \}\
+    \}\
+    \
+\}\
+\
+\cf6 void\cf0  sort(\cf6 int\cf0  top ,\cf6 int\cf0  n)\
+\{\
+    \cf6 if\cf0 (n > \cf7 0\cf0 )\
+    \{\
+        \cf9 swap\cf0 (\cf8 heap\cf0 [top], \cf8 heap\cf0 [n]);\
+        \cf9 SortHeapify\cf0 (\cf7 0\cf0 , n-\cf7 1\cf0 );\
+        \cf9 sort\cf0 (top, n-\cf7 1\cf0 );\
+    \}\
+    \cf6 if\cf0 (n == \cf7 0\cf0 )\
+    \{\
+        \cf6 if\cf0 (\cf8 heap\cf0 [n] > \cf8 heap\cf0 [n+\cf7 1\cf0 ])\
+        \{\
+            \cf9 swap\cf0 (\cf8 heap\cf0 [n], \cf8 heap\cf0 [n+\cf7 1\cf0 ]);\
+        \}\
+    \}\
+\}\
+\
+\cf6 int\cf0  main()\
+\{\
+    \cf6 int\cf0  N = \cf7 10\cf0 ;\
+    \cf4 //cin>>N;\cf0 \
+    \cf6 for\cf0 (\cf6 int\cf0  i = \cf7 0\cf0 ; i <N; i++)\{\
+        \cf4 //int element;\cf0 \
+        \cf4 //cin>>element;\cf0 \
+        \cf5 cout\cf0 <<\cf10 "=================\\n"\cf0 ;\
+        \cf9 insert\cf0 (\cf7 1\cf0 +i);\
+        \cf6 int\cf0  j = \cf7 0\cf0 ;\
+        \cf6 if\cf0 ((i+\cf7 1\cf0 )%\cf7 2\cf0  == \cf7 0\cf0 )\{\
+            \cf4 //Even elements\cf0 \
+            \cf9 ArrayDispaly\cf0 ();\
+            \cf6 int\cf0  NumberOfElementsToBePopped = (i+\cf7 2\cf0 )/\cf7 2\cf0 ;\
+            NumberOfElementsToBePopped++;\
+            \cf5 cout\cf0 <<\cf10 "NumberOfElementsToBePopped ->"\cf0 <<NumberOfElementsToBePopped<<\cf11 endl\cf0 ;\
+            \cf6 while\cf0  (j < NumberOfElementsToBePopped)\{\
+                \cf6 int\cf0  g = \cf9 del\cf0 ();\
+                \cf5 cout\cf0 <<\cf10 "Heap Head->"\cf0 <<g<<\cf11 endl\cf0 ;\
+                \cf9 ArrayDispaly\cf0 ();\
+                \cf8 stk\cf0 .\cf11 push\cf0 (g);\
+                j++;\
+            \}\
+            \cf6 int\cf0  top = \cf8 stk\cf0 .\cf11 top\cf0 ();\
+            \cf8 stk\cf0 .\cf11 pop\cf0 ();\
+            \cf6 int\cf0  top2 = \cf8 stk\cf0 .\cf11 top\cf0 ();\
+            \cf8 stk\cf0 .\cf11 pop\cf0 ();\
+            \cf5 cout\cf0 <<\cf10 "Top 1 = "\cf0 <<top<<\cf10 " Top 2 ->"\cf0 <<top2<<\cf11 endl\cf0 ;\
+            \cf5 cout\cf0 <<\cf10 "even-> "\cf0 <<(top+top2)/\cf7 2\cf0 <<\cf11 endl\cf0 ;\
+            \cf9 insert\cf0 (top);\
+            \cf9 insert\cf0 (top2);\
+            \cf6 while\cf0 (!\cf8 stk\cf0 .\cf11 empty\cf0 ())\{\
+                \cf6 int\cf0  t = \cf8 stk\cf0 .\cf11 top\cf0 ();\
+                \cf8 stk\cf0 .\cf11 pop\cf0 ();\
+                \cf9 insert\cf0 (t);\
+            \}\
+        \}\cf6 else\cf0 \{\
+            \cf4 //Odd Elements\cf0 \
+            \cf9 ArrayDispaly\cf0 ();\
+            \cf6 int\cf0  NumberOfElementsToBePopped = (i/\cf7 2\cf0 )+\cf7 1\cf0 ;\
+            \cf5 cout\cf0 <<\cf10 "NumberOfElementsToBePopped ->"\cf0 <<NumberOfElementsToBePopped<<\cf11 endl\cf0 ;\
+            \cf6 while\cf0  (j < NumberOfElementsToBePopped)\{\
+                \cf6 int\cf0  g = \cf9 del\cf0 ();\
+                \cf5 cout\cf0 <<\cf10 "Heap Head->"\cf0 <<g<<\cf11 endl\cf0 ;\
+                \cf9 ArrayDispaly\cf0 ();\
+                \cf8 stk\cf0 .\cf11 push\cf0 (g);\
+                j++;\
+            \}\
+            \cf6 int\cf0  top = \cf8 stk\cf0 .\cf11 top\cf0 ();\
+            \cf8 stk\cf0 .\cf11 pop\cf0 ();\
+            \cf5 cout\cf0 <<\cf10 "Top -> "\cf0 <<top<<\cf11 endl\cf0 ;\
+            \cf5 cout\cf0 <<i<<\cf10 " odd->"\cf0 <<top<<\cf11 endl\cf0 ;\
+            \cf9 insert\cf0 (top);\
+            \cf6 while\cf0 (!\cf8 stk\cf0 .\cf11 empty\cf0 ())\{\
+                \cf6 int\cf0  t = \cf8 stk\cf0 .\cf11 top\cf0 ();\
+                \cf8 stk\cf0 .\cf11 pop\cf0 ();\
+                \cf9 insert\cf0 (t);\
+            \}\
+        \}\
+    \}\
+    \
+\}\
+}

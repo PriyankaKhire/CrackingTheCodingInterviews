@@ -1,0 +1,283 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red63\green110\blue116;
+\red92\green38\blue153;\red196\green26\blue22;\red46\green13\blue110;\red28\green0\blue207;\red38\green71\blue75;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 /*\
+ Reverse a Linked List in groups of given size\
+ Given a linked list, write a function to reverse every k nodes (where k is an input to the function).\
+ \
+ Example:\
+ Inputs:  1->2->3->4->5->6->7->8->NULL and k = 3\
+ Output:  3->2->1->6->5->4->8->7->NULL.\
+ \
+ Inputs:   1->2->3->4->5->6->7->80->NULL and k = 5\
+ Output:  5->4->3->2->1->8->7->6->NULL.\
+ */\cf0 \
+\
+\cf3 struct\cf0  LinkedList\
+\{\
+    \cf3 int\cf0  data;\
+    \cf4 LinkedList\cf0  *link;\
+\};\
+\
+\cf4 LinkedList\cf0  *RootNode = \cf3 new\cf0  \cf4 LinkedList\cf0 ;\
+\
+\cf3 void\cf0  display(\cf4 LinkedList\cf0  *RN)\
+\{\
+    \cf3 if\cf0 (RN->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf5 cout\cf0 <<RN->\cf4 data\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf4 LinkedList\cf0  *ptr;\
+        ptr = RN;\
+        \cf3 while\cf0  (ptr != \cf3 NULL\cf0 )\
+        \{\
+            \cf5 cout\cf0 <<ptr->\cf4 data\cf0 <<\cf6 "->"\cf0 ;\
+            ptr = ptr->\cf4 link\cf0 ;\
+        \}\
+        \cf5 cout\cf0 <<\cf7 endl\cf0 ;\
+    \}\
+\}\
+\
+\cf3 void\cf0  insert(\cf3 int\cf0  data)\
+\{\
+    \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 data\cf0  == -\cf8 999\cf0  && \cf4 RootNode\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf4 RootNode\cf0 ->\cf4 data\cf0  = data;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf4 LinkedList\cf0  *NewNode;\
+        NewNode = \cf3 new\cf0  \cf4 LinkedList\cf0 ;\
+        NewNode->\cf4 data\cf0  = data;\
+        NewNode->\cf4 link\cf0  = \cf4 RootNode\cf0 ;\
+        \cf4 RootNode\cf0  = NewNode;\
+    \}\
+\}\
+\
+\cf4 LinkedList\cf0  *rev(\cf4 LinkedList\cf0  *RN, \cf4 LinkedList\cf0  *StopAt)\
+\{\
+    \cf3 if\cf0 (RN->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf2 //Just one node\cf0 \
+        \cf3 return\cf0  RN;\
+    \}\
+    \cf3 else\cf0  \cf3 if\cf0  (RN->\cf4 link\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf2 //Jusr 2 nodes\cf0 \
+        \cf4 LinkedList\cf0  *ptr;\
+        ptr = RN->\cf4 link\cf0 ;\
+        ptr->\cf4 link\cf0  = RN;\
+        RN->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+        RN = ptr;\
+        \cf3 return\cf0  RN;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf4 LinkedList\cf0  *a, *b, *c;\
+        c = RN;\
+        b = RN->\cf4 link\cf0 ;\
+        a = RN->\cf4 link\cf0 ;\
+        c->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+        \cf3 while\cf0 (a->\cf4 link\cf0  != StopAt)\
+        \{\
+            a = a->\cf4 link\cf0 ;\
+            b->\cf4 link\cf0  = c;\
+            c = b;\
+            b = a;\
+        \}\
+        b->\cf4 link\cf0  = c;\
+        RN = b;\
+        \cf3 return\cf0  RN;\
+    \}\
+\}\
+\
+\
+\
+\cf3 void\cf0  Kreverse(\cf3 int\cf0  iter, \cf3 int\cf0  k, \cf4 LinkedList\cf0  *RN, \cf4 LinkedList\cf0  *Old)\
+\{\
+    \cf3 if\cf0 (RN == \cf3 NULL\cf0 )\
+    \{\
+        \cf3 return\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+        \cf3 if\cf0 (RN->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf3 return\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf4 LinkedList\cf0  *Rabbit, *Tortoise;\
+        \cf3 int\cf0  n = \cf8 0\cf0 ;\
+        Rabbit = RN;\
+        Tortoise = Rabbit;\
+        \cf3 while\cf0 ( Rabbit->\cf4 link\cf0  != \cf3 NULL\cf0  && n<k)\
+        \{\
+            Tortoise = Rabbit;\
+            Rabbit = Rabbit->\cf4 link\cf0 ;\
+            n++;\
+        \}\
+        \cf3 if\cf0 (Rabbit->\cf4 link\cf0  == \cf3 NULL\cf0  && n<k)\
+        \{\
+            Tortoise = \cf9 rev\cf0 (RN, Rabbit);\
+            \cf3 return\cf0 ;\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            \cf4 LinkedList\cf0  *NewRoot;\
+            NewRoot = \cf9 rev\cf0 (RN, Rabbit);\
+            \cf3 if\cf0 (Old != \cf3 NULL\cf0 )\
+            \{\
+                Old->\cf4 link\cf0  = NewRoot;\
+            \}\
+            RN->\cf4 link\cf0  = Rabbit;\
+            \cf3 if\cf0 (iter == \cf8 0\cf0 )\
+            \{\
+                \cf4 RootNode\cf0  = NewRoot;\
+            \}\
+            iter = iter+\cf8 1\cf0 ;\
+            \cf9 Kreverse\cf0 (iter, k, Rabbit, RN);\
+        \}\
+        \
+    \}\
+\}\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf4 RootNode\cf0 ->\cf4 data\cf0  = -\cf8 999\cf0 ;\
+    \cf4 RootNode\cf0 ->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+    \cf9 insert\cf0 (\cf8 7\cf0 );\
+    \cf9 insert\cf0 (\cf8 6\cf0 );\
+    \cf9 insert\cf0 (\cf8 5\cf0 );\
+    \cf9 insert\cf0 (\cf8 4\cf0 );\
+    \cf9 insert\cf0 (\cf8 3\cf0 );\
+    \cf9 insert\cf0 (\cf8 2\cf0 );\
+    \cf9 insert\cf0 (\cf8 1\cf0 );\
+    \cf9 display\cf0 (\cf4 RootNode\cf0 );\
+    \cf9 Kreverse\cf0 (\cf8 0\cf0 , \cf8 2\cf0 , \cf4 RootNode\cf0 , \cf3 NULL\cf0 );\
+    \cf9 display\cf0 (\cf4 RootNode\cf0 );\
+\}\
+\
+==================================================================================================================================================================\
+\
+\
+\
+\
+\cf3 struct\cf0  LinkedList\
+\{\
+    \cf3 int\cf0  data;\
+    \cf4 LinkedList\cf0  *link;\
+\};\
+\
+\cf4 LinkedList\cf0  *Root = \cf3 new\cf0  \cf4 LinkedList\cf0 ;\
+\
+\cf3 void\cf0  create()\
+\{\
+    \cf4 LinkedList\cf0  *ptr;\
+    ptr = \cf4 Root\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf8 0\cf0 ; i < \cf8 10\cf0 ; i ++)\
+    \{\
+        ptr->\cf4 data\cf0  = i+\cf8 1\cf0 ;\
+        \cf4 LinkedList\cf0  *newNode;\
+        newNode = \cf3 new\cf0  \cf4 LinkedList\cf0 ;\
+        newNode->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+        ptr->\cf4 link\cf0  = newNode;\
+        ptr = ptr->\cf4 link\cf0 ;\
+    \}\
+    \
+    ptr = \cf4 Root\cf0 ;\
+    \cf3 while\cf0  (ptr!=\cf3 NULL\cf0 )\
+    \{\
+        \cf5 cout\cf0 <<ptr->\cf4 data\cf0 <<\cf6 "->"\cf0 ;\
+        ptr = ptr->\cf4 link\cf0 ;\
+    \}\
+\}\
+\
+\cf4 LinkedList\cf0  *reverseLinkedList(\cf4 LinkedList\cf0  *Head, \cf4 LinkedList\cf0  *Tail)\
+\{\
+    \cf3 if\cf0 (Head == \cf3 NULL\cf0 )\
+    \{\
+        \cf3 return\cf0  \cf3 NULL\cf0 ;\
+    \}\
+    \cf3 if\cf0 (Head->\cf4 link\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf4 LinkedList\cf0  *ptr = Head->\cf4 link\cf0 ;\
+        Head->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+        ptr->\cf4 link\cf0  = Head;\
+        \cf3 return\cf0  ptr;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf4 LinkedList\cf0  *a, *b, *c;\
+        a = Head->\cf4 link\cf0 ;\
+        b = Head->\cf4 link\cf0 ;\
+        c = Head;\
+        c->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+        \cf3 while\cf0  (a->\cf4 link\cf0  != Tail)\
+        \{\
+            a = a->\cf4 link\cf0 ;\
+            b->\cf4 link\cf0  = c;\
+            c = b;\
+            b = a;\
+        \}\
+        b->\cf4 link\cf0  = c;\
+        Head= b;\
+        \cf4 LinkedList\cf0  *ptr = Head;\
+        \cf3 while\cf0  (ptr!=\cf3 NULL\cf0 )\
+        \{\
+            \cf5 cout\cf0 <<ptr->\cf4 data\cf0 <<\cf6 "->"\cf0 ;\
+            ptr = ptr->\cf4 link\cf0 ;\
+        \}\
+        \cf3 return\cf0  Head;\
+    \}\
+\}\
+\
+\cf3 void\cf0  Kreverse(\cf3 int\cf0  k, \cf4 LinkedList\cf0  *Head, \cf4 LinkedList\cf0  *PreviousHead)\
+\{\
+    \cf3 if\cf0 (Head != \cf3 NULL\cf0 )\
+    \{\
+        \cf4 LinkedList\cf0  *Tail;\
+        Tail = Head;\
+        \cf3 while\cf0 (Tail != \cf3 NULL\cf0  && k > \cf8 0\cf0 )\
+        \{\
+            k--;\
+            Tail = Tail->\cf4 link\cf0 ;\
+        \}\
+        \cf5 cout\cf0 <<\cf6 "Tail is at "\cf0 <<Tail->\cf4 data\cf0 <<\cf7 endl\cf0 ;\
+        \cf4 LinkedList\cf0  *NewHead = \cf9 reverseLinkedList\cf0 (Head, Tail);\
+        \cf5 cout\cf0 <<\cf6 "Head is at "\cf0 <<Head->\cf4 data\cf0 <<\cf7 endl\cf0 ;\
+        \cf2 //Connect head to tail\cf0 \
+        Head->\cf4 link\cf0  = Tail;\
+        \cf2 //Connect the previous Head to newHead\cf0 \
+        \cf3 if\cf0 (PreviousHead != \cf3 NULL\cf0 )\
+        \{\
+            PreviousHead->\cf4 link\cf0  = NewHead;\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            \cf4 Root\cf0  = NewHead;\
+        \}\
+        \cf9 Kreverse\cf0 (k, Tail, Head);\
+        \
+        \cf4 LinkedList\cf0  *ptr = NewHead;\
+        \cf3 while\cf0  (ptr!=\cf3 NULL\cf0 )\
+        \{\
+            \cf5 cout\cf0 <<ptr->\cf4 data\cf0 <<\cf6 "->"\cf0 ;\
+            ptr = ptr->\cf4 link\cf0 ;\
+        \}\
+    \}\
+\}\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf9 create\cf0 ();\
+    \cf5 cout\cf0 <<\cf7 endl\cf0 ;\
+    \cf9 Kreverse\cf0 (\cf8 3\cf0 , \cf4 Root\cf0 , \cf3 NULL\cf0 );\
+\}}

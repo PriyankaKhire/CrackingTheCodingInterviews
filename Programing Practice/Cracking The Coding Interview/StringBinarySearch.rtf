@@ -1,0 +1,180 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red28\green0\blue207;
+\red92\green38\blue153;\red196\green26\blue22;\red46\green13\blue110;\red38\green71\blue75;\red63\green110\blue116;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 /*\
+Given a sorted array of strings which interspersed with empty strings, write a method to fidn the location of a given string.\
+ */\cf0 \
+\
+\cf3 const\cf0  \cf3 static\cf0  \cf3 int\cf0  size = \cf4 13\cf0 ;\
+\
+\cf3 void\cf0  StringBinarySearch(\cf5 string\cf0  a[], \cf3 int\cf0  low, \cf3 int\cf0  high, \cf5 string\cf0  element)\
+\{\
+    \cf3 if\cf0 (low <= high)\
+    \{\
+        \cf3 if\cf0 (low == high)\
+        \{\
+            \cf2 //Only one element present\cf0 \
+            \cf3 if\cf0 (a[low] == element)\
+            \{\
+                \cf5 cout\cf0 <<\cf6 "Found at position "\cf0 <<low<<\cf7 endl\cf0 ;\
+                \cf3 return\cf0 ;\
+            \}\
+            \cf3 else\cf0 \
+                \cf3 if\cf0 (low < high)\
+            \{\
+                \cf3 int\cf0  mid = (low+high)/\cf4 2\cf0 ;\
+                \
+                \cf3 if\cf0 (a[mid] == element)\
+                \{\
+                    \cf5 cout\cf0 <<\cf6 "Found at position "\cf0 <<mid<<\cf7 endl\cf0 ;\
+                    \cf3 return\cf0 ;\
+                \}\
+                \cf2 //If a[mid] has some string in it\cf0 \
+                \cf3 if\cf0 (a[mid] != \cf6 ""\cf0 )\
+                \{\
+                    \cf3 char\cf0  FirstLetterOfString = \cf7 tolower\cf0 (a[mid][\cf4 0\cf0 ]);\
+                    \cf3 char\cf0  FirstLetterOfElement = \cf7 tolower\cf0 (element[\cf4 0\cf0 ]);\
+                    \cf3 int\cf0  valueOfString = \cf3 int\cf0 (FirstLetterOfString) - \cf3 int\cf0 (\cf4 'a'\cf0 );\
+                    \cf3 int\cf0  valueOfElement = \cf3 int\cf0 (FirstLetterOfElement) - \cf3 int\cf0 (\cf4 'a'\cf0 );\
+                    \cf3 if\cf0 (valueOfElement < valueOfString)\
+                    \{\
+                        \cf2 //Go left\cf0 \
+                        \cf5 cout\cf0 <<\cf6 "Going Left\\n"\cf0 ;\
+                        \cf8 StringBinarySearch\cf0 (a, low, mid-\cf4 1\cf0 , element);\
+                    \}\
+                    \cf3 else\cf0 \
+                    \{\
+                        \cf2 //Go right\cf0 \
+                        \cf5 cout\cf0 <<\cf6 "Going Right\\n"\cf0 ;\
+                        \cf8 StringBinarySearch\cf0 (a, mid+\cf4 1\cf0 , high, element);\
+                    \}\
+                \}\
+                \cf2 //If a[mid] has empty string in it\cf0 \
+                \cf3 if\cf0 (a[mid] == \cf6 ""\cf0 )\
+                \{\
+                    \cf3 int\cf0  i = \cf4 0\cf0 ;\
+                    \cf3 bool\cf0  FoundInRight = \cf3 false\cf0 ;\
+                    \cf3 bool\cf0  FoudInLeft = \cf3 false\cf0 ;\
+                    \cf3 while\cf0 (a[mid+i] == \cf6 ""\cf0  || a[mid-i] == \cf6 ""\cf0 || i < \cf9 size\cf0 )\
+                    \{\
+                        i++;\
+                        \cf2 //mid+i = Going right\cf0 \
+                        \cf3 if\cf0 (a[mid+i] != \cf6 ""\cf0 )\
+                        \{\
+                            FoundInRight = \cf3 true\cf0 ;\
+                            \cf2 //Don't break here coz then it wont check the mid-i condition\cf0 \
+                            \cf2 //This is necessary coz what if there is something in left as well as right\cf0 \
+                        \}\
+                        \cf2 //mid - i = Going left\cf0 \
+                        \cf3 if\cf0 (a[mid-i] != \cf6 ""\cf0 )\
+                        \{\
+                            FoudInLeft = \cf3 true\cf0 ;\
+                        \}\
+                        \
+                        \cf3 if\cf0 (FoudInLeft == \cf3 true\cf0  || FoundInRight == \cf3 true\cf0 )\
+                        \{\
+                            \cf3 break\cf0 ;\
+                        \}\
+                    \}\
+                    \
+                    \cf3 if\cf0 (a[mid-i] == element)\
+                    \{\
+                        \cf5 cout\cf0 <<\cf6 "Found in position "\cf0 <<mid-i<<\cf7 endl\cf0 ;\
+                        \cf3 return\cf0 ;\
+                    \}\
+                    \cf3 if\cf0 (a[mid+i] == element)\
+                    \{\
+                        \cf5 cout\cf0 <<\cf6 "Found in position "\cf0 <<mid+i<<\cf7 endl\cf0 ;\
+                        \cf3 return\cf0 ;\
+                    \}\
+                    \
+                    \cf3 if\cf0 (FoudInLeft == \cf3 true\cf0  && FoundInRight == \cf3 true\cf0 )\
+                    \{\
+                        \cf2 //Found in both places\cf0 \
+                        \cf3 char\cf0  FirstLetterOfLeftString = \cf7 tolower\cf0 (a[mid-i][\cf4 0\cf0 ]);\
+                        \cf3 char\cf0  FirstLetterOfRightString = \cf7 tolower\cf0 (a[mid+i][\cf4 0\cf0 ]);\
+                        \cf3 int\cf0  ValueOfLeftLetter = \cf3 int\cf0 (FirstLetterOfLeftString) - \cf3 int\cf0 (\cf4 'a'\cf0 );\
+                        \cf3 int\cf0  ValueOfRightLetter = \cf3 int\cf0 (FirstLetterOfRightString) - \cf3 int\cf0 (\cf4 'a'\cf0 );\
+                        \cf3 char\cf0  FirstLetterOfElement = \cf7 tolower\cf0 (element[\cf4 0\cf0 ]);\
+                        \cf3 int\cf0  valueOfElement = \cf3 int\cf0 (FirstLetterOfElement) - \cf3 int\cf0 (\cf4 'a'\cf0 );\
+                        \
+                        \cf2 //Case 1) element less than both of them -> move left\cf0 \
+                        \cf3 if\cf0 (valueOfElement < ValueOfLeftLetter && valueOfElement < ValueOfRightLetter)\
+                        \{\
+                            \cf5 cout\cf0 <<\cf6 "Going Left\\n"\cf0 ;\
+                            \cf8 StringBinarySearch\cf0 (a, low, mid-i-\cf4 1\cf0 , element);\
+                        \}\
+                        \cf2 //Case 2) element greater than both of them -> move right\cf0 \
+                        \cf3 if\cf0 (valueOfElement > ValueOfLeftLetter && valueOfElement > ValueOfRightLetter)\
+                        \{\
+                            \cf5 cout\cf0 <<\cf6 "Going Right\\n"\cf0 ;\
+                            \cf8 StringBinarySearch\cf0 (a, mid+i+\cf4 1\cf0 , high, element);\
+                        \}\
+                        \cf2 //Case 3) element lies between both of them -> error\cf0 \
+                        \cf3 if\cf0 (ValueOfLeftLetter < valueOfElement && valueOfElement < ValueOfRightLetter)\
+                        \{\
+                            \cf5 cout\cf0 <<\cf6 "error\\n"\cf0 ;\
+                            \cf3 return\cf0 ;\
+                        \}\
+                        \
+                    \}\
+                    \cf3 if\cf0 (FoudInLeft == \cf3 true\cf0  && FoundInRight == \cf3 false\cf0 )\
+                    \{\
+                        \cf2 //Found only in left\cf0 \
+                        \cf3 char\cf0  FirstLetterOfLeftString = \cf7 tolower\cf0 (a[mid-i][\cf4 0\cf0 ]);\
+                        \cf3 int\cf0  ValueOfLeftLetter = \cf3 int\cf0 (FirstLetterOfLeftString) - \cf3 int\cf0 (\cf4 'a'\cf0 );\
+                        \cf3 char\cf0  FirstLetterOfElement = \cf7 tolower\cf0 (element[\cf4 0\cf0 ]);\
+                        \cf3 int\cf0  valueOfElement = \cf3 int\cf0 (FirstLetterOfElement) - \cf3 int\cf0 (\cf4 'a'\cf0 );\
+                        \
+                        \cf3 if\cf0 (valueOfElement < ValueOfLeftLetter)\
+                        \{\
+                            \cf5 cout\cf0 <<\cf6 "Going Left\\n"\cf0 ;\
+                            \cf8 StringBinarySearch\cf0 (a, low, mid-i-\cf4 1\cf0 , element);\
+                        \}\
+                        \cf3 else\cf0 \
+                        \{\
+                            \cf5 cout\cf0 <<\cf6 "Going right\\n"\cf0 ;\
+                            \cf8 StringBinarySearch\cf0 (a, mid+i+\cf4 1\cf0 , high, element);\
+                        \}\
+                        \
+                    \}\
+                    \cf3 if\cf0 (FoudInLeft == \cf3 false\cf0  && FoundInRight == \cf3 true\cf0 )\
+                    \{\
+                        \cf2 //Found only in right\cf0 \
+                        \cf3 char\cf0  FirstLetterOfRightString = \cf7 tolower\cf0 (a[mid+i][\cf4 0\cf0 ]);\
+                        \cf3 int\cf0  ValueOfRightLetter = \cf3 int\cf0 (FirstLetterOfRightString) - \cf3 int\cf0 (\cf4 'a'\cf0 );\
+                        \cf3 char\cf0  FirstLetterOfElement = \cf7 tolower\cf0 (element[\cf4 0\cf0 ]);\
+                        \cf3 int\cf0  valueOfElement = \cf3 int\cf0 (FirstLetterOfElement) - \cf3 int\cf0 (\cf4 'a'\cf0 );\
+                        \cf3 if\cf0 (valueOfElement < ValueOfRightLetter)\
+                        \{\
+                            \cf5 cout\cf0 <<\cf6 "Going Left\\n"\cf0 ;\
+                            \cf8 StringBinarySearch\cf0 (a, low, mid-i-\cf4 1\cf0 , element);\
+                        \}\
+                        \cf3 else\cf0 \
+                        \{\
+                            \cf5 cout\cf0 <<\cf6 "Going rightt\\n"\cf0 ;\
+                            \cf8 StringBinarySearch\cf0 (a, mid+i+\cf4 1\cf0 , high, element);\
+                        \}\
+                    \}\
+                    \cf3 if\cf0 (FoundInRight == \cf3 false\cf0  && FoudInLeft == \cf3 false\cf0 )\
+                    \{\
+                        \cf5 cout\cf0 <<\cf6 "Error\\n"\cf0 ;\
+                        \cf3 return\cf0 ;\
+                    \}\
+                \}\
+            \}\
+        \}\
+    \}\
+\}\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf5 string\cf0  a[\cf9 size\cf0 ] = \{\cf6 "at"\cf0 , \cf6 ""\cf0 , \cf6 ""\cf0 , \cf6 ""\cf0 , \cf6 "ball"\cf0 , \cf6 ""\cf0 , \cf6 ""\cf0 , \cf6 "car"\cf0 ,\cf6 ""\cf0 , \cf6 ""\cf0 , \cf6 "dad"\cf0 , \cf6 ""\cf0 , \cf6 ""\cf0 \};\
+    \cf8 StringBinarySearch\cf0 (a, \cf4 0\cf0 , \cf9 size\cf0 -\cf4 1\cf0 , \cf6 "ball"\cf0 );   \
+\}}

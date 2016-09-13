@@ -1,0 +1,157 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red28\green0\blue207;
+\red92\green38\blue153;\red196\green26\blue22;\red46\green13\blue110;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 /*\
+Write an algorithm such that if an element in an MxN matrix is 0, its entire row and column are set to 0.\
+ */\cf0 \
+\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf3 static\cf0  \cf3 const\cf0  \cf3 int\cf0  N = \cf4 3\cf0 ;\
+    \cf3 int\cf0  matrix[N][N] = \{\{\cf4 1\cf0 ,\cf4 2\cf0 ,\cf4 3\cf0 \},\
+        \{\cf4 4\cf0 ,\cf4 0\cf0 ,\cf4 6\cf0 \},\
+        \{\cf4 7\cf0 ,\cf4 8\cf0 ,\cf4 9\cf0 \}\
+    \};\
+    \
+    \cf2 //Printing Matrix\cf0 \
+    \cf5 cout\cf0 <<\cf6 "\\nMatrix Before -> 1\\n"\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < N; i ++)\
+    \{\
+        \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j <N; j++)\
+        \{\
+            \cf5 cout\cf0 <<matrix[i][j]<<\cf6 " "\cf0 ;\
+        \}\
+        \cf5 cout\cf0 <<\cf7 endl\cf0 ;\
+    \}\
+    \
+    \cf3 bool\cf0  row[N];\
+    \cf3 bool\cf0  col[N];\
+    \
+    \cf2 //Initialise them to false\cf0 \
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < N; i++)\
+    \{\
+        row[i] = \cf3 false\cf0 ;\
+        col[i] = \cf3 false\cf0 ;\
+    \}\
+    \
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < N; i ++)\
+    \{\
+        \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j < N; j++)\
+        \{\
+            \cf3 if\cf0 (matrix[i][j] == \cf4 0\cf0 )\
+            \{\
+                row[i] = \cf3 true\cf0 ;\
+                col[j] = \cf3 true\cf0 ;\
+            \}\
+        \}\
+    \}\
+    \
+    \cf2 //Seting row to 0\cf0 \
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < N; i++)\
+    \{\
+        \cf3 if\cf0 (row[i] == \cf3 true\cf0 )\
+        \{\
+            \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j < N; j++)\
+            \{\
+                matrix[i][j] = \cf4 0\cf0 ;\
+            \}\
+        \}\
+    \}\
+    \
+    \cf2 //Seting col to 0\cf0 \
+    \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j < N; j++)\
+    \{\
+        \cf3 if\cf0 (col[j] == \cf3 true\cf0 )\
+        \{\
+            \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i <N; i ++)\
+            \{\
+                matrix[i][j] = \cf4 0\cf0 ;\
+            \}\
+        \}\
+    \}\
+    \
+    \cf2 //Printing Matrix\cf0 \
+    \cf5 cout\cf0 <<\cf6 "\\nMatrix After\\n"\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < N; i ++)\
+    \{\
+        \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j <N; j++)\
+        \{\
+            \cf5 cout\cf0 <<matrix[i][j]<<\cf6 " "\cf0 ;\
+        \}\
+        \cf5 cout\cf0 <<\cf7 endl\cf0 ;\
+    \}\
+    \
+    \cf2 //Approach 2 Space reduction approach\cf0 \
+    \
+    \cf3 int\cf0  mat[N][N] = \{\{\cf4 1\cf0 ,\cf4 2\cf0 ,\cf4 3\cf0 \},\
+        \{\cf4 0\cf0 ,\cf4 5\cf0 ,\cf4 6\cf0 \},\
+        \{\cf4 7\cf0 ,\cf4 8\cf0 ,\cf4 9\cf0 \}\
+    \};\
+    \
+    \
+    \cf2 //Printing Matrix\cf0 \
+    \cf5 cout\cf0 <<\cf6 "\\nMatrix Before -> 2\\n"\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < N; i ++)\
+    \{\
+        \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j <N; j++)\
+        \{\
+            \cf5 cout\cf0 <<mat[i][j]<<\cf6 " "\cf0 ;\
+        \}\
+        \cf5 cout\cf0 <<\cf7 endl\cf0 ;\
+    \}\
+    \
+    \cf2 //If matrix is M*N then make size of row mat into which ever is big that is if M >N then rowMat[M]\cf0 \
+    \cf3 int\cf0  rowMat[N];\
+    \cf2 //Initialising row mat to -1\cf0 \
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i <N; i ++)\
+    \{\
+        rowMat[i] = -\cf4 1\cf0 ;\
+    \}\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < N; i ++)\
+    \{\
+        \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j < N; j++)\
+        \{\
+            \cf3 if\cf0 (mat[i][j] == \cf4 0\cf0 )\
+            \{\
+                rowMat[i] = j;\
+            \}\
+        \}\
+    \}\
+    \
+    \
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < N; i++)\
+    \{\
+        \cf3 if\cf0 (rowMat[i] > -\cf4 1\cf0 )\
+        \{\
+            \cf2 //Seting row to 0\cf0 \
+            \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j < N; j++)\
+            \{\
+                mat[i][j] = \cf4 0\cf0 ;\
+            \}\
+            \
+            \cf2 //Seting col to 0\cf0 \
+            \cf3 for\cf0 (\cf3 int\cf0  k = \cf4 0\cf0 ; k <N; k++)\
+            \{\
+                mat[k][rowMat[i]]= \cf4 0\cf0 ;\
+            \}\
+            \
+        \}\
+    \}\
+    \
+    \cf2 //Printing Matrix\cf0 \
+    \cf5 cout\cf0 <<\cf6 "\\nMatrix After\\n"\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < N; i ++)\
+    \{\
+        \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j <N; j++)\
+        \{\
+            \cf5 cout\cf0 <<mat[i][j]<<\cf6 " "\cf0 ;\
+        \}\
+        \cf5 cout\cf0 <<\cf7 endl\cf0 ;\
+    \}\
+\}}

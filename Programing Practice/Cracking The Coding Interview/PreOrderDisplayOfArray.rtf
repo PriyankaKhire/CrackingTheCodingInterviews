@@ -1,0 +1,31 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red170\green13\blue145;\red28\green0\blue207;\red63\green110\blue116;
+\red92\green38\blue153;\red196\green26\blue22;\red38\green71\blue75;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 static\cf0  \cf2 const\cf0  \cf2 int\cf0  N = \cf3 7\cf0 ;\
+\cf2 int\cf0  ar[\cf4 N\cf0 ] = \{\cf3 2\cf0 ,\cf3 3\cf0 ,\cf3 4\cf0 ,\cf3 5\cf0 ,\cf3 6\cf0 ,\cf3 7\cf0 ,\cf3 8\cf0 \};\
+\cf2 int\cf0  visited[\cf4 N\cf0 ] = \{\cf3 0\cf0 ,\cf3 0\cf0 ,\cf3 0\cf0 ,\cf3 0\cf0 ,\cf3 0\cf0 ,\cf3 0\cf0 ,\cf3 0\cf0 \};\
+\
+\cf2 void\cf0  preorderDisplay(\cf2 int\cf0  low, \cf2 int\cf0  high)\
+\{\
+    \cf2 if\cf0 (low <= high)\
+    \{\
+        \cf2 int\cf0  mid = (low+high) / \cf3 2\cf0 ;\
+        \cf2 if\cf0 (\cf4 visited\cf0 [mid] == \cf3 0\cf0 )\
+        \{\
+            \cf5 cout\cf0 <<\cf4 ar\cf0 [mid]<<\cf6 " "\cf0 ;\
+            \cf4 visited\cf0 [mid] = \cf3 1\cf0 ;\
+            \cf7 preorderDisplay\cf0 (low, mid-\cf3 1\cf0 );\
+            \cf7 preorderDisplay\cf0 (mid+\cf3 1\cf0 , high);\
+        \}\
+    \}\
+\}\
+\
+\cf2 int\cf0  main()\
+\{\
+    \cf7 preorderDisplay\cf0 (\cf3 0\cf0 , \cf4 N\cf0 );\
+\}}

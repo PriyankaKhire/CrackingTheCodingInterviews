@@ -1,0 +1,195 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red92\green38\blue153;
+\red63\green110\blue116;\red196\green26\blue22;\red46\green13\blue110;\red28\green0\blue207;}
+\paperw11905\paperh16837\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf0 \CocoaLigature0 \
+\cf2 /* Write a method to replace all spaces in a string with'%20'. You may assume that the string has sufficient space at the end of the string to hold the additional characters, and that you are given the "true" length of the string. (Note: if imple- menting in Java, please use a character array so that you can perform this opera- tion in place.)\
+ */\cf0 \
+\
+\cf3 struct\cf0  Node\
+\{\
+    \cf4 string\cf0  word;\
+    \cf5 Node\cf0  *link;\
+\};\
+\cf5 Node\cf0  *RootNode = \cf3 new\cf0  \cf5 Node\cf0 ;\
+\
+\cf3 void\cf0  insertBack(\cf4 string\cf0  data)\
+\{\
+    \cf2 //If its the first node\cf0 \
+    \cf3 if\cf0 (\cf5 RootNode\cf0 ->\cf5 word\cf0  == \cf6 "\\0"\cf0  && \cf5 RootNode\cf0 ->\cf5 link\cf0  ==\cf3 NULL\cf0 )\
+    \{\
+        \cf5 RootNode\cf0 ->\cf5 word\cf0  = data;\
+    \}\
+    \cf2 //If not the first node\cf0 \
+    \cf3 else\cf0 \
+    \{\
+        \cf5 Node\cf0  *NewNode;\
+        NewNode = \cf3 new\cf0  \cf5 Node\cf0 ;\
+        \
+        NewNode->\cf5 word\cf0  = data;\
+        NewNode->\cf5 link\cf0  = \cf3 NULL\cf0 ;\
+        \
+        \cf5 Node\cf0  *Pointer;\
+        \
+        Pointer = \cf5 RootNode\cf0 ;\
+        \
+        \cf3 while\cf0 (Pointer->\cf5 link\cf0  != \cf3 NULL\cf0 )\
+        \{\
+            Pointer = Pointer->\cf5 link\cf0 ;\
+        \}\
+        \
+        Pointer->\cf5 link\cf0  = NewNode;\
+        \
+    \}\
+\}\
+\
+\cf3 void\cf0  PrintLinkedList()\
+\{\
+    \cf3 if\cf0 (\cf5 RootNode\cf0 ->\cf5 link\cf0  == \cf3 NULL\cf0  && \cf5 RootNode\cf0 ->\cf5 word\cf0  == \cf6 "\\0"\cf0 )\
+    \{\
+        \cf4 cout\cf0 <<\cf6 "Linked list is empty \\n"\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+        \cf3 if\cf0 (\cf5 RootNode\cf0 ->\cf5 word\cf0  != \cf6 "\\0"\cf0  && \cf5 RootNode\cf0 ->\cf5 link\cf0  == \cf3 NULL\cf0 )\
+        \{\
+            \cf4 cout\cf0 <<\cf6 "Only root node is filled and the data is "\cf0 <<\cf5 RootNode\cf0 ->\cf5 word\cf0 <<\cf7 endl\cf0 ;\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            \cf5 Node\cf0  *Pointer;\
+            Pointer = \cf5 RootNode\cf0 ;\
+            \
+            \cf3 while\cf0 (Pointer != \cf3 NULL\cf0 )\
+            \{\
+                \cf4 cout\cf0 <<Pointer->\cf5 word\cf0 <<\cf6 "%20"\cf0 ;\
+                Pointer = Pointer->\cf5 link\cf0 ;\
+            \}\
+        \}\
+\}\
+\
+\
+\
+\cf3 int\cf0  main(\cf3 int\cf0  argc, \cf3 const\cf0  \cf3 char\cf0  * argv[])\
+\{\
+    \cf2 //Default RootNode initialization\cf0 \
+    \cf5 RootNode\cf0 ->\cf5 word\cf0  = \cf6 "\\0"\cf0 ;\
+    \cf5 RootNode\cf0 ->\cf5 link\cf0  = \cf3 NULL\cf0 ;\
+    \
+    \cf4 string\cf0  line;\
+    \cf4 cout\cf0 <<\cf6 "Enter input\\n"\cf0 ;\
+    \cf7 getline\cf0 (\cf4 cin\cf0 , line);\
+    \
+    \cf2 //To check if the length is greater than zero;\cf0 \
+    \cf3 if\cf0 (line.\cf7 length\cf0 () > \cf8 0\cf0 )\
+    \{\
+        \cf4 string\cf0  temp; \cf2 //Will take in all the words\cf0 \
+        \cf3 int\cf0  counter = \cf8 0\cf0 ;\
+        \cf3 for\cf0 (\cf3 int\cf0  i = \cf8 0\cf0 ; i<line.\cf7 length\cf0 (); i++)\
+        \{\
+            \cf3 if\cf0 (line[\cf7 i\cf0 ] == \cf8 ' '\cf0 )\
+            \{\
+                \cf2 //The previous word is complete send it to linked list\cf0 \
+                \cf4 cout\cf0 <<temp<<\cf6 "%20"\cf0 ;\
+                \cf3 if\cf0 (line[\cf7 i\cf0 +\cf8 1\cf0 ] != \cf8 ' '\cf0 )\
+                \{\
+                    temp = \cf6 ""\cf0 ; \cf2 //Erase the contents of temp\cf0 \
+                    \cf2 //Set counter to zero again;\cf0 \
+                    counter = \cf8 0\cf0 ;\
+                \}\
+            \}\
+            \cf3 else\cf0 \
+            \{\
+                temp[\cf7 counter\cf0 ] = line[\cf7 i\cf0 ];\
+                counter++;\
+            \}\
+        \}\
+        \
+        \cf2 //Display the words\cf0 \
+        \cf2 //PrintLinkedList();\cf0 \
+    \}\
+    \
+    \
+    \
+    \
+\}\
+\
+\
+\
+\
+\
+//Another Approach Non-working\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf4 string\cf0  str = \cf6 "Mr John Smith     "\cf0 ;\
+    \cf3 bool\cf0  initialSpace = \cf3 false\cf0 ;\
+    \cf3 int\cf0  j = \cf8 0\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = str.\cf7 length\cf0 () - \cf8 1\cf0 ; i > \cf8 0\cf0 ; i++)\
+    \{\
+        \cf3 if\cf0 (str[\cf7 i\cf0 ] != \cf8 ' '\cf0  && str[\cf7 i\cf0 +\cf8 1\cf0 ] == \cf8 ' '\cf0  && str[\cf7 i\cf0 +\cf8 2\cf0 ] == \cf8 ' '\cf0  && str[\cf7 i\cf0 +\cf8 3\cf0 ] == \cf8 ' '\cf0  && initialSpace == \cf3 false\cf0 )\
+        \{\
+            initialSpace = \cf3 true\cf0 ;\
+            j = str.\cf7 length\cf0 () - \cf8 1\cf0 ;\
+        \}\
+        \cf3 if\cf0 (initialSpace == \cf3 true\cf0  && str[\cf7 i\cf0 ] != \cf8 ' '\cf0 )\
+        \{\
+            str[\cf7 j\cf0 ] = str[\cf7 i\cf0 ];\
+            j--;\
+            \cf4 cout\cf0 <<str[\cf7 i\cf0 ]<<\cf7 endl\cf0 ;\
+        \}\
+        \cf3 if\cf0 (str[\cf7 i\cf0 ] == \cf8 ' '\cf0  && initialSpace == \cf3 true\cf0 )\
+        \{\
+            str[\cf7 j\cf0 ] = \cf8 '0'\cf0 ;\
+            j--;\
+            str[\cf7 j\cf0 ] = \cf8 '2'\cf0 ;\
+            j--;\
+            str[\cf7 j\cf0 ] = \cf8 '%'\cf0 ;\
+            j--;\
+        \}\
+        \
+    \}\
+\}\
+\
+//Working Approach\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf4 string\cf0  str = \cf6 "a b c      "\cf0 ;\
+    \cf2 //lap = last aplhabet position\cf0 \
+    \cf3 int\cf0  lap = \cf8 0\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf8 0\cf0 ; i < str.\cf7 length\cf0 (); i++)\
+    \{\
+        \cf3 if\cf0 (\cf7 isalpha\cf0 (str[\cf7 i\cf0 ]))\
+        \{\
+            lap = i;\
+        \}\
+    \}\
+    \cf7 printf\cf0 (\cf6 "%d"\cf0 , str.\cf7 length\cf0 ());\
+    \cf3 int\cf0  i = str.\cf7 length\cf0 ()-\cf8 1\cf0 ;\
+    \cf3 while\cf0 (i >=\cf8 0\cf0 )\
+    \{\
+        \cf3 if\cf0 (str[\cf7 lap\cf0 ] != \cf8 ' '\cf0 )\
+        \{\
+            str[\cf7 i\cf0 ] = str[\cf7 lap\cf0 ];\
+            lap--;\
+            i--;\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            str[\cf7 i\cf0 ] = \cf8 '0'\cf0 ;\
+            i--;\
+            str[\cf7 i\cf0 ] = \cf8 '2'\cf0 ;\
+            i--;\
+            str[\cf7 i\cf0 ] = \cf8 '%'\cf0 ;\
+            i--;\
+            lap--;\
+        \}\
+    \}\
+    \cf4 cout\cf0 <<str<<\cf7 endl\cf0 ;\
+    \
+\}\
+}

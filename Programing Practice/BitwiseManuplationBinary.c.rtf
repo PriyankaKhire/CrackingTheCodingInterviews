@@ -1,0 +1,53 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red100\green56\blue32;\red196\green26\blue22;
+\red170\green13\blue145;\red46\green13\blue110;\red38\green71\blue75;\red28\green0\blue207;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 //\cf0 \
+\cf2 //  main.c\cf0 \
+\cf2 //  LinkedIn Practice\cf0 \
+\cf2 //\cf0 \
+\cf2 //  Created by priyanka khire on 12/12/13.\cf0 \
+\cf2 //  Copyright (c) 2013 priyanka khire. All rights reserved.\cf0 \
+\cf2 //\cf0 \
+\
+\cf3 #include \cf4 <stdio.h>\cf3 \
+#include \cf4 <string.h>\cf3 \
+\cf5 void\cf0  binary(\cf5 int\cf0  n);\
+\cf5 int\cf0  main()\
+\{\
+    \cf5 int\cf0  x;\
+    \cf6 printf\cf0 (\cf4 "Enter the value of x"\cf0 );\
+    \cf6 scanf\cf0 (\cf4 "%d"\cf0 ,&x);\
+    \cf6 printf\cf0 (\cf4 "Binary X ="\cf0 );\
+    \cf7 binary\cf0 (x);\
+    x=x>>\cf8 1\cf0 ;\
+    \cf6 printf\cf0 (\cf4 "\\nDecimal=%d \\n"\cf0 ,x);\
+    \cf6 printf\cf0 (\cf4 "Binary X ="\cf0 );\
+    \cf7 binary\cf0 (x);\
+    \
+\}\
+\cf5 void\cf0  binary( \cf5 int\cf0  n)\
+\{\
+    \cf5 int\cf0  rem[\cf8 100\cf0 ], i=\cf8 0\cf0 ,j;\
+    \cf5 for\cf0 (j=\cf8 0\cf0 ;j<\cf8 100\cf0 ;j++)\
+    \{\
+        rem[j]=\cf8 0\cf0 ;\
+    \}\
+    \cf5 while\cf0 (n>\cf8 0\cf0 )\
+    \{\
+        rem[i]= n%\cf8 2\cf0 ;\
+        n=n/\cf8 2\cf0 ;\
+        i++;\
+    \}\
+   \
+    \cf5 for\cf0 (j=i;j>=\cf8 0\cf0 ;j--)\
+    \{\
+        \cf6 printf\cf0 (\cf4 "%d"\cf0 ,rem[j]);\
+    \}\
+\}\
+\
+}

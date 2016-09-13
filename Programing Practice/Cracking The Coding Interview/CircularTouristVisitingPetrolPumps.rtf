@@ -1,0 +1,70 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red28\green0\blue207;
+\red92\green38\blue153;\red196\green26\blue22;\red46\green13\blue110;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf0 \CocoaLigature0 \
+\cf2 /*\
+ Suppose there is a circle. There are n petrol pumps on that circle. You are given two sets of data.\
+ \
+ 1. The amount of petrol that petrol pump will give.\
+ 2. Distance from that petrol pump to the next petrol pump.\
+ \
+ Calculate the first point from where a truck will be able to complete the circle (The truck will stop at each petrol pump and it has infinite capacity). Expected time complexity is O(n). Assume for 1 litre petrol, the truck can go 1 unit of distance.\
+ \
+ For example, let there be 4 petrol pumps with amount of petrol and distance to next petrol pump value pairs as \{4, 6\}, \{6, 5\}, \{7, 3\} and \{4, 5\}. The first point from where truck can make a circular tour is 2nd petrol pump. Output should be \'93start = 1\uc0\u8243  (index of 2nd petrol pump).\
+ \
+ */\cf0 \
+\
+\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf3 static\cf0  \cf3 const\cf0  \cf3 int\cf0  n = \cf4 4\cf0 ;\
+    \cf3 int\cf0  input[n][\cf4 2\cf0 ] = \{\{\cf4 4\cf0 , \cf4 6\cf0 \}, \{\cf4 6\cf0 , \cf4 5\cf0 \}, \{\cf4 7\cf0 , \cf4 3\cf0 \}, \{\cf4 4\cf0 , \cf4 5\cf0 \}\};\
+    \
+    \cf3 int\cf0  avaliable = \cf4 0\cf0 ;\
+    \cf3 int\cf0  required = \cf4 0\cf0 ;\
+    \cf3 int\cf0  StartPump = \cf4 2\cf0 ;\
+    \
+    \cf3 int\cf0  total = \cf4 0\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i <n; i++)\
+    \{\
+        total = total + input[i][\cf4 0\cf0 ] - input[i][\cf4 1\cf0 ];\
+    \}\
+    \cf3 if\cf0 (total < \cf4 0\cf0 )\
+    \{\
+        \cf5 cout\cf0 <<\cf6 "No Solution\\n"\cf0 ;\
+        \cf7 exit\cf0 (\cf4 0\cf0 );\
+    \}\
+    \
+    \cf3 while\cf0 (StartPump <n)\
+    \{\
+        \cf5 cout\cf0 <<\cf6 "At pump "\cf0 <<StartPump<<\cf7 endl\cf0 ;\
+        avaliable = avaliable + input[StartPump][\cf4 0\cf0 ];\
+        required = required + input[StartPump][\cf4 1\cf0 ];\
+        \cf5 cout\cf0 <<\cf6 "Avaliable = "\cf0 <<avaliable<<\cf7 endl\cf0 ;\
+        \cf5 cout\cf0 <<\cf6 "Required = "\cf0 <<required<<\cf7 endl\cf0 ;\
+        \cf3 if\cf0 (avaliable < required)\
+        \{\
+            \cf3 if\cf0 (StartPump - \cf4 1\cf0  == -\cf4 1\cf0 )\
+            \{\
+                StartPump = n-\cf4 1\cf0 ;\
+            \}\
+            \cf3 else\cf0 \
+            \{\
+                StartPump = (StartPump-\cf4 1\cf0 )%n;\
+            \}\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            \cf5 cout\cf0 <<\cf6 "Start at "\cf0 <<StartPump<<\cf7 endl\cf0 ;\
+            \cf3 break\cf0 ;\
+        \}\
+    \}\
+\
+\}\
+}

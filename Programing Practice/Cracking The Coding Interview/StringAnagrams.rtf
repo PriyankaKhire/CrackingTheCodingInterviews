@@ -1,0 +1,162 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red92\green38\blue153;\red170\green13\blue145;
+\red28\green0\blue207;\red46\green13\blue110;\red196\green26\blue22;\red38\green71\blue75;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 /*\
+ Given two strings, write a method to decide if one is a permutation of the other. Anagrams\
+ */\cf0 \
+\
+\cf2 //Simple string sort\cf0 \
+\cf3 string\cf0  StringSort(\cf3 string\cf0  str)\
+\{\
+    \cf4 for\cf0 (\cf4 int\cf0  i = \cf5 0\cf0 ; i < str.\cf6 length\cf0 ()-\cf5 1\cf0 ; i++)\
+    \{\
+        \cf4 for\cf0 (\cf4 int\cf0  j = i+\cf5 1\cf0 ; j < str.\cf6 length\cf0 (); j++ )\
+        \{\
+            \cf4 if\cf0 (str[\cf6 i\cf0 ] > str [\cf6 j\cf0 ])\
+            \{\
+                \cf4 char\cf0  temp = str[\cf6 i\cf0 ];\
+                str[\cf6 i\cf0 ] = str[\cf6 j\cf0 ];\
+                str[\cf6 j\cf0 ] = temp;\
+            \}\
+        \}\
+    \}\
+    \cf4 return\cf0  str;\
+\}\
+\
+\cf4 int\cf0  main()\
+\{\
+    \cf3 string\cf0  Str1 = \cf7 "abc"\cf0 ;\
+    \cf3 string\cf0  Str2 = \cf7 "cba"\cf0 ;\
+    \
+    \cf4 if\cf0 (Str1.\cf6 length\cf0 () != Str2.\cf6 length\cf0 ())\
+    \{\
+        \cf3 cout\cf0 <<\cf7 "Not Equal"\cf0 ;\
+        \cf6 exit\cf0 (\cf5 0\cf0 );\
+    \}\
+    \cf2 //Sort the strings and check if they are equal or not\cf0 \
+    Str1 = \cf8 StringSort\cf0 (Str1);\
+    Str2 = \cf8 StringSort\cf0 (Str2);\
+    \cf4 for\cf0 (\cf4 int\cf0  i = \cf5 0\cf0 ; i < Str1.\cf6 length\cf0 (); i++)\
+    \{\
+        \cf4 if\cf0 (Str1[\cf6 i\cf0 ] != Str2[\cf6 i\cf0 ])\
+        \{\
+            \cf3 cout\cf0 <<Str1[\cf6 i\cf0 ]<<\cf7 " "\cf0 <<Str2[\cf6 i\cf0 ]<<\cf6 endl\cf0 ;\
+            \cf3 cout\cf0 <<\cf7 "Not Equal"\cf0 ;\
+            \cf6 exit\cf0 (\cf5 0\cf0 );\
+        \}\
+    \}\
+    \cf3 cout\cf0 <<\cf7 "Equal\\n"\cf0 ;\
+    \
+    \cf2 //Take an array of 26 lenght coz A = a and for each occourance of character increment the corresponding array index\cf0 \
+    \cf4 int\cf0  Alphabets[\cf5 26\cf0 ];\
+    \cf4 for\cf0 (\cf4 int\cf0  i = \cf5 0\cf0 ; i <\cf5 26\cf0 ; i++)\
+    \{\
+        Alphabets[i] = \cf5 0\cf0 ;\
+    \}\
+    \
+    \
+    \cf2 /* Look at the errors that you made by uncommenting this\
+    \
+     Str1 = "aaa";\
+     Str2 = "ccc";\
+    \
+    \
+    for(int i = 0; i < Str1.length(); i++)\
+    \{\
+        char c = tolower(Str1[i]);\
+        int index = int(c) - int('a');\
+        Alphabets[index]++;\
+    \}\
+    for(int i = 0; i < Str2.length(); i++)\
+    \{\
+        char c = tolower(Str2[i]);\
+        int index = int(c) - int('a');\
+        Alphabets[index]--;\
+    \}\
+    \
+    int total = 0;\
+    for(int i = 0; i < 26; i++)\
+    \{\
+        cout<<i<<" "<<Alphabets[i]<<endl;\
+        total += Alphabets[i];\
+    \}\
+\
+    \
+    */\cf0 \
+    \
+    \
+    Str1 = \cf7 "cba"\cf0 ;\
+    Str2 = \cf7 "abc"\cf0 ;\
+    \
+    \
+    \cf4 for\cf0 (\cf4 int\cf0  i = \cf5 0\cf0 ; i < Str1.\cf6 length\cf0 (); i++)\
+    \{\
+        \cf4 char\cf0  c = \cf6 tolower\cf0 (Str1[\cf6 i\cf0 ]);\
+        \cf4 int\cf0  index = \cf4 int\cf0 (c) - \cf4 int\cf0 (\cf5 'a'\cf0 );\
+        Alphabets[index]++;\
+    \}\
+    \cf4 for\cf0 (\cf4 int\cf0  i = \cf5 0\cf0 ; i < Str2.\cf6 length\cf0 (); i++)\
+    \{\
+        \cf4 char\cf0  c = \cf6 tolower\cf0 (Str2[\cf6 i\cf0 ]);\
+        \cf4 int\cf0  index = \cf4 int\cf0 (c) - \cf4 int\cf0 (\cf5 'a'\cf0 );\
+        \cf4 if\cf0 (Alphabets[index] == \cf5 0\cf0 )\
+        \{\
+            \cf3 cout\cf0 <<\cf7 "Not Equal\\n"\cf0 ;\
+            \cf6 exit\cf0 (\cf5 0\cf0 );\
+        \}\
+        Alphabets[index]--;\
+    \}\
+    \
+    \cf4 int\cf0  total = \cf5 0\cf0 ;\
+    \cf4 for\cf0 (\cf4 int\cf0  i = \cf5 0\cf0 ; i < \cf5 26\cf0 ; i++)\
+    \{\
+        total += Alphabets[i];\
+    \}\
+    \cf4 if\cf0 (total > \cf5 0\cf0 )\
+    \{\
+        \cf3 cout\cf0 <<\cf7 "String 2 is SubString of String 1 \\n"\cf0 ;\
+    \}\
+    \cf4 else\cf0  \cf4 if\cf0 (total == \cf5 0\cf0 )\
+    \{\
+        \cf3 cout\cf0 <<\cf7 "Equal\\n"\cf0 ;\
+    \}\
+    \
+    \cf2 //Taking 2 arrays\cf0 \
+    \
+    Str1 = \cf7 "abc"\cf0 ;\
+    Str2 = \cf7 "ajgjgjhcb"\cf0 ;\
+    \cf4 int\cf0  A1[\cf5 26\cf0 ];\
+    \cf4 int\cf0  A2[\cf5 26\cf0 ];\
+    \cf4 for\cf0 (\cf4 int\cf0  i = \cf5 0\cf0 ; i < \cf5 26\cf0 ; i ++)\
+    \{\
+        A1[i] = \cf5 0\cf0 ;\
+        A2[i] = \cf5 0\cf0 ;\
+    \}\
+    \cf4 for\cf0 (\cf4 int\cf0  i = \cf5 0\cf0 ; i < Str1.\cf6 length\cf0 (); i++)\
+    \{\
+        \cf4 char\cf0  c = \cf6 tolower\cf0 (Str1[\cf6 i\cf0 ]);\
+        \cf4 int\cf0  index = \cf4 int\cf0 (c) - \cf4 int\cf0 (\cf5 'a'\cf0 );\
+        A1[index]++;\
+    \}\
+    \cf4 for\cf0 (\cf4 int\cf0  i = \cf5 0\cf0 ; i < Str2.\cf6 length\cf0 (); i++)\
+    \{\
+        \cf4 char\cf0  c = \cf6 tolower\cf0 (Str2[\cf6 i\cf0 ]);\
+        \cf4 int\cf0  index = \cf4 int\cf0 (c) - \cf4 int\cf0 (\cf5 'a'\cf0 );\
+        A2[index]++;\
+    \}\
+    \cf4 for\cf0 (\cf4 int\cf0  i = \cf5 0\cf0 ; i < \cf5 26\cf0 ; i ++)\
+    \{\
+        \cf4 if\cf0 (A1[i] != A2[i])\
+        \{\
+            \cf3 cout\cf0 <<\cf7 "Not Equal\\n"\cf0 ;\
+            \cf6 exit\cf0 (\cf5 0\cf0 );\
+        \}\
+    \}\
+    \cf3 cout\cf0 <<\cf7 "Equal\\n"\cf0 ;\
+    \
+\}}

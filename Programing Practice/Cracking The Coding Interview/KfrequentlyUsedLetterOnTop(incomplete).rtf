@@ -1,0 +1,146 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red63\green110\blue116;
+\red92\green38\blue153;\red28\green0\blue207;\red46\green13\blue110;\red196\green26\blue22;\red38\green71\blue75;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 /*\
+ K most frequently used letters in word are always on top\
+ */\cf0 \
+\
+\cf3 struct\cf0  LinkedList\
+\{\
+    \cf3 int\cf0  count;\
+    \cf3 char\cf0  Letter;\
+    \cf4 LinkedList\cf0  *Llink;\
+    \cf4 LinkedList\cf0  *Rlink;\
+\};\
+\
+\pard\tx529\pardeftab529\pardirnatural
+\cf4 LinkedList\cf0  *Root = \cf3 new\cf0  \cf4 LinkedList\cf0 ;\
+\cf4 LinkedList\cf0  *Last;\
+\
+\pard\tx529\pardeftab529\pardirnatural
+\cf5 map\cf0 <\cf3 char\cf0 , \cf4 LinkedList\cf0 *> HashTable;\
+\
+\cf3 void\cf0  createNode(\cf3 char\cf0  letter)\
+\{\
+    \cf3 if\cf0 (\cf4 Root\cf0 ->\cf4 Llink\cf0  == \cf3 NULL\cf0  && \cf4 Root\cf0 ->\cf4 Rlink\cf0  == \cf3 NULL\cf0  && \cf4 Root\cf0 ->\cf4 count\cf0  == \cf6 0\cf0 )\
+    \{\
+        \cf4 Root\cf0 ->\cf4 count\cf0  = \cf6 1\cf0 ;\
+        \cf4 Root\cf0 ->\cf4 Letter\cf0  = letter;\
+        \cf4 HashTable\cf0 [\cf7 letter\cf0 ] = \cf4 Root\cf0 ;\
+        \cf4 Last\cf0  = \cf4 Root\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf4 LinkedList\cf0  *NewNode;\
+        NewNode = \cf3 new\cf0  \cf4 LinkedList\cf0 ;\
+        NewNode->\cf4 count\cf0  = \cf6 1\cf0 ;\
+        NewNode->\cf4 Letter\cf0  = letter;\
+        \
+        NewNode->\cf4 Rlink\cf0  = \cf3 NULL\cf0 ;\
+        NewNode->\cf4 Llink\cf0  = \cf4 Last\cf0 ;\
+        \cf4 Last\cf0 ->\cf4 Rlink\cf0  = NewNode;\
+        \
+        \cf4 Last\cf0  = NewNode;\
+        \cf4 HashTable\cf0 [\cf7 letter\cf0 ] = NewNode;\
+    \}\
+\}\
+\
+\cf3 void\cf0  updateNode(\cf3 char\cf0  letter)\
+\{\
+    \cf4 LinkedList\cf0  *Node = \cf4 HashTable\cf0 [\cf7 letter\cf0 ];\
+    Node->\cf4 count\cf0  = Node->\cf4 count\cf0  + \cf6 1\cf0 ;\
+    \cf4 LinkedList\cf0  *prev = \cf3 NULL\cf0 , *next = \cf3 NULL\cf0 ;\
+    \
+    \cf3 if\cf0 (Node->\cf4 Llink\cf0  != \cf3 NULL\cf0 )\
+    \{\
+        prev = Node->\cf4 Llink\cf0 ;\
+    \}\
+    \cf3 if\cf0 (Node->\cf4 Rlink\cf0  != \cf3 NULL\cf0 )\
+    \{\
+        next = Node->\cf4 Rlink\cf0 ;\
+    \}\
+    \
+    \cf4 LinkedList\cf0  *ptr;\
+    ptr = \cf4 Root\cf0 ;\
+    \cf3 while\cf0 (ptr != \cf3 NULL\cf0 )\
+    \{\
+        \cf3 if\cf0 (ptr->\cf4 count\cf0  > Node->\cf4 count\cf0  && ptr->\cf4 Rlink\cf0 ->\cf4 count\cf0  <= Node->\cf4 count\cf0 )\
+        \{\
+            \cf3 break\cf0 ;\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            ptr = ptr->\cf4 Rlink\cf0 ;\
+        \}\
+    \}\
+    \
+    \cf2 //Add the node accordingly\cf0 \
+    ------\
+    ------\
+    \
+    \cf3 if\cf0 (Node != Root)\
+    \{\
+        \cf3 if\cf0 (prev != \cf3 NULL\cf0 )\
+        \{\
+            prev->Rlink = next;\
+        \}\
+        \cf3 if\cf0 (next != \cf3 NULL\cf0 )\
+        \{\
+            next->Llink = prev;\
+        \}\
+        \cf3 if\cf0 (next == \cf3 NULL\cf0 )\
+        \{\
+            Last = prev;\
+        \}\
+        \
+        Node->Rlink = Root;\
+        Node->Llink = \cf3 NULL\cf0 ;\
+        Root->Llink = Node;\
+        \
+        Root = Node;\
+    \}\
+    \
+\}\
+\
+\cf3 void\cf0  display()\
+\{\
+    \cf4 LinkedList\cf0  *ptr;\
+    ptr = \cf4 Root\cf0 ;\
+    \cf3 while\cf0 (ptr != \cf3 NULL\cf0 )\
+    \{\
+        \cf5 cout\cf0 <<ptr->\cf4 Letter\cf0 <<\cf8 " count = "\cf0 <<ptr->\cf4 count\cf0 <<\cf7 endl\cf0 ;\
+        ptr = ptr->\cf4 Rlink\cf0 ;\
+    \}\
+\}\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf4 Root\cf0 ->\cf4 Llink\cf0  = \cf3 NULL\cf0 ;\
+    \cf4 Root\cf0 ->\cf4 Rlink\cf0  = \cf3 NULL\cf0 ;\
+    \cf4 Root\cf0 ->\cf4 count\cf0  = \cf6 0\cf0 ;\
+    \
+    \cf5 string\cf0  word;\
+    \cf5 cout\cf0 <<\cf8 "Enter word\\n"\cf0 ;\
+    \cf5 cin\cf0 >>word;\
+    \
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf6 0\cf0 ; i < word.\cf7 length\cf0 (); i++)\
+    \{\
+        \cf3 if\cf0 (\cf4 HashTable\cf0 [\cf7 word\cf0 [\cf7 i\cf0 ]] == \cf3 NULL\cf0 )\
+        \{\
+            \cf9 createNode\cf0 (word[\cf7 i\cf0 ]);\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            \cf9 updateNode\cf0 (word[\cf7 i\cf0 ]);\
+        \}\
+    \}\
+\
+    \cf9 display\cf0 ();\
+    \
+\}}

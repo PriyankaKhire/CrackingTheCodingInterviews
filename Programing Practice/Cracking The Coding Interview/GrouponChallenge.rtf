@@ -1,0 +1,185 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red118\green194\blue200;\red193\green193\blue193;\red83\green83\blue83;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\fs24 \cf0 /*\
+\pard\pardeftab720\sl360\sa200
+
+\fs34 \cf2 Problem Statement\
+\pard\pardeftab720\sl400\sa200
+
+\fs28 \cf3 You are given a set of cards. Each card has a string written on the front and a number on the back. The strings on all the cards have the same length. You must choose some of these cards (at least one, possibly all) and place them in a row with the front sides visible, such that the concatenated string is a palindrome\
+You are given a list of strings "front" and a list of numbers "back" describing the set of cards you are given. The i-th card has front[i] written on the front and back[i] on the back\
+Find the maximum possible score you can achieve with these cards. Score is obtained by summing up all the "front" values that were used\
+\pard\pardeftab720\sl400\sa400
+\cf4 \
+\pard\pardeftab720\sl360\sa200
+
+\fs34 \cf2 Problem Constraints\
+\pard\pardeftab720\sl400\sa200
+
+\fs28 \cf3 front will contain between 1 and 50 elements, inclusive\
+Each element of front will contain between 1 and 50 characters, inclusive\
+Each element of front will contain the same number of characters\
+Each character in front will be a lowercase letter ('a' - 'z')\
+front and back will contain the same number of elements\
+Each element of back will be between 1 and 1,000,000, inclusive\
+\pard\pardeftab720\sl400\sa400
+\cf4 \
+\pard\pardeftab720\sl360\sa200
+
+\fs34 \cf2 Input Format\
+\pard\pardeftab720\sl400\sa200
+
+\fs28 \cf3 Line 1: Comma separated list of front strings\
+Line 2: Comma separated list of back numbers\
+\pard\pardeftab720\sl400\sa400
+\cf4 \
+\pard\pardeftab720\sl360\sa200
+
+\fs34 \cf2 Sample Input\
+\pard\pardeftab720\sl400\sa200
+
+\fs28 \cf3 abc,abc,def,cba,fed\
+24,7,63,222,190\
+\pard\pardeftab720\sl360\sa200
+
+\fs34 \cf2 Sample Output\
+\pard\pardeftab720\sl400\sa200
+
+\fs28 \cf3 499\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\fs24 \cf0 */\
+\
+from sys import stdin\
+import sys\
+\
+def AllLettersSame(string):\
+    for i in range(1, len(string)):\
+        if(string[i] != string[i-1]):\
+            return False\
+    return True\
+\
+def isPalendrome(string):\
+    string = string.rstrip()\
+    if(len(string) == 1):\
+        return True\
+    for i in range(0, (len(string)/2)+1):\
+        if(string[len(string)-1 - i] != string[i]):\
+            return False\
+    return True\
+\
+def Reverse(string):\
+    rev = string[::-1]\
+    return rev\
+\
+def findMinPos(lis):\
+	m = 9999999999999999\
+	for i in range(3, len(lis)):\
+		if(m > lis[i]):\
+			m = i\
+	return m\
+        \
+#Read the input using stdin\
+input = stdin.readline()\
+numbers = stdin.readline()\
+#Split input based in comma\
+FrontStringList = input.split(',')\
+BackNumberList = numbers.split(',')\
+if(len(FrontStringList) == 1):\
+    if(isPalendrome(input) == True):\
+        print int(numbers)\
+    else:\
+        print 0\
+    sys.exit()\
+#Assign a max\
+maximum = 0\
+#Create Dictionary to store data\
+dict = \{\}\
+#Store data in dictionary\
+for i in range (0,len(FrontStringList)):\
+    try:\
+        #There exist a duplicate\
+        dict[FrontStringList[i].rstrip()][0] = dict[FrontStringList[i].rstrip()][0] + 1\
+        dict[FrontStringList[i].rstrip()].append(int(BackNumberList[i]))\
+        if(int(BackNumberList[i]) > maximum):\
+            maximum = int(BackNumberList[i])\
+    except KeyError:\
+        #This is the first/only copy of the key\
+        dict[FrontStringList[i].rstrip()] = [1 ,i, "np", int(BackNumberList[i])]\
+        #Check if each string is palendrome or not\
+        if(isPalendrome(FrontStringList[i].rstrip()) == True):\
+            dict[FrontStringList[i].rstrip()][2] = "p"\
+            if(AllLettersSame(FrontStringList[i].rstrip()) == True):\
+                dict[FrontStringList[i].rstrip()][2] = "als"\
+            if(int(BackNumberList[i]) > maximum):\
+                maximum = int(BackNumberList[i])\
+#print maximum\
+# Maximum created by adding all back values\
+ConcatinatedMaximum = 0\
+ToUseOrNotToUse = []\
+for key in dict:\
+    if(dict[key][2] == "p" or dict[key][2] == "als"):\
+		if(dict[key][2] == "p"):\
+			if(dict[key][0]%2 == 0):\
+				#is even\
+				for i in range(3,len(dict[key])):\
+					ConcatinatedMaximum = ConcatinatedMaximum + dict[key][i]			\
+			else:\
+				#is odd\
+				if(dict[key][0] == 1):\
+					ToUseOrNotToUse.append(dict[key][3])\
+				else:\
+					pos = findMinPos(dict[key])\
+					ToUseOrNotToUse.append(dict[key][pos])\
+					for i in range(3, len(dict[key])):\
+						if( i != pos):\
+							ConcatinatedMaximum = ConcatinatedMaximum + dict[key][i]					\
+				\
+		if(dict[key][2] == "als"):\
+			if(dict[key][0]%2 == 0):\
+				#is even\
+				for i in range(3,len(dict[key])):\
+					ConcatinatedMaximum = ConcatinatedMaximum + dict[key][i]\
+			else:\
+				#is odd\
+				if(dict[key][0] == 1):\
+					ToUseOrNotToUse.append(dict[key][3])\
+				else:\
+					pos = findMinPos(dict[key])\
+					ToUseOrNotToUse.append(dict[key][pos])\
+					for i in range(3, len(dict[key])):\
+						if( i != pos):\
+							ConcatinatedMaximum = ConcatinatedMaximum + dict[key][i]\
+        \
+    else:\
+        try:\
+            m = 0\
+            mr = 0\
+            #Reverse of key present\
+            if(dict[key][0] > 0 and dict[Reverse(key)][0] > 0 and (dict[key][1] != dict[Reverse(key)][1])):\
+                for i in range(3, len(dict[key])):\
+                    if(dict[key][i] > m):\
+                        m = i\
+                for i in range(3, len(dict[Reverse(key)])):\
+                    if(dict[Reverse(key)][i] > mr):\
+                        mr = i\
+                dict[key][0] = dict[key][0] - 1\
+                dict[Reverse(key)][0] = dict[Reverse(key)][0] - 1\
+                ConcatinatedMaximum = ConcatinatedMaximum + dict[key][m] + dict[Reverse(key)][mr]\
+                dict[key][m] = 0\
+                dict[Reverse(key)][mr] = 0\
+        except KeyError:\
+            #Reverse of key not present\
+            print ""\
+        \
+    \
+if not ToUseOrNotToUse:\
+	print ConcatinatedMaximum\
+else:\
+	print str(max(ToUseOrNotToUse) + ConcatinatedMaximum)\
+}
