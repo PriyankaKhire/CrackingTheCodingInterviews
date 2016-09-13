@@ -1,0 +1,82 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red100\green56\blue32;\red196\green26\blue22;\red170\green13\blue145;
+\red92\green38\blue153;\red46\green13\blue110;\red28\green0\blue207;\red0\green116\blue0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 #include \cf3 <vector>\cf2 \
+\cf4 using\cf0  \cf4 namespace\cf0  \cf5 std\cf0 ;\
+\
+\cf4 int\cf0  main()\
+\{\
+    \cf5 vector\cf0 <\cf4 int\cf0 > MyVector;\
+    \cf5 vector\cf0 <\cf4 int\cf0 >::\cf5 iterator\cf0  it;\
+    \
+    it = MyVector.\cf6 begin\cf0 ();\
+    \
+    it = MyVector.\cf6 insert\cf0 (it, \cf7 100\cf0 );\
+    MyVector.\cf6 insert\cf0 (it, \cf7 2\cf0 , \cf7 200\cf0 ); \cf8 // This line kills it\cf0 \
+    \
+    it = MyVector.\cf6 begin\cf0 ();        \cf8 //Try commenting out this line and see you get an error it's coz the above line kills it\cf0 \
+    it = MyVector.\cf6 insert\cf0 (it, \cf7 3\cf0 , \cf7 300\cf0 );\
+    \
+    \
+    \cf5 vector\cf0 <\cf4 int\cf0 > anothervector (\cf7 2\cf0 ,\cf7 400\cf0 );\
+    \cf5 cout\cf0 <<\cf3 "Display anothervector \\n"\cf0 ;\
+    \cf4 for\cf0 (it = anothervector.\cf6 begin\cf0 (); it<anothervector.\cf6 end\cf0 (); it++)\
+    \{\
+        \cf5 cout\cf0 <<*it<<\cf6 endl\cf0 ;\
+    \}\
+    \cf5 cout\cf0 <<\cf6 endl\cf0 ;\
+    \
+    \cf8 //Inserting another vector into Myvactor\cf0 \
+    MyVector.\cf6 insert\cf0 (it+\cf7 2\cf0 , anothervector.\cf6 begin\cf0 (), anothervector.\cf6 end\cf0 ()); \cf8 //Try making it+3 instead of it+2 and  see what happens\cf0 \
+    \
+    \
+    \cf8 //Pushback adds element at the end of the array\cf0 \
+    MyVector.\cf6 push_back\cf0 (\cf7 10\cf0 );\
+    \
+    \cf8 //Inserting an array into vector\cf0 \
+    \cf4 int\cf0  MyArray[] = \{\cf7 500\cf0 , \cf7 600\cf0 , \cf7 700\cf0 \};\
+    \cf5 cout\cf0 <<\cf4 sizeof\cf0 (MyArray)/\cf4 sizeof\cf0 (*MyArray)<<\cf6 endl\cf0 ; \cf8 //Gives the size of the array\cf0 \
+    MyVector.\cf6 insert\cf0 (MyVector.\cf6 begin\cf0 (), MyArray, MyArray+\cf7 3\cf0 );\
+\
+    \
+    \cf5 cout\cf0 <<\cf3 "Display My Vector after adding \\n"\cf0 ;\
+    \cf4 for\cf0 (it = MyVector.\cf6 begin\cf0 (); it<MyVector.\cf6 end\cf0 (); it++)\
+    \{\
+        \cf5 cout\cf0 <<*it<<\cf6 endl\cf0 ;\
+    \}\
+\
+    \
+    \
+    \
+    \
+    \cf8 //Erasing elements\cf0 \
+    \
+    \cf8 //erasing 6th element\cf0 \
+    MyVector.\cf6 erase\cf0 (MyVector.\cf6 begin\cf0 ()+\cf7 5\cf0 ); \cf8 //300 got erased\cf0 \
+    \
+    \cf8 //erasing first 3 elements\cf0 \
+    MyVector.\cf6 erase\cf0 (MyVector.\cf6 begin\cf0 (), MyVector.\cf6 begin\cf0 ()+\cf7 3\cf0 ); \cf8 //500,600,700 got erased\cf0 \
+    \
+    \cf8 //experiments\cf0 \
+   \cf8 // MyVector.erase(MyVector.begin(), MyVector.begin()-2);\cf0 \
+  \cf8 //  MyVector.erase(MyVector.begin()-1); //the first element gets erased\cf0 \
+    MyVector.\cf6 erase\cf0 (MyVector.\cf6 begin\cf0 ()+\cf7 1\cf0 ); \cf8 //They both give same result but together the result is still same that is erase first elmnt\cf0 \
+    \
+    \cf5 cout\cf0 <<\cf3 "Display My Vector after erasing \\n"\cf0 ;\
+    \cf4 for\cf0 (it = MyVector.\cf6 begin\cf0 (); it<MyVector.\cf6 end\cf0 (); it++)\
+    \{\
+        \cf5 cout\cf0 <<*it<<\cf6 endl\cf0 ;\
+    \}\
+    \
+    \cf4 int\cf0  a = MyVector[\cf7 0\cf0 ];\
+    \cf5 cout\cf0 <<\cf3 "Getting element \\n"\cf0 ;\
+    \cf5 cout\cf0 <<a<<\cf6 endl\cf0 ;\
+    \cf5 cout\cf0 <<MyVector.\cf6 size\cf0 ()<<\cf6 endl\cf0 ; \cf8 //Size of the vector\cf0 \
+\}\
+\
+}

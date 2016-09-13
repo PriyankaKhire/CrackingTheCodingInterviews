@@ -1,0 +1,919 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red100\green56\blue32;\red196\green26\blue22;
+\red170\green13\blue145;\red92\green38\blue153;\red63\green110\blue116;\red28\green0\blue207;\red38\green71\blue75;
+\red46\green13\blue110;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww19320\viewh12600\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 //\cf0 \
+\cf2 //  main.cpp\cf0 \
+\cf2 //  C++ Practice\cf0 \
+\cf2 //\cf0 \
+\cf2 //  Created by Priyanka on 13/09/14.\cf0 \
+\cf2 //  Copyright (c) 2014 Priyanka is dong Practice. All rights reserved.\cf0 \
+\cf2 //\cf0 \
+\
+\cf3 #include \cf4 <iostream>\cf3 \
+#include \cf4 <string>\cf3 \
+#include \cf4 <queue>\cf3 \
+\cf0 \
+\cf3 #include \cf4 <vector>\cf3 \
+\cf5 using\cf0  \cf5 namespace\cf0  \cf6 std\cf0 ;\
+\
+\cf5 struct\cf0  TreeNode\
+\{\
+    \cf5 int\cf0  data;\
+    \cf7 TreeNode\cf0  *llink;\
+    \cf7 TreeNode\cf0  *rlink;\
+\};\
+\
+\cf7 TreeNode\cf0  *RootNode = \cf5 new\cf0  \cf7 TreeNode\cf0 ;\
+\cf5 int\cf0  NumberNodes = \cf8 0\cf0 ;\
+\
+\cf5 void\cf0  CreateTree()\
+\{\
+    \cf5 char\cf0  ch;\
+    \cf6 cout\cf0 <<\cf4 "Insert ?? \\n"\cf0 ;\
+    \cf6 cin\cf0 >>ch;\
+    \cf5 while\cf0 (ch ==\cf8 'y'\cf0 )\
+    \{\
+        \cf5 if\cf0 (\cf7 RootNode\cf0 ->\cf7 data\cf0  ==\cf8 0\cf0  && \cf7 RootNode\cf0 ->\cf7 llink\cf0  == \cf5 NULL\cf0  && \cf7 RootNode\cf0 ->\cf7 rlink\cf0  == \cf5 NULL\cf0 )\
+        \{\
+            \cf5 int\cf0  data;\
+            \cf6 cout\cf0 <<\cf4 "Enter RootNode Data\\n"\cf0 ;\
+            \cf6 cin\cf0 >>data;\
+            \cf7 RootNode\cf0 ->\cf7 data\cf0  = data;\
+        \}\
+        \cf5 else\cf0 \
+        \{\
+            \cf7 TreeNode\cf0  *Ptr;\
+            Ptr = \cf7 RootNode\cf0 ;\
+            \cf7 TreeNode\cf0  *PrevPtr;\
+            PrevPtr = Ptr;\
+            \
+            \cf5 int\cf0  data;\
+            \cf6 cout\cf0 <<\cf4 "Enter Data\\n"\cf0 ;\
+            \cf6 cin\cf0 >>data;\
+            \
+            \
+            \cf2 //Create the new node to be inserted\cf0 \
+            \cf7 TreeNode\cf0  *NewNode = \cf5 new\cf0  \cf7 TreeNode\cf0 ;\
+            NewNode->\cf7 data\cf0  = data;\
+            NewNode->\cf7 llink\cf0  = NewNode->\cf7 rlink\cf0  = \cf5 NULL\cf0 ;\
+            \
+            \cf2 //Once I have the data now i need to see where i can inser it\cf0 \
+            \cf5 while\cf0 (Ptr != \cf5 NULL\cf0 ) \cf2 //while(Ptr->rlink !=NULL || Ptr->llink != NULL) aint a great condition\cf0 \
+            \{\
+                PrevPtr = Ptr;\
+                \cf5 if\cf0 (data < Ptr->\cf7 data\cf0 )\
+                \{\
+                    \cf2 //Go left\cf0 \
+                    Ptr = Ptr->\cf7 llink\cf0 ;\
+                \}\
+                \cf5 else\cf0 \
+                    \cf5 if\cf0 (data > Ptr->\cf7 data\cf0 )\
+                    \{\
+                        \cf2 //Go right\cf0 \
+                        Ptr = Ptr->\cf7 rlink\cf0 ;\
+                    \}\
+            \}\
+            \
+            \cf2 //Once we have the Ptr Now remember since we said Ptr !=NULL and not any Ptr->link the Ptr actually points to NULL\cf0 \
+            \cf2 //Thats why we have the previous pointer\cf0 \
+            \cf5 if\cf0 (data < PrevPtr->\cf7 data\cf0 )\
+            \{\
+                \cf2 //Insert Left\cf0 \
+                PrevPtr->\cf7 llink\cf0  = NewNode;\
+            \}\
+            \cf5 else\cf0 \
+                \cf5 if\cf0 (data > PrevPtr->\cf7 data\cf0 )\
+                \{\
+                    \cf2 //Insert Right\cf0 \
+                    PrevPtr->\cf7 rlink\cf0  = NewNode;\
+                \}\
+            \
+        \}\
+        \
+        \cf6 cout\cf0 <<\cf4 "Insert ?? \\n"\cf0 ;\
+        \cf6 cin\cf0 >>ch;\
+    \}\
+\}\
+\
+\cf5 void\cf0  InOrder(\cf7 TreeNode\cf0  *Node)\
+\{\
+    \cf5 if\cf0 (Node == \cf5 NULL\cf0 )\
+    \{\
+        \cf5 return\cf0 ;\
+    \}\
+    \cf5 else\cf0 \
+    \{\
+        \cf9 InOrder\cf0 (Node->\cf7 llink\cf0 );\
+        \cf6 cout\cf0 <<Node->\cf7 data\cf0 <<\cf10 endl\cf0 ;\
+        \cf9 InOrder\cf0 (Node->\cf7 rlink\cf0 );\
+    \}\
+\}\
+\
+\cf5 void\cf0  PostOrder(\cf7 TreeNode\cf0  *Node)\
+\{\
+    \cf5 if\cf0 (Node == \cf5 NULL\cf0 )\
+    \{\
+        \cf5 return\cf0 ;\
+    \}\
+    \cf5 else\cf0 \
+    \{\
+        \cf9 PostOrder\cf0 (Node->\cf7 llink\cf0 );\
+        \cf9 PostOrder\cf0 (Node->\cf7 rlink\cf0 );\
+        \cf6 cout\cf0 <<Node->\cf7 data\cf0 <<\cf10 endl\cf0 ;\
+    \}\
+\}\
+\
+\cf5 void\cf0  PreOrder(\cf7 TreeNode\cf0  *Node)\
+\{\
+    \cf5 if\cf0 (Node == \cf5 NULL\cf0 )\
+    \{\
+        \cf5 return\cf0 ;\
+    \}\
+    \cf5 else\cf0 \
+    \{\
+        \cf6 cout\cf0 <<Node->\cf7 data\cf0 <<\cf10 endl\cf0 ;\
+        \cf9 PreOrder\cf0 (Node->\cf7 llink\cf0 );\
+        \cf9 PreOrder\cf0 (Node->\cf7 rlink\cf0 );\
+    \}\
+\}\
+\
+\cf5 void\cf0  insert(\cf5 int\cf0  data)\
+\{\
+    \cf5 if\cf0 (\cf7 RootNode\cf0 ->\cf7 data\cf0  == \cf8 0\cf0  && \cf7 RootNode\cf0 ->\cf7 llink\cf0  == \cf5 NULL\cf0  && \cf7 RootNode\cf0 ->\cf7 rlink\cf0  == \cf5 NULL\cf0 )\
+    \{\
+        \cf7 RootNode\cf0 ->\cf7 data\cf0  = data;\
+    \}\
+    \cf5 else\cf0 \
+    \{\
+        \cf7 TreeNode\cf0  *NewNode = \cf5 new\cf0  \cf7 TreeNode\cf0 ;\
+        NewNode->\cf7 data\cf0  = data;\
+        NewNode->\cf7 llink\cf0  = NewNode->\cf7 rlink\cf0  = \cf5 NULL\cf0 ;\
+        \
+        \cf2 //Create current pointer and previosu pointer\cf0 \
+        \cf7 TreeNode\cf0  *Curr, *Prev;\
+        Curr = \cf7 RootNode\cf0 ;\
+        Prev = Curr;\
+        \
+        \cf5 while\cf0 (Curr != \cf5 NULL\cf0 )\
+        \{\
+            Prev = Curr;\
+            \cf5 if\cf0 (data < Curr->\cf7 data\cf0 )\
+            \{\
+                \cf2 //Go left\cf0 \
+                Curr = Curr->\cf7 llink\cf0 ;\
+            \}\
+            \cf5 else\cf0 \
+                \cf5 if\cf0 (data > Curr->\cf7 data\cf0 )\
+                \{\
+                    \cf2 //Go right\cf0 \
+                    Curr = Curr->\cf7 rlink\cf0 ;\
+                \}\
+        \}\
+        \
+        \cf2 //Once you get the position\cf0 \
+        \
+        \cf5 if\cf0 (data < Prev->\cf7 data\cf0 )\
+        \{\
+            \cf2 //Go left\cf0 \
+            Prev->\cf7 llink\cf0  = NewNode;\
+        \}\
+        \cf5 else\cf0 \
+            \cf5 if\cf0 (data > Prev->\cf7 data\cf0 )\
+            \{\
+                \cf2 //Go right\cf0 \
+                Prev->\cf7 rlink\cf0  = NewNode;\
+            \}\
+    \}\
+\}\
+\
+\cf5 void\cf0  searchItem(\cf5 int\cf0  item)\
+\{\
+    \cf5 if\cf0 (\cf7 RootNode\cf0 ->\cf7 data\cf0  == \cf8 0\cf0  && \cf7 RootNode\cf0 ->\cf7 llink\cf0  == \cf5 NULL\cf0  && \cf7 RootNode\cf0 ->\cf7 rlink\cf0  == \cf5 NULL\cf0 )\
+    \{\
+        \cf6 cout\cf0 <<\cf4 "Empty\\n"\cf0 ;\
+        \cf5 return\cf0 ;\
+    \}\
+    \cf5 else\cf0 \
+    \{\
+        \cf5 int\cf0  count = \cf8 0\cf0 ;\
+        \cf7 TreeNode\cf0  *Curr, *Prev;\
+        Curr = \cf7 RootNode\cf0 ;\
+        Prev = Curr;\
+        \cf5 while\cf0 (Curr != \cf5 NULL\cf0 )\
+        \{\
+            Prev = Curr;\
+            \cf5 if\cf0 (item < Curr->\cf7 data\cf0 )\
+            \{\
+                \cf2 //Search left\cf0 \
+                Curr = Curr->\cf7 llink\cf0 ;\
+                count++;\
+                \cf6 cout\cf0 <<\cf4 "Going Left \\n"\cf0 ;\
+            \}\
+            \cf5 else\cf0 \
+                \cf5 if\cf0 (item > Curr->\cf7 data\cf0 )\
+                \{\
+                    \cf2 //Search Right\cf0 \
+                    Curr = Curr->\cf7 rlink\cf0 ;\
+                    count++;\
+                    \cf6 cout\cf0 <<\cf4 "Going Right \\n"\cf0 ;\
+                \}\
+            \cf5 else\cf0 \
+                \cf5 if\cf0 (item == Curr->\cf7 data\cf0 )\
+                \{\
+                    \cf2 //Found it\cf0 \
+                    \cf6 cout\cf0 <<\cf4 "\\nFound it after traversing "\cf0 <<count<<\cf4 " Nodes\\n"\cf0 ;\
+                    \cf5 return\cf0 ;\
+                \}\
+        \}\
+        \cf6 cout\cf0 <<\cf10 endl\cf0 <<\cf4 "Fuck you"\cf0 <<\cf10 endl\cf0 ;\
+    \}\
+\}\
+\
+\cf2 //Remember if you do that if RootNode->llink == Null and rlink == NULL then return it will give you error the simple thing in tree\cf0 \
+\cf2 //To stop incrementing forward is to say if a node is equal to null or not\cf0 \
+\cf2 //So for this reason we have the previous pointer\cf0 \
+\cf5 int\cf0  height(\cf7 TreeNode\cf0  *Node)\
+\{\
+    \cf5 if\cf0 (Node == \cf5 NULL\cf0 )\
+    \{\
+        \cf5 return\cf0  -\cf8 1\cf0 ;\
+    \}\
+    \cf5 else\cf0 \
+    \{\
+        \cf5 int\cf0  LeftTreeHeight = \cf8 0\cf0 ;\
+        \cf5 int\cf0  RightTreeHeight = \cf8 0\cf0 ;\
+        \
+        LeftTreeHeight = \cf9 height\cf0 (Node->\cf7 llink\cf0 );\
+        RightTreeHeight = \cf9 height\cf0 (Node->\cf7 rlink\cf0 );\
+        \
+        \cf5 if\cf0  (LeftTreeHeight > RightTreeHeight)\
+        \{\
+            \cf5 return\cf0  LeftTreeHeight+\cf8 1\cf0 ;\
+        \}\
+        \cf5 else\cf0 \
+        \{\
+            \cf5 return\cf0  RightTreeHeight+\cf8 1\cf0 ;\
+        \}\
+    \}\
+\}\
+\
+\cf2 //More like inorder traversal thing\cf0 \
+\cf5 void\cf0  NumberOFnodes(\cf7 TreeNode\cf0  *Node)\
+\{\
+    \cf5 if\cf0 (Node == \cf5 NULL\cf0 )\
+    \{\
+        \cf5 return\cf0 ;\
+    \}\
+    \cf5 else\cf0 \
+    \{\
+    \cf9 NumberOFnodes\cf0 (Node->\cf7 llink\cf0 );\
+    \cf7 NumberNodes\cf0 ++; \cf2 //remember this is global\cf0 \
+    \cf9 NumberOFnodes\cf0 (Node->\cf7 rlink\cf0 );\
+    \}\
+\}\
+\
+\cf5 void\cf0  printLeaves(\cf7 TreeNode\cf0  *Node)\
+\{\
+    \cf5 if\cf0 (Node == \cf5 NULL\cf0 )\
+    \{\
+        \cf5 return\cf0 ;\
+    \}\
+    \cf5 else\cf0 \
+    \{\
+        \cf9 printLeaves\cf0 (Node->\cf7 llink\cf0 );\
+       \cf2 // cout<<"Left Outter Node "<<Node->data<<endl; //When I print these doesnt give the outter nodes !!\cf0 \
+        \
+        \cf5 if\cf0 (Node->\cf7 llink\cf0  == \cf5 NULL\cf0  && Node->\cf7 rlink\cf0  == \cf5 NULL\cf0 )\
+        \{\
+            \cf6 cout\cf0 <<Node->\cf7 data\cf0 <<\cf10 endl\cf0 ;\
+        \}\
+        \
+        \cf9 printLeaves\cf0 (Node->\cf7 rlink\cf0 );\
+       \cf2 // cout<<"Right Outter Node "<<Node->data<<endl; //When I print these doesnt give the outter nodes !!\cf0 \
+    \}\
+\}\
+\
+\
+\
+\
+\cf5 void\cf0  deleteNode(\cf5 int\cf0  NodeData)\
+\{\
+    \cf2 //Firstly find the node it's parent and it's inprder successor\cf0 \
+    \cf2 //1) Finding the node and parent\cf0 \
+    \cf7 TreeNode\cf0  *Node, *Parent;\
+    Node = \cf7 RootNode\cf0 ;\
+    Parent = Node;\
+    \
+    \cf2 //According to node data see where to traverse first\cf0 \
+    \cf5 while\cf0 (Node != \cf5 NULL\cf0 )\
+    \{\
+        \
+        \cf5 if\cf0 (NodeData == Node->\cf7 data\cf0 )\
+        \{\
+            \cf5 break\cf0 ;\
+        \}\
+        \cf5 else\cf0 \
+            \cf5 if\cf0 (NodeData < Node->\cf7 data\cf0 )\
+            \{\
+                \cf2 //Traverse left\cf0 \
+                Parent = Node;\
+                Node = Node->\cf7 llink\cf0 ;\
+            \}\
+        \cf5 else\cf0 \
+            \cf5 if\cf0 (NodeData > Node->\cf7 data\cf0 )\
+            \{\
+                \cf2 //Traverse right\cf0 \
+                Parent = Node;\
+                Node = Node->\cf7 rlink\cf0 ;\
+            \}\
+    \}\
+    \
+    \cf5 if\cf0 (Node == \cf5 NULL\cf0 )\
+    \{\
+        \cf5 return\cf0 ;\
+    \}\
+    \cf5 else\cf0 \
+    \{\
+        \cf2 //Once we have the node and it's parent\cf0 \
+        \cf2 //We now find the inorder successor\cf0 \
+        \cf2 //    o   <-- Parent\cf0 \
+        \cf2 //   / \\\
+        //  o   o  <--Node To Be Deleted\cf0 \
+        \cf2 //     / \\\
+        //    o   o\cf0 \
+        \cf2 // Inorder is always left root right then again left root right\cf0 \
+        \cf2 // Inorder successor always lie towards right and then towards left\cf0 \
+        \
+        \cf7 TreeNode\cf0  *InOrderSuccessor;\
+        \
+        \cf2 //But what if the node doesnt have an inorder successor\cf0 \
+        \cf2 // 2 cases either the node is a leaf in that case delete the node\cf0 \
+        \cf2 //else if it only has left kid\cf0 \
+        \cf5 if\cf0 (Node->\cf7 rlink\cf0  == \cf5 NULL\cf0 )\
+        \{\
+            \
+        \cf2 //If the node is leaf\cf0 \
+            \cf5 if\cf0 (Node->\cf7 llink\cf0  == \cf5 NULL\cf0 )\
+            \{\
+            \
+            \cf2 //If it doesnt have parent\cf0 \
+            \cf5 if\cf0 (Parent == Node)\
+            \{\
+                \cf2 //In which case it's the only node in the tree\cf0 \
+                Node->\cf7 data\cf0  = \cf8 0\cf0 ;\
+                Node->\cf7 llink\cf0  = Node->\cf7 rlink\cf0  = \cf5 NULL\cf0 ;\
+            \}\
+            \cf5 else\cf0 \
+            \{\
+                \cf2 //If parent is not null\cf0 \
+                \cf5 if\cf0 (Node == Parent->\cf7 llink\cf0 )\
+                \{\
+                    Parent->\cf7 llink\cf0 = \cf5 NULL\cf0 ;\
+                \}\
+                \cf5 else\cf0 \
+                    Parent->\cf7 rlink\cf0  = \cf5 NULL\cf0 ;\
+                \
+                \cf5 delete\cf0  Node;\
+            \}\
+            \}\
+            \cf5 else\cf0 \
+            \{\
+                \cf2 //If it only has left child\cf0 \
+                \
+                \cf2 //No Parent\cf0 \
+                \cf5 if\cf0 (Parent == Node)\
+                \{\
+                    \cf7 RootNode\cf0  = Node->\cf7 llink\cf0 ;\
+                    \cf5 delete\cf0  Node;\
+                \}\
+                \cf5 else\cf0 \
+                \{\
+                    \cf2 //If it has parent\cf0 \
+                    \cf5 if\cf0 (Node == Parent->\cf7 rlink\cf0 )\
+                    \{\
+                        Parent->\cf7 rlink\cf0  = Node->\cf7 llink\cf0 ;\
+                    \}\
+                    \cf5 else\cf0 \
+                        Parent->\cf7 llink\cf0  = Node->\cf7 llink\cf0 ;\
+                    \
+                    \cf5 delete\cf0  Node;\
+                \}\
+            \}\
+            \
+        \}\
+        \cf5 else\cf0 \
+        \{\
+        InOrderSuccessor = Node->\cf7 rlink\cf0 ;\
+        \cf5 while\cf0 (InOrderSuccessor->\cf7 llink\cf0  != \cf5 NULL\cf0 )\
+        \{\
+            InOrderSuccessor = InOrderSuccessor->\cf7 llink\cf0 ;\
+        \}\
+            \cf2 //Attach the node's left tree to this inorder successor\cf0 \
+            \cf5 if\cf0 (Node->\cf7 llink\cf0  !=\cf5 NULL\cf0 )\
+            \{\
+                InOrderSuccessor->\cf7 llink\cf0  = Node->\cf7 llink\cf0 ;\
+            \}\
+            \cf5 if\cf0 (Parent == Node)\
+            \{\
+                \cf2 //Parent is null\cf0 \
+                \cf7 RootNode\cf0  = Node->\cf7 rlink\cf0 ;\
+                \cf5 delete\cf0  Node;\
+            \}\
+            \cf5 else\cf0 \
+            \{\
+                \cf2 //If Parent Present\cf0 \
+                \cf5 if\cf0 (Node == Parent->\cf7 rlink\cf0 )\
+                \{\
+                    Parent->\cf7 rlink\cf0  = Node->\cf7 rlink\cf0 ;\
+                \}\
+                \cf5 else\cf0 \
+                    Parent->\cf7 llink\cf0  = Node->\cf7 rlink\cf0 ;\
+                \
+                \cf5 delete\cf0  Node;\
+            \}\
+            \
+            \
+        \}\
+    \}\
+\}\
+\
+\cf5 int\cf0  main()\
+\{\
+    \cf7 RootNode\cf0 ->\cf7 data\cf0  = \cf8 0\cf0 ;\
+    \cf7 RootNode\cf0 ->\cf7 llink\cf0  = \cf7 RootNode\cf0 ->\cf7 rlink\cf0  = \cf5 NULL\cf0 ;\
+    \
+    \cf9 CreateTree\cf0 ();\
+    \
+    \cf9 deleteNode\cf0 (\cf8 20\cf0 );\
+    \cf2 //insert(500);\cf0 \
+    \cf2 //insert(250);\cf0 \
+    \
+    \cf9 InOrder\cf0 (\cf7 RootNode\cf0 );\
+    \
+    \cf2 //searchItem(150);\cf0 \
+    \
+    \cf9 NumberOFnodes\cf0 (\cf7 RootNode\cf0 );\
+    \cf6 cout\cf0 <<\cf4 "The number of nodes is "\cf0 <<\cf7 NumberNodes\cf0 <<\cf10 endl\cf0 ;\
+    \
+    \cf5 int\cf0  h = \cf8 0\cf0 ;\
+    h = \cf9 height\cf0 (\cf7 RootNode\cf0 );\
+    \cf6 cout\cf0 <<\cf4 "The height is "\cf0 <<h<<\cf10 endl\cf0 ;\
+    \
+    \cf6 cout\cf0 <<\cf4 "\\n The leaves are \\n"\cf0 ;\
+    \cf9 printLeaves\cf0 (\cf7 RootNode\cf0 );\
+    \
+    \cf6 cout\cf0 <<\cf4 "The Root Node is "\cf0 <<\cf7 RootNode\cf0 ->\cf7 data\cf0 <<\cf10 endl\cf0 ;\
+    \
+    \
+    \cf2 //Points to node when deleting a node\cf0 \
+    \cf2 //1) if the node exists or not if not then return\cf0 \
+    \cf2 //2) if yes then we need to find the parent\cf0 \
+    \cf2 //3) if parent exists then ok if not then this is the root node\cf0 \
+    \cf2 //4) if the node is only node in the tree then make tree empty\cf0 \
+    \cf2 //5) if it's a leaf node then delete the leaf and make parent point appropriately\cf0 \
+    \cf2 //6) if right side is empty then make parent point to node's left side and delete the node\cf0 \
+    \cf2 //7) if left side is empty then make parent point to node's right side and delete the node\cf0 \
+    \cf2 //8) if nothing is empty then go to node's right side and find the left most node whose left side is null\cf0 \
+    \cf2 //   make the node's left sub tree attached to this node in the right sub tree\cf0 \
+    \cf2 //   if parent is empty then the right side becomes root if not make parent point to this right subtree\cf0 \
+    \
+    \
+    \cf2 // o <- Only node in tree\cf0 \
+    \
+    \cf2 //     o\cf0 \
+    \cf2 //    / \\\
+    //   o   o <-Leaf node\cf0 \
+    \
+    \cf2 //     o\cf0 \
+    \cf2 //    / \\\
+    //   o   o <- Right subtree empty\cf0 \
+    \cf2 //      /\cf0 \
+    \cf2 //     o\cf0 \
+    \
+    \cf2 //    o <- Right subtree empty with no parent\cf0 \
+    \cf2 //   /\cf0 \
+    \cf2 //  o\cf0 \
+    \
+    \cf2 //    o\cf0 \
+    \cf2 //   / \\\
+    //  o   o <- Left Subtree empty\cf0 \
+    \cf2 //       \\\
+    //        o\cf0 \
+    \
+    \cf2 //    o <-Left Subtree empty with no parent\cf0 \
+    \cf2 //     \\\
+    //      o\cf0 \
+    \
+    \cf2 //     o\cf0 \
+    \cf2 //    / \\\
+    //   o   o <-Both subtrees present\cf0 \
+    \cf2 //      / \\\
+    //     o   o\cf0 \
+    \
+    \cf2 //    o <-Both subtrees present with no parent\cf0 \
+    \cf2 //   / \\\
+    //  o   o\cf0 \
+    \
+\
+    \
+\}\
+\
+//Another way of finding inorder successor\
+\
+\cf5 bool\cf0  flag = \cf5 false\cf0 ;\
+\cf7 Tree\cf0  *inorderNode;\
+\cf7 Tree\cf0  *inorderSuccessor(\cf7 Tree\cf0  *node, \cf7 Tree\cf0  *nod)\
+\{\
+    \cf5 if\cf0 (node != \cf5 NULL\cf0 )\
+    \{\
+        \cf9 inorderSuccessor\cf0 (node->\cf7 Llink\cf0 , nod);\
+        \cf5 if\cf0 (\cf7 flag\cf0  == \cf5 true\cf0 )\
+        \{\
+            \cf7 inorderNode\cf0  = node;\
+            \cf7 flag\cf0  = \cf5 false\cf0 ;\
+            \cf5 return\cf0  node;\
+        \}\
+        \cf5 if\cf0 (node == nod)\
+        \{\
+            \cf7 flag\cf0  = \cf5 true\cf0 ;\
+        \}\
+        \cf9 inorderSuccessor\cf0 (node->\cf7 Rlink\cf0 , nod);\
+    \}\
+    \cf5 return\cf0  \cf7 inorderNode\cf0 ;\
+\}\
+\
+\
+\
+=============================================================================================================================================================================================================================================================================================\
+\
+\
+\cf5 const\cf0  \cf5 static\cf0  \cf5 int\cf0  NumberOfNodes = \cf8 9\cf0 ;\
+\
+\cf5 struct\cf0  Tree\
+\{\
+    \cf5 int\cf0  data;\
+    \cf5 bool\cf0  visited;\
+    \cf7 Tree\cf0  *llink;\
+    \cf7 Tree\cf0  *rlink;\
+\};\
+\
+\cf7 Tree\cf0  *RootNode = \cf5 new\cf0  \cf7 Tree\cf0 ;\
+\
+\cf5 void\cf0  initialise()\
+\{\
+    \cf7 RootNode\cf0 ->\cf7 data\cf0  = -\cf8 9\cf0 ;\
+    \cf7 RootNode\cf0 ->\cf7 visited\cf0  = \cf5 false\cf0 ;\
+    \cf7 RootNode\cf0 ->\cf7 llink\cf0  = \cf5 NULL\cf0 ;\
+    \cf7 RootNode\cf0 ->\cf7 rlink\cf0  = \cf5 NULL\cf0 ;\
+\}\
+\
+\cf5 void\cf0  insert(\cf5 int\cf0  data)\
+\{\
+    \cf5 if\cf0 (\cf7 RootNode\cf0 ->\cf7 data\cf0  == -\cf8 9\cf0  && \cf7 RootNode\cf0 ->\cf7 llink\cf0  == \cf5 NULL\cf0  && \cf7 RootNode\cf0 ->\cf7 rlink\cf0  == \cf5 NULL\cf0 )\
+    \{\
+        \cf6 cout\cf0 <<\cf4 "Inserted "\cf0 <<data<<\cf4 " in Root\\n"\cf0 ;\
+        \cf7 RootNode\cf0 ->\cf7 data\cf0  = data;\
+    \}\
+    \cf5 else\cf0 \
+    \{\
+        \cf7 Tree\cf0  *Node = \cf5 new\cf0  \cf7 Tree\cf0 ;\
+        Node->\cf7 data\cf0  = data;\
+        Node->\cf7 visited\cf0  = \cf5 false\cf0 ;\
+        Node->\cf7 llink\cf0  = \cf5 NULL\cf0 ;\
+        Node->\cf7 rlink\cf0  = \cf5 NULL\cf0 ;\
+        \cf7 Tree\cf0  *prev, *ptr;\
+        ptr = \cf7 RootNode\cf0 ;\
+        prev = \cf7 RootNode\cf0 ;\
+        \cf5 while\cf0 (ptr != \cf5 NULL\cf0 )\
+        \{\
+            prev = ptr;\
+            \cf5 if\cf0 (data < ptr->\cf7 data\cf0 )\
+            \{\
+                \cf6 cout\cf0 <<\cf4 "Going left\\n"\cf0 ;\
+                ptr = ptr->\cf7 llink\cf0 ;\
+            \}\
+            \cf5 else\cf0 \
+                \cf5 if\cf0 (data > ptr->\cf7 data\cf0 )\
+                \{\
+                    \cf6 cout\cf0 <<\cf4 "Going right\\n"\cf0 ;\
+                    ptr = ptr->\cf7 rlink\cf0 ;\
+                \}\
+        \}\
+        \
+        \cf5 if\cf0 (data < prev->\cf7 data\cf0 )\
+        \{\
+            \cf6 cout\cf0 <<\cf4 "Inserted "\cf0 <<data<<\cf4 " in left\\n"\cf0 ;\
+            prev->\cf7 llink\cf0  = Node;\
+        \}\
+        \cf5 else\cf0 \
+            \cf5 if\cf0 (data > prev->\cf7 data\cf0 )\
+            \{\
+                \cf6 cout\cf0 <<\cf4 "Inserted "\cf0 <<data<<\cf4 " in right\\n"\cf0 ;\
+                prev->\cf7 rlink\cf0  = Node;\
+            \}\
+    \}\
+\}\
+\
+\cf5 void\cf0  Create()\
+\{\
+    \cf5 char\cf0  ch;\
+    \cf6 cout\cf0 <<\cf4 "Would you like to insert y/n ?\\n"\cf0 ;\
+    \cf6 cin\cf0 >>ch;\
+    \cf5 while\cf0 (ch == \cf8 'y'\cf0 )\
+    \{\
+        \cf5 int\cf0  data;\
+        \cf6 cout\cf0 <<\cf4 "Enter data \\n"\cf0 ;\
+        \cf6 cin\cf0 >>data;\
+        \cf9 insert\cf0 (data);\
+        \cf6 cout\cf0 <<\cf4 "Would you like to insert y/n ?\\n"\cf0 ;\
+        \cf6 cin\cf0 >>ch;\
+    \}\
+\}\
+\
+\cf5 void\cf0  inorder(\cf7 Tree\cf0  *Node)\
+\{\
+    \cf5 if\cf0 (Node != \cf5 NULL\cf0 )\
+    \{\
+        \cf9 inorder\cf0 (Node->\cf7 llink\cf0 );\
+        \cf6 cout\cf0 <<Node->\cf7 data\cf0 <<\cf4 " "\cf0 ;\
+        \cf9 inorder\cf0 (Node->\cf7 rlink\cf0 );\
+    \}\
+\}\
+\cf5 void\cf0  preorder(\cf7 Tree\cf0  *Node)\
+\{\
+    \cf5 if\cf0 (Node != \cf5 NULL\cf0 )\
+    \{\
+        \cf6 cout\cf0 <<Node->\cf7 data\cf0 <<\cf4 " "\cf0 ;\
+        \cf9 preorder\cf0 (Node->\cf7 llink\cf0 );\
+        \cf9 preorder\cf0 (Node->\cf7 rlink\cf0 );\
+    \}\
+\}\
+\cf5 void\cf0  postorder(\cf7 Tree\cf0  *Node)\
+\{\
+    \cf5 if\cf0 (Node != \cf5 NULL\cf0 )\
+    \{\
+        \cf9 postorder\cf0 (Node->\cf7 llink\cf0 );\
+        \cf9 postorder\cf0 (Node->\cf7 rlink\cf0 );\
+        \cf6 cout\cf0 <<Node->\cf7 data\cf0 <<\cf4 " "\cf0 ;\
+    \}\
+\}\
+\
+\cf5 int\cf0  height(\cf7 Tree\cf0  *Node)\
+\{\
+    \cf5 if\cf0 (Node == \cf5 NULL\cf0 )\
+    \{\
+        \cf5 return\cf0  -\cf8 1\cf0 ;\
+    \}\
+    \cf5 else\cf0 \
+    \{\
+        \cf5 int\cf0  l = \cf8 0\cf0 ;\
+        \cf5 int\cf0  r = \cf8 0\cf0 ;\
+        l = \cf9 height\cf0 (Node->\cf7 llink\cf0 );\
+        r = \cf9 height\cf0 (Node->\cf7 rlink\cf0 );\
+        \cf5 if\cf0 (l > r)\
+        \{\
+            \cf5 return\cf0  l+\cf8 1\cf0 ;\
+        \}\
+        \cf5 else\cf0 \
+        \{\
+            \cf5 return\cf0  r+\cf8 1\cf0 ;\
+        \}\
+    \}\
+\}\
+\
+\cf5 void\cf0  search(\cf5 int\cf0  data)\
+\{\
+    \cf7 Tree\cf0  *ptr = \cf7 RootNode\cf0 ;\
+    \cf5 while\cf0 (ptr != \cf5 NULL\cf0 )\
+    \{\
+        \cf5 if\cf0 (ptr->\cf7 data\cf0  == data)\
+        \{\
+            \cf6 cout\cf0 <<\cf4 "Found it\\n"\cf0 ;\
+            \cf5 return\cf0 ;\
+        \}\
+        \cf5 else\cf0 \
+        \{\
+            \cf5 if\cf0 (data < ptr->\cf7 data\cf0 )\
+            \{\
+                \cf6 cout\cf0 <<\cf4 "Going left to search\\n"\cf0 ;\
+                ptr = ptr->\cf7 llink\cf0 ;\
+            \}\
+            \cf5 if\cf0 (data > ptr->\cf7 data\cf0 )\
+            \{\
+                \cf6 cout\cf0 <<\cf4 "Going right to search\\n"\cf0 ;\
+                ptr = ptr->\cf7 rlink\cf0 ;\
+            \}\
+        \}\
+    \}\
+    \cf5 if\cf0 (ptr == \cf5 NULL\cf0 )\
+    \{\
+        \cf6 cout\cf0 <<\cf4 "Not Found\\n"\cf0 ;\
+    \}\
+\}\
+\
+\cf5 void\cf0  CreateTreeOfMinHeight(\cf5 int\cf0  a[], \cf5 int\cf0  low, \cf5 int\cf0  high)\
+\{\
+    \cf5 if\cf0 (low <= high)\
+    \{\
+        \cf5 int\cf0  mid = (low+high)/\cf8 2\cf0 ;\
+        \cf9 insert\cf0 (a[mid]);\
+        \cf9 CreateTreeOfMinHeight\cf0 (a, low, mid-\cf8 1\cf0 );\
+        \cf9 CreateTreeOfMinHeight\cf0 (a, mid+\cf8 1\cf0 , high);\
+    \}\
+\}\
+\
+\cf6 stack\cf0 <\cf7 Tree\cf0 *> DFSstack;\
+\cf5 void\cf0  DFS()\
+\{\
+    \cf5 if\cf0 (!\cf7 DFSstack\cf0 .\cf10 empty\cf0 ())\
+    \{\
+        \cf7 Tree\cf0  *top = \cf7 DFSstack\cf0 .\cf10 top\cf0 ();\
+        top->\cf7 visited\cf0  = \cf5 true\cf0 ;\
+        \cf6 cout\cf0 <<\cf4 " "\cf0 <<top->\cf7 data\cf0 ;\
+        \cf5 if\cf0 (top->\cf7 llink\cf0  != \cf5 NULL\cf0  && top->\cf7 llink\cf0 ->\cf7 visited\cf0  == \cf5 false\cf0 )\
+        \{\
+            \cf7 DFSstack\cf0 .\cf10 push\cf0 (top->\cf7 llink\cf0 );\
+            \cf9 DFS\cf0 ();\
+        \}\
+        \cf5 if\cf0 (top->\cf7 rlink\cf0  != \cf5 NULL\cf0 )\
+        \{\
+            \cf7 DFSstack\cf0 .\cf10 push\cf0 (top->\cf7 rlink\cf0 );\
+            \cf9 DFS\cf0 ();\
+        \}\
+        \cf7 DFSstack\cf0 .\cf10 pop\cf0 ();\
+    \}\
+    \
+\}\
+\
+\cf5 void\cf0  DFSdisplay()\
+\{\
+    \cf6 cout\cf0 <<\cf4 "DFS ="\cf0 ;\
+    \cf7 DFSstack\cf0 .\cf10 push\cf0 (\cf7 RootNode\cf0 );\
+    \cf9 DFS\cf0 ();\
+    \cf6 cout\cf0 <<\cf10 endl\cf0 ;\
+\}\
+\
+\cf6 queue\cf0 <\cf7 Tree\cf0 *> BFSqueue;\
+\
+\cf5 void\cf0  BFS()\
+\{\
+    \cf5 if\cf0 (!\cf7 BFSqueue\cf0 .\cf10 empty\cf0 ())\
+    \{\
+        \cf7 Tree\cf0  *top = \cf7 BFSqueue\cf0 .\cf10 front\cf0 ();\
+        top->\cf7 visited\cf0  = \cf5 true\cf0 ;\
+        \cf6 cout\cf0 <<\cf4 " "\cf0 <<top->\cf7 data\cf0 ;\
+        \cf7 BFSqueue\cf0 .\cf10 pop\cf0 ();\
+        \cf5 if\cf0 (top->\cf7 llink\cf0  != \cf5 NULL\cf0 )\
+        \{\
+            \cf7 BFSqueue\cf0 .\cf10 push\cf0 (top->\cf7 llink\cf0 );\
+        \}\
+        \cf5 if\cf0 (top->\cf7 rlink\cf0  != \cf5 NULL\cf0 )\
+        \{\
+            \cf7 BFSqueue\cf0 .\cf10 push\cf0 (top->\cf7 rlink\cf0 );\
+        \}\
+        \cf9 BFS\cf0 ();\
+    \}\
+\}\
+\
+\cf5 void\cf0  BFSdisplay()\
+\{\
+    \cf6 cout\cf0 <<\cf4 "BFS ="\cf0 ;\
+    \cf7 BFSqueue\cf0 .\cf10 push\cf0 (\cf7 RootNode\cf0 );\
+    \cf9 BFS\cf0 ();\
+    \cf6 cout\cf0 <<\cf10 endl\cf0 ;\
+\}\
+\
+\cf5 void\cf0  LevelOfEachNode(\cf7 Tree\cf0  *Node, \cf5 int\cf0  level, \cf5 int\cf0  l[])\
+\{\
+    \cf5 if\cf0 (Node != \cf5 NULL\cf0 )\
+    \{\
+        \cf9 LevelOfEachNode\cf0 (Node->\cf7 llink\cf0 , level+\cf8 1\cf0 , l);\
+        \cf2 //cout<<"Node = "<<Node->data<<" Level = "<<level<<" Level array = "<<l[level]<<" - 1"<<endl;\cf0 \
+        l[level] = l[level]-\cf8 1\cf0 ;\
+        \cf9 LevelOfEachNode\cf0 (Node->\cf7 rlink\cf0 , level+\cf8 1\cf0 , l);\
+    \}\
+\}\
+\
+\cf5 void\cf0  CompleteBinaryTree()\
+\{\
+    \cf5 int\cf0  HeightOfTree = \cf9 height\cf0 (\cf7 RootNode\cf0 )+\cf8 1\cf0 ;\
+    \cf5 int\cf0  level[\cf8 4\cf0 ];\
+    \cf2 //We know that at each level i we need 2^i nodes\cf0 \
+    \cf5 for\cf0 (\cf5 int\cf0  i = \cf8 0\cf0 ; i < HeightOfTree; i++)\
+    \{\
+        level[i] = \cf10 pow\cf0 (\cf8 2\cf0 , i);\
+    \}\
+    \
+    \cf9 LevelOfEachNode\cf0 (\cf7 RootNode\cf0 , \cf8 0\cf0 , level);\
+    \cf5 for\cf0 (\cf5 int\cf0  i = \cf8 0\cf0 ; i < HeightOfTree; i++)\
+    \{\
+        \cf5 if\cf0 (i != HeightOfTree-\cf8 1\cf0 )\
+        \{\
+            \cf5 if\cf0 (level[i] != \cf8 0\cf0 )\
+            \{\
+                \cf6 cout\cf0 <<\cf4 "Tree is not Complete at level = "\cf0 <<i<<\cf10 endl\cf0 ;\
+            \}\
+            \cf5 else\cf0 \
+            \{\
+                \cf6 cout\cf0 <<\cf4 "Tree is complete at level = "\cf0 <<i<<\cf10 endl\cf0 ;\
+            \}\
+        \}\
+    \}\
+    \
+    \
+\}\
+\
+\cf5 void\cf0  Parent(\cf7 Tree\cf0  *Node, \cf5 int\cf0  Child)\
+\{\
+    \cf5 if\cf0 (Node != \cf5 NULL\cf0 )\
+    \{\
+        \cf5 if\cf0 ((Node->\cf7 llink\cf0  != \cf5 NULL\cf0  && Node->\cf7 llink\cf0 ->\cf7 data\cf0  == Child) || (Node->\cf7 rlink\cf0  != \cf5 NULL\cf0  && Node->\cf7 rlink\cf0 ->\cf7 data\cf0  == Child))\
+        \{\
+            \cf6 cout\cf0 <<\cf4 "Parent of "\cf0 <<Child<<\cf4 " is "\cf0 <<Node->\cf7 data\cf0 <<\cf10 endl\cf0 ;\
+            \cf5 return\cf0 ;\
+        \}\
+        \cf5 else\cf0 \
+        \{\
+            \cf5 if\cf0 (Child < Node->\cf7 data\cf0 )\
+            \{\
+                \cf9 Parent\cf0 (Node->\cf7 llink\cf0 , Child);\
+            \}\
+            \cf5 if\cf0 (Child > Node->\cf7 data\cf0 )\
+            \{\
+                \cf9 Parent\cf0 (Node->\cf7 rlink\cf0 , Child);\
+            \}\
+        \}\
+    \}\
+    \cf5 else\cf0 \
+    \{\
+        \cf6 cout\cf0 <<\cf4 "Not Found\\n"\cf0 ;\
+        \cf5 return\cf0 ;\
+    \}\
+\}\
+\
+\cf5 void\cf0  PrintAllLeaves(\cf7 Tree\cf0  *Node)\
+\{\
+    \cf5 if\cf0 (Node != \cf5 NULL\cf0 )\
+    \{\
+        \cf9 PrintAllLeaves\cf0 (Node->\cf7 llink\cf0 );\
+        \cf5 if\cf0 (Node->\cf7 llink\cf0  != \cf5 NULL\cf0 )\
+        \{\
+            \cf5 if\cf0 (Node->\cf7 llink\cf0 ->\cf7 llink\cf0  == \cf5 NULL\cf0  && Node->\cf7 llink\cf0 ->\cf7 rlink\cf0  == \cf5 NULL\cf0 )\
+            \{\
+                \cf6 cout\cf0 <<\cf4 "Left Leave is "\cf0 <<Node->\cf7 llink\cf0 ->\cf7 data\cf0 <<\cf10 endl\cf0 ;\
+            \}\
+        \}\
+        \cf5 if\cf0 (Node->\cf7 rlink\cf0  != \cf5 NULL\cf0 )\
+        \{\
+            \cf5 if\cf0 (Node->\cf7 rlink\cf0 ->\cf7 llink\cf0  == \cf5 NULL\cf0  && Node->\cf7 rlink\cf0 ->\cf7 rlink\cf0  == \cf5 NULL\cf0 )\
+            \{\
+                \cf6 cout\cf0 <<\cf4 "Right Leave is "\cf0 <<Node->\cf7 rlink\cf0 ->\cf7 data\cf0 <<\cf10 endl\cf0 ;\
+            \}\
+        \}\
+        \cf9 PrintAllLeaves\cf0 (Node->\cf7 rlink\cf0 );\
+    \}\
+\}\
+\
+\cf5 void\cf0  reverseInorder(\cf7 Tree\cf0  *Node)\
+\{\
+    \cf5 if\cf0 (Node != \cf5 NULL\cf0 )\
+    \{\
+        \cf9 reverseInorder\cf0 (Node->\cf7 rlink\cf0 );\
+        \cf6 cout\cf0 <<Node->\cf7 data\cf0 <<\cf4 " "\cf0 ;\
+        \cf9 reverseInorder\cf0 (Node->\cf7 llink\cf0 );\
+    \}\
+\}\
+\
+\cf5 int\cf0  main()\
+\{\
+    \cf9 initialise\cf0 ();\
+    \cf2 //Create();\cf0 \
+    \cf5 int\cf0  a[\cf7 NumberOfNodes\cf0 ] = \{\cf8 4\cf0 , \cf8 5\cf0 , \cf8 6\cf0 , \cf8 10\cf0 , \cf8 12\cf0 , \cf8 15\cf0 , \cf8 18\cf0 , \cf8 19\cf0 , \cf8 20\cf0 \};\
+    \cf9 CreateTreeOfMinHeight\cf0 (a, \cf8 0\cf0 , \cf8 8\cf0 );\
+    \cf6 cout\cf0 <<\cf4 "Inorder display = "\cf0 ;\
+    \cf9 inorder\cf0 (\cf7 RootNode\cf0 );\
+    \cf6 cout\cf0 <<\cf10 endl\cf0 ;\
+    \cf6 cout\cf0 <<\cf4 "Reverse Inorder display = "\cf0 ;\
+    \cf9 reverseInorder\cf0 (\cf7 RootNode\cf0 );\
+    \cf6 cout\cf0 <<\cf10 endl\cf0 ;\
+    \cf6 cout\cf0 <<\cf4 "Preorder display = "\cf0 ;\
+    \cf9 preorder\cf0 (\cf7 RootNode\cf0 );\
+    \cf6 cout\cf0 <<\cf10 endl\cf0 ;\
+    \cf6 cout\cf0 <<\cf4 "Postorder display = "\cf0 ;\
+    \cf9 postorder\cf0 (\cf7 RootNode\cf0 );\
+    \cf6 cout\cf0 <<\cf10 endl\cf0 ;\
+    \cf6 cout\cf0 <<\cf4 "Height = "\cf0 <<\cf9 height\cf0 (\cf7 RootNode\cf0 )<<\cf10 endl\cf0 ;\
+    \cf9 search\cf0 (\cf8 19\cf0 );\
+    \cf9 DFSdisplay\cf0 ();\
+    \cf9 BFSdisplay\cf0 ();\
+    \cf9 CompleteBinaryTree\cf0 ();\
+    \cf9 Parent\cf0 (\cf7 RootNode\cf0 , \cf8 20\cf0 );\
+    \cf9 PrintAllLeaves\cf0 (\cf7 RootNode\cf0 );\
+    \
+\}}

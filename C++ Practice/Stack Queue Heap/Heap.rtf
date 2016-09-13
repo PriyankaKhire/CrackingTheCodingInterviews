@@ -1,0 +1,236 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red28\green0\blue207;
+\red63\green110\blue116;\red38\green71\blue75;\red92\green38\blue153;\red196\green26\blue22;\red46\green13\blue110;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf0 \CocoaLigature0 \
+\
+\cf2 /* heap data structure using an array */\
+\
+/* \
+The operations performed are:\
+delete\
+insert\
+ */\cf0 \
+\cf3 static\cf0  \cf3 const\cf0  \cf3 int\cf0  size = \cf4 10\cf0 ;\
+\cf3 int\cf0  Heap[\cf5 size\cf0 ];\
+\cf3 int\cf0  Top;\
+\
+\
+\cf3 int\cf0  Parent(\cf3 int\cf0  index)\
+\{\
+    \
+    \cf3 int\cf0  ParentIndex = \cf4 0\cf0 ;\
+    \
+    \cf2 //Find out which child\cf0 \
+    \cf3 if\cf0 (index%\cf4 2\cf0  == \cf4 0\cf0 )\
+    \{\
+        \cf2 //Right child\cf0 \
+        \
+        \cf2 //Find the parent\cf0 \
+        \cf2 // if n is parent then right child is at 2n+2\cf0 \
+        \cf2 //2n+2 = Top\cf0 \
+        \cf2 //n = (Top-2)/2\cf0 \
+        \
+        ParentIndex = (index-\cf4 2\cf0 )/\cf4 2\cf0 ;\
+        \
+    \}\
+    \cf3 else\cf0 \
+        \cf3 if\cf0 (index%\cf4 2\cf0  == \cf4 1\cf0 )\
+        \{\
+            \cf2 //Left child\cf0 \
+            \
+            \cf2 //Find the parent\cf0 \
+            \cf2 // if n is parent then left child is at 2n+1\cf0 \
+            \cf2 //2n+1 = Top\cf0 \
+            \cf2 //n = (Top-1)/2\cf0 \
+            \
+            ParentIndex = (index-\cf4 1\cf0 )/\cf4 2\cf0 ;\
+            \
+        \}\
+    \
+    \cf3 return\cf0  ParentIndex;\
+\}\
+\
+\cf3 void\cf0  Heapify(\cf3 int\cf0  index)\
+\{\
+    \cf3 if\cf0 (index == \cf4 0\cf0 )\
+    \{\
+        \cf3 return\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf2 //Find Parent Index\cf0 \
+        \cf3 int\cf0  ParentIndex = \cf4 0\cf0 ;\
+        ParentIndex = \cf6 Parent\cf0 (index);\
+        \
+        \cf2 //Once you have the parent index\cf0 \
+        \cf2 //Compare the parent with the new child\cf0 \
+        \
+        \cf3 if\cf0 (\cf5 Heap\cf0 [ParentIndex] < \cf5 Heap\cf0 [index])\
+        \{\
+            \cf2 //IF Parent is smaller than kid\cf0 \
+            \cf2 //Swap them\cf0 \
+            \cf3 int\cf0  temp;\
+            temp = \cf5 Heap\cf0 [index];\
+            \cf5 Heap\cf0 [index] = \cf5 Heap\cf0 [ParentIndex];\
+            \cf5 Heap\cf0 [ParentIndex] = temp;\
+            \
+            \cf6 Heapify\cf0 (ParentIndex);\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            \cf3 return\cf0 ;\
+        \}\
+    \}\
+\}\
+\
+\cf3 void\cf0  insert(\cf3 int\cf0  data)\
+\{\
+    \cf3 if\cf0 (\cf5 Top\cf0  == \cf5 size\cf0 )\
+    \{\
+        \cf7 cout\cf0 <<\cf8 "Heap is full\\n"\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf5 Heap\cf0 [\cf5 Top\cf0 ] = data;\
+        \cf2 //Since I do not wait Top value to change we put its value in some temp index\cf0 \
+        \cf3 int\cf0  index = \cf5 Top\cf0 ;\
+        \
+        \cf6 Heapify\cf0 (index);\
+        \cf5 Top\cf0 ++;\
+    \}\
+\}\
+\
+\cf3 void\cf0  display()\
+\{\
+    \cf3 if\cf0 (\cf5 Top\cf0  == \cf4 0\cf0 )\
+    \{\
+        \cf7 cout\cf0 <<\cf8 "Empty \\n"\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+        \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i<\cf5 Top\cf0 ; i++)\
+        \{\
+            \cf7 cout\cf0 <<\cf8 "|"\cf0 <<\cf5 Heap\cf0 [i]<<\cf8 "|"\cf0 ;\
+        \}\
+\}\
+\
+\cf3 int\cf0  FindingChldern(\cf3 int\cf0  ParentIndex)\
+\{\
+    \cf3 int\cf0  LeftChild = \cf4 0\cf0 ;\
+    \cf3 int\cf0  RightChild = \cf4 0\cf0 ;\
+    \
+    \cf2 //If parent index is n then\cf0 \
+    \
+    \cf2 //The left child is\cf0 \
+    \cf2 //2n+1\cf0 \
+    LeftChild = (\cf4 2\cf0 *ParentIndex)+\cf4 1\cf0 ;\
+    \
+    \cf2 //The right child is\cf0 \
+    \cf2 //2n+2\cf0 \
+    RightChild = (\cf4 2\cf0 *ParentIndex)+\cf4 2\cf0 ;\
+    \
+    \cf3 if\cf0 (\cf5 Heap\cf0 [LeftChild] > \cf5 Heap\cf0 [RightChild])\
+    \{\
+        \cf3 return\cf0  LeftChild;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf3 return\cf0  RightChild;\
+    \}\
+\}\
+\
+\cf3 void\cf0  ReverseHeapify(\cf3 int\cf0  ParentIndex)\
+\{\
+    \cf2 //Find the childern of this newly reinserted element\cf0 \
+    \cf3 int\cf0  ChildIndex;\
+    ChildIndex = \cf6 FindingChldern\cf0 (ParentIndex);\
+    \
+    \cf2 //Compare the kid with the new parent\cf0 \
+    \cf3 if\cf0 (\cf5 Heap\cf0 [ChildIndex] > \cf5 Heap\cf0 [ParentIndex])\
+    \{\
+        \cf2 //swap them\cf0 \
+        \cf3 int\cf0  temp;\
+        temp = \cf5 Heap\cf0 [ChildIndex];\
+        \cf5 Heap\cf0 [ChildIndex] = \cf5 Heap\cf0 [ParentIndex];\
+        \cf5 Heap\cf0 [ParentIndex] = temp;\
+        \
+        \cf6 ReverseHeapify\cf0 (ChildIndex);\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf3 return\cf0 ;\
+    \}\
+\}\
+\
+\cf3 void\cf0  deleteNode(\cf3 int\cf0  Position)\
+\{\
+    \cf3 if\cf0 (\cf5 Top\cf0  == \cf4 0\cf0 )\
+    \{\
+        \cf7 cout\cf0 <<\cf8 "Heap Empty \\n"\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+    \cf2 //Delete that item on that position\cf0 \
+    \cf5 Heap\cf0 [Position] = \cf4 0\cf0 ;\
+    \
+    \cf2 //Once the item on the specified position is deleted\cf0 \
+    \cf2 //We then put the item which was recently added on to that positon\cf0 \
+    \cf5 Top\cf0 --;\
+    \cf5 Heap\cf0 [Position] = \cf5 Heap\cf0 [\cf5 Top\cf0 ];\
+    \cf5 Heap\cf0 [\cf5 Top\cf0 ] = \cf4 0\cf0 ; \cf2 //Delete the item which you have removed and inserted into new position from its previosu position\cf0 \
+    \
+        \cf6 ReverseHeapify\cf0 (Position);\
+       \
+        \
+        \
+    \}\
+    \
+\}\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf5 Top\cf0  = \cf4 0\cf0 ;\
+    \cf3 int\cf0  data;\
+    \
+    \cf3 char\cf0  choice;\
+    \cf7 cout\cf0 <<\cf8 "Would you like to insert in heap (y/n) ?? \\n"\cf0 ;\
+    \cf7 cin\cf0 >>choice;\
+    \cf3 while\cf0 (choice == \cf4 'y'\cf0 )\
+    \{\
+        \cf7 cout\cf0 <<\cf8 "Enter data \\n"\cf0 ;\
+        \cf7 cin\cf0 >>data;\
+        \cf6 insert\cf0 (data);\
+        \cf7 cout\cf0 <<\cf5 Top\cf0 <<\cf9 endl\cf0 ;\
+        \cf7 cout\cf0 <<\cf8 "Would you like to insert in heap (y/n) ?? \\n"\cf0 ;\
+        \cf7 cin\cf0 >>choice;\
+    \}\
+    \
+    \
+    \
+    \cf6 display\cf0 ();\
+    \
+    \cf7 cout\cf0 <<\cf9 endl\cf0 ;\
+    \
+    \cf7 cout\cf0 <<\cf8 "Would you like to delete from heap (y/n) ?? \\n"\cf0 ;\
+    \cf7 cin\cf0 >>choice;\
+    \cf3 while\cf0 (choice == \cf4 'y'\cf0 )\
+    \{\
+        \cf7 cout\cf0 <<\cf8 "Enter Position \\n"\cf0 ;\
+        \cf7 cin\cf0 >>data;\
+        \cf6 deleteNode\cf0 (data);\
+        \cf7 cout\cf0 <<\cf5 Top\cf0 <<\cf9 endl\cf0 ;\
+        \cf6 display\cf0 ();\
+        \cf7 cout\cf0 <<\cf9 endl\cf0 ;\
+        \cf7 cout\cf0 <<\cf8 "Would you like to delete from heap (y/n) ?? \\n"\cf0 ;\
+        \cf7 cin\cf0 >>choice;\
+    \}\
+\
+    \
+    \
+    \
+\}}

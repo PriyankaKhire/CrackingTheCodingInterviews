@@ -1,0 +1,187 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red63\green110\blue116;
+\red28\green0\blue207;\red92\green38\blue153;\red196\green26\blue22;\red46\green13\blue110;\red38\green71\blue75;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 /*\
+Suffix Tree\
+ */\cf0 \
+\
+\cf3 struct\cf0  Trie\
+\{\
+    \cf3 char\cf0  alphabet;\
+    \cf3 int\cf0  WordCompleted;\
+    \cf3 int\cf0  prefix;\
+    \cf4 Trie\cf0  *edges[\cf5 26\cf0 ];\
+\};\
+\
+\cf3 struct\cf0  SuffixTree\
+\{\
+    \cf6 string\cf0  suffix;\
+    \cf4 SuffixTree\cf0  *edges[\cf5 26\cf0 ];\
+\};\
+\
+\cf4 SuffixTree\cf0  *SuffixTreeRoot = \cf3 new\cf0  \cf4 SuffixTree\cf0 ;\
+\
+\cf4 Trie\cf0  *Root = \cf3 new\cf0  \cf4 Trie\cf0 ;\
+\
+\cf4 Trie\cf0  *initialise(\cf3 char\cf0  alphabet)\
+\{\
+    \cf4 Trie\cf0  *vertex;\
+    vertex = \cf3 new\cf0  \cf4 Trie\cf0 ;\
+    vertex->\cf4 alphabet\cf0  = alphabet;\
+    vertex->\cf4 WordCompleted\cf0  = \cf5 0\cf0 ;\
+    vertex->\cf4 prefix\cf0  = \cf5 0\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf5 0\cf0 ; i <\cf5 26\cf0 ; i++)\
+    \{\
+        vertex->\cf4 edges\cf0 [i] = \cf3 NULL\cf0 ;\
+    \}\
+    \cf3 return\cf0  vertex;\
+\}\
+\
+\cf4 SuffixTree\cf0  *initialiseDuffixTree(\cf6 string\cf0  word)\
+\{\
+    \cf4 SuffixTree\cf0  *vertex;\
+    vertex = \cf3 new\cf0  \cf4 SuffixTree\cf0 ;\
+    vertex->\cf4 suffix\cf0  = word;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf5 0\cf0 ; i < \cf5 26\cf0 ; i++)\
+    \{\
+        vertex->\cf4 edges\cf0 [i] = \cf3 NULL\cf0 ;\
+    \}\
+    \cf3 return\cf0  vertex;\
+\}\
+\
+\cf3 void\cf0  addword(\cf4 Trie\cf0  *node ,\cf6 string\cf0  word)\
+\{\
+    \cf3 if\cf0 (word == \cf7 ""\cf0 )\
+    \{\
+        \cf6 cout\cf0 <<\cf7 "Completed adding the word\\n"\cf0 ;\
+        node->\cf4 WordCompleted\cf0 ++;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        node->\cf4 prefix\cf0 ++;\
+        \cf3 char\cf0  k = \cf8 tolower\cf0 (word[\cf5 0\cf0 ]);\
+        \cf6 cout\cf0 <<\cf7 "Adding "\cf0 <<k<<\cf8 endl\cf0 ;\
+        word = word.\cf8 erase\cf0 (\cf5 0\cf0 ,\cf5 1\cf0 );\
+        \cf3 int\cf0  i = \cf3 int\cf0 (k) - \cf3 int\cf0 (\cf5 'a'\cf0 );\
+        \cf3 if\cf0 (node->\cf4 edges\cf0 [i] != \cf3 NULL\cf0 )\
+        \{\
+            \cf6 cout\cf0 <<node->\cf4 alphabet\cf0 <<\cf7 " already exists\\n"\cf0 ;\
+            node = node->\cf4 edges\cf0 [i];\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            \cf6 cout\cf0 <<\cf7 "Creating node for "\cf0 <<k<<\cf8 endl\cf0 ;\
+            \cf4 Trie\cf0  *NodeK = \cf9 initialise\cf0 (k);\
+            node->\cf4 edges\cf0 [i] = NodeK;\
+            node = node->\cf4 edges\cf0 [i];\
+        \}\
+        \cf9 addword\cf0 (node, word);\
+    \}\
+\}\
+\
+\cf3 void\cf0  search(\cf4 Trie\cf0  *node, \cf6 string\cf0  word)\
+\{\
+    \cf3 if\cf0 (word == \cf7 ""\cf0 )\
+    \{\
+        \cf6 cout\cf0 <<\cf7 "The word ends at "\cf0 <<node->\cf4 alphabet\cf0 <<\cf7 " and it's prefix is "\cf0 <<node->\cf4 prefix\cf0 <<\cf7 " and the word count is "\cf0 <<node->\cf4 WordCompleted\cf0 <<\cf8 endl\cf0 ;\
+        \cf6 cout\cf0 <<\cf7 "Found the whole word\\n"\cf0 ;\
+        \cf3 return\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf3 char\cf0  k = \cf8 tolower\cf0 (word[\cf5 0\cf0 ]);\
+        \cf3 int\cf0  i = \cf3 int\cf0 (k) - \cf3 int\cf0 (\cf5 'a'\cf0 );\
+        \cf3 if\cf0 (node->\cf4 edges\cf0 [i] != \cf3 NULL\cf0 )\
+        \{\
+            \cf6 cout\cf0 <<\cf7 "For alphabet "\cf0 <<node->\cf4 alphabet\cf0 <<\cf7 " prefix is "\cf0 <<node->\cf4 prefix\cf0 <<\cf7 " and the word count is "\cf0 <<node->\cf4 WordCompleted\cf0 <<\cf8 endl\cf0 ;\
+            word = word.\cf8 erase\cf0 (\cf5 0\cf0 ,\cf5 1\cf0 );\
+            node = node->\cf4 edges\cf0 [i];\
+            \cf9 search\cf0 (node, word);\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            \cf6 cout\cf0 <<\cf7 "Not Found \\n"\cf0 ;\
+            \cf3 return\cf0 ;\
+        \}\
+    \}\
+\}\
+\
+\
+\
+\cf3 void\cf0  IntermediateSuffixTree(\cf6 string\cf0  word)\
+\{\
+    \cf3 if\cf0 (word != \cf7 ""\cf0 )\
+    \{\
+        \cf9 addword\cf0 (\cf4 Root\cf0 , word);\
+        word = word.\cf8 erase\cf0 (\cf5 0\cf0 ,\cf5 1\cf0 );\
+        \cf9 IntermediateSuffixTree\cf0 (word);\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf3 return\cf0 ;\
+    \}\
+\}\
+\
+\cf3 int\cf0  j = \cf5 0\cf0 ;\
+\cf3 char\cf0  s[\cf5 26\cf0 ];\
+\cf3 void\cf0  SuffixTreeConstruction(\cf4 Trie\cf0  *Node)\
+\{\
+    \cf3 if\cf0 (Node != \cf3 NULL\cf0 )\
+    \{\
+        \cf4 Trie\cf0  *ptr = Node;\
+        \cf3 int\cf0  i = \cf5 0\cf0 ;\
+        \cf3 while\cf0 (ptr->\cf4 edges\cf0 [i] == \cf3 NULL\cf0  && i < \cf5 26\cf0 )\
+        \{\
+            i = i+\cf5 1\cf0 ;\
+        \}\
+        ptr = ptr->\cf4 edges\cf0 [i];\
+        \cf6 cout\cf0 <<\cf7 "Adding "\cf0 <<ptr->\cf4 alphabet\cf0 <<\cf7 " to suffix tree\\n prefix = "\cf0 <<ptr->\cf4 prefix\cf0 <<\cf7 " word count = "\cf0 <<ptr->\cf4 WordCompleted\cf0 <<\cf8 endl\cf0 ;\
+        \cf3 if\cf0 (ptr->\cf4 WordCompleted\cf0  > \cf5 0\cf0 )\
+        \{\
+            \cf4 s\cf0 [\cf4 j\cf0 ] = ptr->\cf4 alphabet\cf0 ;\
+            \cf6 string\cf0  str(\cf4 s\cf0 );\
+            \cf4 SuffixTree\cf0  *Node = \cf9 initialiseDuffixTree\cf0 (str);\
+            \cf6 cout\cf0 <<\cf7 "suffix = "\cf0 <<Node->\cf4 suffix\cf0 <<\cf8 endl\cf0 ;\
+            \cf4 j\cf0  = \cf5 0\cf0 ;\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            \cf4 s\cf0 [\cf4 j\cf0 ] = ptr->\cf4 alphabet\cf0 ;\
+            \cf4 j\cf0 ++;\
+        \}\
+        \cf9 SuffixTreeConstruction\cf0 (ptr);\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf3 return\cf0 ;\
+    \}\
+\}\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf2 //Initialise the root\cf0 \
+    \cf4 Root\cf0 ->\cf4 alphabet\cf0  = \cf5 ' '\cf0 ;\
+    \cf4 Root\cf0 ->\cf4 WordCompleted\cf0  = \cf3 false\cf0 ;\
+    \cf4 Root\cf0 ->\cf4 prefix\cf0  = \cf3 false\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf5 0\cf0 ; i <\cf5 26\cf0 ; i++)\
+    \{\
+        \cf4 Root\cf0 ->\cf4 edges\cf0 [i] = \cf3 NULL\cf0 ;\
+    \}\
+    \
+    \cf4 SuffixTreeRoot\cf0 ->\cf4 suffix\cf0  = \cf7 ""\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf5 0\cf0 ; i <\cf5 26\cf0 ; i++)\
+    \{\
+        \cf4 SuffixTreeRoot\cf0 ->\cf4 edges\cf0 [i] = \cf3 NULL\cf0 ;\
+    \}\
+    \
+    \cf9 IntermediateSuffixTree\cf0 (\cf7 "mississippi"\cf0 );\
+    \cf9 search\cf0 (\cf4 Root\cf0 , \cf7 "an"\cf0 );\
+    \cf9 SuffixTreeConstruction\cf0 (\cf4 Root\cf0 );\
+    \
+\}}

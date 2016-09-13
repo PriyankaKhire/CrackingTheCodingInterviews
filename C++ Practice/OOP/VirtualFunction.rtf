@@ -1,0 +1,171 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red170\green13\blue145;\red92\green38\blue153;\red46\green13\blue110;
+\red196\green26\blue22;\red63\green110\blue116;\red0\green116\blue0;\red38\green71\blue75;\red28\green0\blue207;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 class\cf0  Base\{\
+    \
+\cf2 public\cf0 :\
+     \cf2 void\cf0  function()\
+    \{\
+        \cf3 cout\cf0 <<\cf4 endl\cf0 <<\cf5 "Hi there I am a function from BASE class"\cf0 <<\cf4 endl\cf0 ;\
+    \}\
+\};\
+\
+\cf2 class\cf0  Derived: \cf2 public\cf0  \cf6 Base\cf0 \
+\{\
+    \
+\cf2 public\cf0 :\
+    \cf2 void\cf0  function()\
+    \{\
+        \cf3 cout\cf0 <<\cf4 endl\cf0 <<\cf5 "Hi there I am a function of DERIVED class"\cf0 <<\cf4 endl\cf0 ;\
+    \}\
+\};\
+\
+\cf2 void\cf0  SomeRandomFunction(\cf6 Base\cf0  *object) \cf7 //Note the *object\cf0 \
+\{\
+    object->\cf8 function\cf0 ();\
+\}\
+\
+\cf2 class\cf0  ClassWithVirtualFunction\{\
+    \
+\cf2 public\cf0 :\
+    \cf2 virtual\cf0  \cf2 void\cf0  function()\
+    \{\
+        \cf3 cout\cf0 <<\cf4 endl\cf0 <<\cf5 "Hi there I am VIRTUAL function of Class ClassWithVirtualFunction"\cf0 <<\cf4 endl\cf0 ;\
+    \}\
+\};\
+\
+\cf2 class\cf0  DerivedClassOfVirtualFunctionClass: \cf2 public\cf0  \cf6 ClassWithVirtualFunction\cf0 \
+\{\
+    \
+\cf2 public\cf0 :\
+    \cf2 void\cf0  function()\
+    \{\
+        \cf3 cout\cf0 <<\cf4 endl\cf0 <<\cf5 "Hi I am DERIVED class of the class with virtual function"\cf0 <<\cf4 endl\cf0 ;\
+    \}\
+\};\
+\
+\cf2 void\cf0  AnotherRandomFunction(\cf6 ClassWithVirtualFunction\cf0  *object) \cf7 //Notice the *object\cf0 \
+\{\
+    object->\cf8 function\cf0 ();\
+\}\
+\
+\cf2 int\cf0  main(\cf2 int\cf0  argc, \cf2 const\cf0  \cf2 char\cf0  * argv[])\
+\{\
+    \cf7 //Pointer Objects\cf0 \
+    \cf6 Base\cf0  *objBase;\
+    \cf6 Derived\cf0  *objDerived;\
+    \
+    objBase->\cf8 function\cf0 ();\
+    objDerived->\cf8 function\cf0 ();\
+    \
+    \cf8 SomeRandomFunction\cf0 (objBase);\
+    \cf8 SomeRandomFunction\cf0 (objDerived); \cf7 //Gives output --> Hi there I am a function from BASE class\cf0 \
+    \
+    \
+    \cf6 ClassWithVirtualFunction\cf0  *obj;\
+    \cf6 DerivedClassOfVirtualFunctionClass\cf0  *object;\
+    obj->\cf8 function\cf0 ();\
+    object->\cf8 function\cf0 ();\
+    \
+    \cf8 AnotherRandomFunction\cf0 (obj);\
+    \cf8 AnotherRandomFunction\cf0 (object);\
+\}\
+\
+******************************************************************************\
+******************************************************************************\
+\
+\cf7 //Inheritance\cf0 \
+\
+\cf2 class\cf0  Base\
+\{\
+    \
+\cf2 private\cf0 :\
+    \cf7 //Think of these as global members of the class\cf0 \
+    \cf2 int\cf0  PrivateMember1;\
+    \cf2 int\cf0  PrivateMember2;\
+    \
+\cf2 public\cf0 :\
+    \cf2 void\cf0  function()\
+    \{\
+        \cf6 PrivateMember1\cf0  = \cf9 10\cf0 ;\
+        \cf6 PrivateMember2\cf0  = \cf9 20\cf0 ;\
+        \cf3 cout\cf0 <<\cf5 "Function of BASE class "\cf0 <<\cf6 PrivateMember1\cf0 <<\cf5 " "\cf0 <<\cf6 PrivateMember1\cf0 <<\cf4 endl\cf0 ;\
+    \}\
+    \cf2 void\cf0  anotherFunction()\
+    \{\
+        \cf3 cout\cf0 <<\cf5 "Another function of BASE class\\n"\cf0 ;\
+    \}\
+    \cf2 void\cf0  YetAnotherFunction()\
+    \{\
+        \cf3 cout\cf0 <<\cf5 "Yet another function of BASE class\\n"\cf0 ;\
+    \}\
+    \cf2 virtual\cf0  \cf2 void\cf0  function2()\
+    \{\
+        \cf3 cout\cf0 <<\cf5 "Virtual function of BASE class\\n"\cf0 ;\
+    \}\
+\};\
+\
+\cf2 class\cf0  Derived : \cf2 public\cf0  \cf6 Base\cf0 \
+\{\
+\cf2 private\cf0 :\
+    \cf2 char\cf0  PrivateMember1;\
+    \cf2 char\cf0  PrivateMember2;\
+    \
+\cf2 public\cf0 :\
+    \cf2 void\cf0  function()\
+    \{\
+        \cf6 PrivateMember1\cf0  = \cf9 'a'\cf0 ;\
+        \cf6 PrivateMember2\cf0  = \cf9 'b'\cf0 ;\
+        \cf3 cout\cf0 <<\cf5 "Function of DERIVED class "\cf0 <<\cf6 PrivateMember1\cf0 <<\cf5 " "\cf0 <<\cf6 PrivateMember2\cf0 <<\cf4 endl\cf0 ;\
+    \}\
+    \cf2 void\cf0  function2()\
+    \{\
+        \cf3 cout\cf0 <<\cf5 "Normal function of DERIVED class\\n"\cf0 ;\
+    \}\
+    \cf2 void\cf0  function3()\
+    \{\
+        \cf3 cout\cf0 <<\cf5 "Some function of DERIVED class\\n"\cf0 ;\
+    \}\
+\};\
+\
+\cf2 int\cf0  main()\
+\{\
+    \cf3 cout\cf0 <<\cf5 "Base class Functions\\n"\cf0 ;\
+    \cf6 Base\cf0  BASEobj;\
+    BASEobj.\cf8 function\cf0 ();\
+    BASEobj.\cf8 anotherFunction\cf0 ();\
+    BASEobj.\cf8 YetAnotherFunction\cf0 ();\
+    BASEobj.\cf8 function2\cf0 ();\
+    \
+    \
+    \cf3 cout\cf0 <<\cf5 "\\nDerived class functions\\n"\cf0 ;\
+    \cf6 Derived\cf0  DERIVEDobj;\
+    DERIVEDobj.\cf8 function\cf0 ();\
+    DERIVEDobj.\cf8 function2\cf0 ();\
+    DERIVEDobj.\cf8 function3\cf0 ();\
+    \cf3 cout\cf0 <<\cf5 "\\nDerived class Base class functions\\n"\cf0 ;\
+    DERIVEDobj.\cf6 Base\cf0 ::\cf8 function\cf0 ();\
+    DERIVEDobj.\cf6 Base\cf0 ::\cf8 anotherFunction\cf0 ();\
+    DERIVEDobj.\cf6 Base\cf0 ::\cf8 YetAnotherFunction\cf0 ();\
+    DERIVEDobj.\cf6 Base\cf0 ::\cf8 function2\cf0 ();\
+    \
+    \cf3 cout\cf0 <<\cf5 "\\nBASE class pointer pointing to BASE object\\n"\cf0 ;\
+    \cf6 Base\cf0  *PtrBASEobj2BASE = &BASEobj;\
+    PtrBASEobj2BASE->\cf8 function\cf0 ();\
+    PtrBASEobj2BASE->\cf8 anotherFunction\cf0 ();\
+    PtrBASEobj2BASE->\cf8 YetAnotherFunction\cf0 ();\
+    PtrBASEobj2BASE->\cf8 function2\cf0 ();\
+    \
+    \cf3 cout\cf0 <<\cf5 "\\nBASE class pointer pointing to DERIVED object\\n"\cf0 ;\
+    \cf6 Base\cf0  *PtrBASEobj2DERIVED = &DERIVEDobj;\
+    PtrBASEobj2DERIVED->\cf8 function\cf0 ();\
+    PtrBASEobj2DERIVED->\cf8 anotherFunction\cf0 ();\
+    PtrBASEobj2DERIVED->\cf8 YetAnotherFunction\cf0 ();\
+    PtrBASEobj2DERIVED->\cf8 function2\cf0 ();\
+\}}

@@ -1,0 +1,149 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red170\green13\blue145;\red28\green0\blue207;\red63\green110\blue116;
+\red92\green38\blue153;\red196\green26\blue22;\red46\green13\blue110;\red0\green116\blue0;\red38\green71\blue75;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf0 \CocoaLigature0 \
+\cf2 const\cf0  \cf2 static\cf0  \cf2 int\cf0  size = \cf3 10\cf0 ;\
+\
+\cf2 struct\cf0  LinkedList\
+\{\
+    \cf2 int\cf0  data;\
+    \cf4 LinkedList\cf0  *link;\
+\};\
+\
+\cf2 void\cf0  PrintLinkedList(\cf4 LinkedList\cf0  *Head)\
+\{\
+    \cf4 LinkedList\cf0  *ptr = Head;\
+    \cf2 while\cf0 (ptr != \cf2 NULL\cf0 )\
+    \{\
+        \cf5 cout\cf0 <<ptr->\cf4 data\cf0 <<\cf6 " "\cf0 ;\
+        ptr= ptr->\cf4 link\cf0 ;\
+    \}\
+    \cf5 cout\cf0 <<\cf7 endl\cf0 ;\
+\}\
+\
+\cf4 LinkedList\cf0  *partition(\cf4 LinkedList\cf0  *Head)\
+\{\
+    \cf2 if\cf0 (Head != \cf2 NULL\cf0  && Head->\cf4 link\cf0  != \cf2 NULL\cf0 )\
+    \{\
+        \cf4 LinkedList\cf0  *Pivot = Head;\
+        Head = Head->\cf4 link\cf0 ;\
+        Pivot->\cf4 link\cf0  = \cf2 NULL\cf0 ;\
+        \cf4 LinkedList\cf0  *ptr = Head, *prev = Head;\
+        \
+        \cf2 while\cf0 (ptr != \cf2 NULL\cf0 )\
+        \{\
+            \cf2 if\cf0 (ptr->\cf4 data\cf0  < Pivot->\cf4 data\cf0 )\
+            \{\
+                \cf2 if\cf0 (ptr == Head)\
+                \{\
+                    \cf8 //Do nothing\cf0 \
+                    \cf5 cout\cf0 <<\cf6 "Ptr is head\\n"\cf0 ;\
+                    prev = ptr;\
+                    ptr = ptr->\cf4 link\cf0 ;\
+                \}\
+                \cf2 else\cf0 \
+                \{\
+                    \cf2 if\cf0 (ptr->\cf4 link\cf0  == \cf2 NULL\cf0 )\
+                    \{\
+                        \cf5 cout\cf0 <<\cf6 "Ptr is last node\\n"\cf0 ;\
+                        prev->\cf4 link\cf0  = \cf2 NULL\cf0 ;\
+                        ptr->\cf4 link\cf0  = Head;\
+                        Head = ptr;\
+                        ptr = \cf2 NULL\cf0 ;\
+                    \}\
+                    \cf2 else\cf0 \
+                    \{\
+                        \cf5 cout\cf0 <<\cf6 "ptr is "\cf0 <<ptr->\cf4 data\cf0 <<\cf6 " prev is "\cf0 <<prev->\cf4 data\cf0 <<\cf7 endl\cf0 ;\
+                        prev->\cf4 link\cf0  = ptr->\cf4 link\cf0 ;\
+                        ptr->\cf4 link\cf0  = Head;\
+                        Head = ptr;\
+                        ptr = prev->\cf4 link\cf0 ;\
+                    \}\
+                \}\
+            \}\
+        \}\
+        \cf9 PrintLinkedList\cf0 (Head);\
+        \cf8 //finally place pivot in its final position\cf0 \
+        ptr = Head;\
+        prev = Head;\
+        \cf2 while\cf0  (ptr->\cf4 link\cf0  != \cf2 NULL\cf0 )\
+        \{\
+            \cf2 if\cf0 (ptr->\cf4 data\cf0  > Pivot->\cf4 data\cf0 )\
+            \{\
+                \cf2 if\cf0 (ptr == Head)\
+                \{\
+                    Pivot->\cf4 link\cf0  = Head;\
+                    Head = Pivot;\
+                    prev = \cf2 NULL\cf0 ;\
+                    ptr = \cf2 NULL\cf0 ;\
+                    \cf2 break\cf0 ;\
+                \}\
+                \cf2 else\cf0 \
+                \{\
+                    prev->\cf4 link\cf0  = Pivot;\
+                    Pivot->\cf4 link\cf0  = ptr;\
+                    prev = \cf2 NULL\cf0 ;\
+                    ptr = \cf2 NULL\cf0 ;\
+                    \cf2 break\cf0 ;\
+                \}\
+            \}\
+            \cf2 else\cf0 \
+            \{\
+                prev = ptr;\
+                ptr = ptr->\cf4 link\cf0 ;\
+            \}\
+        \}\
+        \
+        \cf2 if\cf0 (prev != \cf2 NULL\cf0  && ptr != \cf2 NULL\cf0 )\
+        \{\
+            \cf2 if\cf0 (ptr->\cf4 data\cf0  < Pivot->\cf4 data\cf0 )\
+            \{\
+                ptr->\cf4 link\cf0  = Pivot;\
+            \}\
+            \cf2 else\cf0 \
+            \{\
+                prev->\cf4 link\cf0  = Pivot;\
+                Pivot->\cf4 link\cf0  = ptr;\
+            \}\
+        \}\
+        \cf2 return\cf0  Pivot;\
+    \}\
+    \cf2 else\cf0 \
+    \{\
+        \cf2 return\cf0  Head;\
+    \}\
+\}\
+\
+\cf2 void\cf0  quicksort(\cf4 LinkedList\cf0  *head)\
+\{\
+    \cf4 LinkedList\cf0  * partitionIndex = \cf9 partition\cf0 (head);\
+    \cf9 quicksort\cf0 (partitionIndex);\
+    \cf9 quicksort\cf0 (head);\
+\}\
+\
+\cf2 int\cf0  main()\
+\{\
+    \cf2 int\cf0  a[\cf4 size\cf0 ] = \{\cf3 10\cf0 ,\cf3 9\cf0 ,\cf3 8\cf0 ,\cf3 7\cf0 ,\cf3 6\cf0 ,\cf3 5\cf0 ,\cf3 4\cf0 ,\cf3 3\cf0 ,\cf3 2\cf0 ,\cf3 1\cf0 \};\
+    \cf2 int\cf0  i = \cf4 size\cf0 -\cf3 2\cf0 ;\
+    \
+    \cf4 LinkedList\cf0  *Root = \cf2 new\cf0  \cf4 LinkedList\cf0 ;\
+    Root->\cf4 data\cf0  = a[\cf4 size\cf0 -\cf3 1\cf0 ];\
+    Root->\cf4 link\cf0  = \cf2 NULL\cf0 ;\
+    \
+    \cf2 while\cf0 (i >= \cf3 0\cf0 )\
+    \{\
+        \cf4 LinkedList\cf0  *NewNode = \cf2 new\cf0  \cf4 LinkedList\cf0 ;\
+        NewNode->\cf4 data\cf0  = a[i];\
+        NewNode->\cf4 link\cf0  = Root;\
+        Root = NewNode;\
+        i--;\
+    \}\
+    \cf9 partition\cf0 (Root);\
+    \
+\}}

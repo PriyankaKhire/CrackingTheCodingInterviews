@@ -1,0 +1,459 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red63\green110\blue116;
+\red28\green0\blue207;\red92\green38\blue153;\red196\green26\blue22;\red46\green13\blue110;\red38\green71\blue75;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 /*\
+All Linked list operations\
+*/\cf0 \
+\
+\cf3 struct\cf0  LinkedList\
+\{\
+    \cf3 int\cf0  data;\
+    \cf4 LinkedList\cf0  *link;\
+\};\
+\
+\cf4 LinkedList\cf0  *RootNode = \cf3 new\cf0  \cf4 LinkedList\cf0 ;\
+\cf4 LinkedList\cf0  *R1 = \cf3 new\cf0  \cf4 LinkedList\cf0 ;\
+\
+\cf3 void\cf0  nthNodeFromLast(\cf3 int\cf0  n)\
+\{\
+    \cf3 int\cf0  m = n;\
+    \cf4 LinkedList\cf0  *Rabbit, *Tortoise;\
+    Rabbit = \cf4 RootNode\cf0 ;\
+    Tortoise = \cf4 RootNode\cf0 ;\
+     \cf3 while\cf0 (Rabbit != \cf3 NULL\cf0 )\
+     \{\
+         \cf3 if\cf0 (n > \cf5 0\cf0 )\
+         \{\
+             n--;\
+             Rabbit = Rabbit->\cf4 link\cf0 ;\
+         \}\
+         \cf3 else\cf0 \
+             \cf3 if\cf0 (n == \cf5 0\cf0 )\
+         \{\
+             Rabbit = Rabbit->\cf4 link\cf0 ;\
+             Tortoise = Tortoise->\cf4 link\cf0 ;\
+         \}\
+     \}\
+    \cf3 if\cf0 (Tortoise == \cf4 RootNode\cf0  && n != \cf5 0\cf0 )\
+    \{\
+        \cf6 cout\cf0 <<\cf7 "\\n"\cf0 <<m<<\cf7 " is non existant"\cf0 ;\
+        \cf3 return\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf6 cout\cf0 <<\cf7 "\\n"\cf0 <<m<<\cf7 "th node from last is "\cf0 <<Tortoise->\cf4 data\cf0 <<\cf8 endl\cf0 ;\
+    \}\
+\}\
+\
+\cf3 void\cf0  RabbitTortoiseLoopDetection()\
+\{\
+    \cf4 LinkedList\cf0  *Rabbit, *Tortoise;\
+    Rabbit = \cf4 R1\cf0 ;\
+    Tortoise = \cf4 R1\cf0 ;\
+    \cf3 while\cf0 (Rabbit->\cf4 link\cf0  != \cf3 NULL\cf0 )\
+    \{\
+        \cf3 if\cf0 (Rabbit == Tortoise)\
+        \{\
+            \cf6 cout\cf0 <<\cf7 "\\nThere is a loop\\n"\cf0 ;\
+            \cf3 return\cf0 ;\
+        \}\
+        Rabbit = Rabbit->\cf4 link\cf0 ;\
+        \cf3 if\cf0 (Rabbit->\cf4 link\cf0  != \cf3 NULL\cf0 )\
+        \{\
+            Tortoise = Tortoise->\cf4 link\cf0 ;\
+            Rabbit = Rabbit->\cf4 link\cf0 ;\
+        \}\
+    \}\
+\}\
+\
+\cf3 void\cf0  TwiceRabbitTortoise()\
+\{\
+    \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 data\cf0  == -\cf5 1\cf0  && \cf4 RootNode\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf6 cout\cf0 <<\cf7 "Empty\\n"\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf4 LinkedList\cf0  *Rabbit, *Tortoise;\
+        Rabbit = \cf4 RootNode\cf0 ;\
+        Tortoise = \cf4 RootNode\cf0 ;\
+        \cf3 while\cf0 (Rabbit->\cf4 link\cf0  != \cf3 NULL\cf0 )\
+        \{\
+            Rabbit = Rabbit->\cf4 link\cf0 ;\
+            \cf3 if\cf0 (Rabbit->\cf4 link\cf0  != \cf3 NULL\cf0 )\
+            \{\
+                Tortoise = Tortoise->\cf4 link\cf0 ;\
+                Rabbit = Rabbit->\cf4 link\cf0 ;\
+            \}\
+        \}\
+        \cf6 cout\cf0 <<\cf7 "Rabbit "\cf0 <<Rabbit->\cf4 data\cf0 <<\cf8 endl\cf0 ;\
+        \cf6 cout\cf0 <<\cf7 "Tortoise "\cf0 <<Tortoise->\cf4 data\cf0 <<\cf8 endl\cf0 ;\
+\
+    \}\
+\}\
+\
+\cf3 void\cf0  reverse()\
+\{\
+    \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 data\cf0  != -\cf5 1\cf0  && \cf4 RootNode\cf0 ->\cf4 link\cf0  != \cf3 NULL\cf0 )\
+    \{\
+        \cf4 LinkedList\cf0  *prev, *curr, *head;\
+        \
+        \cf2 //If only 2 nodes in linked list\cf0 \
+        \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 link\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+        \{\
+            head = \cf4 RootNode\cf0 ->\cf4 link\cf0 ;\
+            head->\cf4 link\cf0  = \cf4 RootNode\cf0 ;\
+            \cf4 RootNode\cf0 ->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+            \cf4 RootNode\cf0  = head;\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            prev = \cf4 RootNode\cf0 ;\
+            curr = \cf4 RootNode\cf0 ->\cf4 link\cf0 ;\
+            head = \cf4 RootNode\cf0 ->\cf4 link\cf0 ;\
+            prev->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+            \
+            \cf3 while\cf0  (head->\cf4 link\cf0  != \cf3 NULL\cf0  )\
+            \{\
+                head = head->\cf4 link\cf0 ;\
+                curr->\cf4 link\cf0  = prev;\
+                prev = curr;\
+                curr = head;\
+            \}\
+            curr->\cf4 link\cf0  = prev;\
+            \cf4 RootNode\cf0  = head;\
+        \}\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf3 return\cf0 ;\
+    \}\
+\}\
+\
+\
+\cf3 void\cf0  deleteGivenNode(\cf3 int\cf0  data)\
+\{\
+    \cf2 //Check Empty\cf0 \
+    \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 data\cf0  == -\cf5 1\cf0  && \cf4 RootNode\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf6 cout\cf0 <<\cf7 "Empty\\n"\cf0 ;\
+    \}\
+    \cf2 //Check root = last node\cf0 \
+    \cf3 else\cf0 \
+        \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0  && \cf4 RootNode\cf0 ->\cf4 data\cf0  == data)\
+        \{\
+            \cf4 RootNode\cf0 ->\cf4 data\cf0  = -\cf5 1\cf0 ;\
+            \cf6 cout\cf0 <<\cf7 "Deleted Last node\\n"\cf0 ;\
+        \}\
+    \cf3 else\cf0 \
+        \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 data\cf0  == data && \cf4 RootNode\cf0 ->\cf4 link\cf0  != \cf3 NULL\cf0 )\
+        \{\
+            \cf4 LinkedList\cf0  *ptr;\
+            ptr = \cf4 RootNode\cf0 ;\
+            \cf4 RootNode\cf0  = \cf4 RootNode\cf0 ->\cf4 link\cf0 ;\
+            \cf3 delete\cf0  ptr;\
+        \}\
+        \cf3 else\cf0 \
+        \{\
+            \cf4 LinkedList\cf0  *ptr, *prevptr;\
+            prevptr = ptr;\
+            ptr = \cf4 RootNode\cf0 ;\
+            \cf3 while\cf0  (ptr != \cf3 NULL\cf0 )\
+            \{\
+                \cf3 if\cf0 (ptr->\cf4 data\cf0  == data)\
+                \{\
+                    \cf6 cout\cf0 <<\cf7 "\\nNode found "\cf0 ;\
+                    \cf3 break\cf0 ;\
+                \}\
+                \cf3 else\cf0 \
+                \{\
+                    prevptr = ptr;\
+                    ptr = ptr->\cf4 link\cf0 ;\
+                \}\
+            \}\
+            \cf3 if\cf0 (ptr == \cf3 NULL\cf0 )\
+            \{\
+                \cf6 cout\cf0 <<\cf7 "\\nNode not found"\cf0 ;\
+                \cf3 return\cf0 ;\
+            \}\
+            \cf3 else\cf0 \
+            \{\
+                \cf3 if\cf0 (ptr->\cf4 link\cf0  != \cf3 NULL\cf0 )\
+                \{\
+                    prevptr->\cf4 link\cf0  = ptr->\cf4 link\cf0 ;\
+                    \cf3 delete\cf0  ptr;\
+                \}\
+                \cf3 else\cf0 \
+                \{\
+                    prevptr->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+                    \cf3 delete\cf0  ptr;\
+                \}\
+            \}\
+        \}\
+\}\
+\
+\cf3 void\cf0  deleteBottom()\
+\{\
+    \cf2 //Check Empty\cf0 \
+    \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 data\cf0  == -\cf5 1\cf0  && \cf4 RootNode\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf6 cout\cf0 <<\cf7 "Empty\\n"\cf0 ;\
+    \}\
+    \cf2 //Check root = last node\cf0 \
+    \cf3 else\cf0 \
+        \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+        \{\
+            \cf4 RootNode\cf0 ->\cf4 data\cf0  = -\cf5 1\cf0 ;\
+            \cf6 cout\cf0 <<\cf7 "Deleted Last node\\n"\cf0 ;\
+        \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf4 LinkedList\cf0  *ptr, *prevptr;\
+        prevptr = ptr;\
+        ptr = \cf4 RootNode\cf0 ;\
+         \cf3 while\cf0 (ptr->\cf4 link\cf0  != \cf3 NULL\cf0 )\
+         \{\
+             prevptr = ptr;\
+             ptr = ptr->\cf4 link\cf0 ;\
+         \}\
+        prevptr->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+        \cf3 delete\cf0  ptr;\
+    \}\
+\}\
+\
+\cf3 void\cf0  deleteTop()\
+\{\
+    \cf2 //Check Empty\cf0 \
+    \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 data\cf0  == -\cf5 1\cf0  && \cf4 RootNode\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf6 cout\cf0 <<\cf7 "Empty\\n"\cf0 ;\
+    \}\
+    \cf2 //Check root = last node\cf0 \
+    \cf3 else\cf0 \
+        \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+        \{\
+            \cf4 RootNode\cf0 ->\cf4 data\cf0  = -\cf5 1\cf0 ;\
+            \cf6 cout\cf0 <<\cf7 "Deleted Last node\\n"\cf0 ;\
+        \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf4 LinkedList\cf0  *ptr;\
+        ptr = \cf4 RootNode\cf0 ;\
+        \cf4 RootNode\cf0  = \cf4 RootNode\cf0 ->\cf4 link\cf0 ;\
+        \cf3 delete\cf0  ptr;\
+    \}\
+\}\
+\
+\cf3 void\cf0  insertBottom(\cf3 int\cf0  data)\
+\{\
+    \cf2 //Check Root\cf0 \
+    \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 data\cf0  == -\cf5 1\cf0  && \cf4 RootNode\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf4 RootNode\cf0 ->\cf4 data\cf0  = data;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf4 LinkedList\cf0  *NewNode;\
+        NewNode = \cf3 new\cf0  \cf4 LinkedList\cf0 ;\
+        NewNode->\cf4 data\cf0  = data;\
+        NewNode->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+        \
+        \cf4 LinkedList\cf0  *ptr;\
+        ptr = \cf4 RootNode\cf0 ;\
+        \
+        \cf3 while\cf0 (ptr->\cf4 link\cf0  != \cf3 NULL\cf0 )\
+        \{\
+            ptr = ptr->\cf4 link\cf0 ;\
+        \}\
+        ptr->\cf4 link\cf0  = NewNode;\
+    \}\
+\}\
+\cf3 void\cf0  insertTop(\cf3 int\cf0  data)\
+\{\
+    \cf2 //Check Root\cf0 \
+    \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 data\cf0  == -\cf5 1\cf0  && \cf4 RootNode\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf4 RootNode\cf0 ->\cf4 data\cf0  = data;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf4 LinkedList\cf0  *NewNode;\
+        NewNode = \cf3 new\cf0  \cf4 LinkedList\cf0 ;\
+        NewNode->\cf4 data\cf0  = data;\
+        NewNode->\cf4 link\cf0  = \cf4 RootNode\cf0 ;\
+        \cf4 RootNode\cf0  = NewNode;\
+    \}\
+\}\
+\
+\cf3 void\cf0  display()\
+\{\
+    \cf2 //Check Root\cf0 \
+    \cf3 if\cf0 (\cf4 RootNode\cf0 ->\cf4 data\cf0  == -\cf5 1\cf0  && \cf4 RootNode\cf0 ->\cf4 link\cf0  == \cf3 NULL\cf0 )\
+    \{\
+        \cf6 cout\cf0 <<\cf7 "\\nLinked List is empty"\cf0 ;\
+        \cf3 return\cf0 ;\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf4 LinkedList\cf0  *ptr;\
+        ptr = \cf4 RootNode\cf0 ;\
+        \cf6 cout\cf0 <<\cf7 "\\nDisplay 1 "\cf0 ;\
+        \cf3 while\cf0 (ptr != \cf3 NULL\cf0 )\
+        \{\
+            \cf6 cout\cf0 <<\cf7 "| "\cf0 <<ptr->\cf4 data\cf0 <<\cf7 " |->"\cf0 ;\
+            ptr = ptr->\cf4 link\cf0 ;\
+        \}\
+        \cf6 cout\cf0 <<\cf7 "\\nDisplay 2 "\cf0 ;\
+        ptr = \cf4 RootNode\cf0 ;\
+        \cf3 while\cf0 (ptr->\cf4 link\cf0  != \cf3 NULL\cf0 )\
+        \{\
+            \cf6 cout\cf0 <<\cf7 "| "\cf0 <<ptr->\cf4 data\cf0 <<\cf7 " |->"\cf0 ;\
+            ptr = ptr->\cf4 link\cf0 ;\
+        \}\
+        \
+    \}\
+\}\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf4 RootNode\cf0 ->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+    \cf4 RootNode\cf0 ->\cf4 data\cf0  = -\cf5 1\cf0 ;\
+    \
+    \cf2 //Create Linked List\cf0 \
+    \cf3 char\cf0  ch;\
+    \cf6 cout\cf0 <<\cf7 "\\nWould you like to create linked List y/n "\cf0 ;\
+    \cf6 cin\cf0 >>ch;\
+    \cf3 while\cf0 (ch == \cf5 'y'\cf0  || ch == \cf5 'Y'\cf0 )\
+    \{\
+        \cf3 int\cf0  data;\
+        \cf6 cout\cf0 <<\cf7 "\\nEnter data item from top "\cf0 ;\
+        \cf6 cin\cf0 >>data;\
+        \cf2 //Insert from top\cf0 \
+        \cf9 insertTop\cf0 (data);\
+        \cf2 //Display\cf0 \
+        \cf9 display\cf0 ();\
+        \
+        \cf6 cout\cf0 <<\cf7 "\\nEnter data item from bottom "\cf0 ;\
+        \cf6 cin\cf0 >>data;\
+        \cf2 //Insert from Bottom\cf0 \
+        \cf9 insertBottom\cf0 (data);\
+        \cf2 //Display\cf0 \
+        \cf9 display\cf0 ();\
+        \cf6 cout\cf0 <<\cf7 "\\nWould you like to create linked List y/n "\cf0 ;\
+        \cf6 cin\cf0 >>ch;\
+    \}\
+    \
+    \cf2 //Delete Node\cf0 \
+    \cf6 cout\cf0 <<\cf7 "\\nWould you like to delete linked List node y/n "\cf0 ;\
+    \cf6 cin\cf0 >>ch;\
+    \cf3 while\cf0 (ch == \cf5 'y'\cf0  || ch == \cf5 'Y'\cf0 )\
+    \{\
+        \cf3 char\cf0  cch;\
+        \cf6 cout\cf0 <<\cf7 "\\nDelete top node y/n "\cf0 ;\
+        \cf6 cin\cf0 >>cch;\
+        \cf3 if\cf0 (cch == \cf5 'y'\cf0  || cch == \cf5 'Y'\cf0 )\
+        \{\
+            \cf2 //Delete from top\cf0 \
+            \cf9 deleteTop\cf0 ();\
+            \cf9 display\cf0 ();\
+        \}\
+        \
+        \cf6 cout\cf0 <<\cf7 "\\nDelete bottom node y/n "\cf0 ;\
+        \cf6 cin\cf0 >>cch;\
+        \cf3 if\cf0 (cch == \cf5 'y'\cf0  || cch == \cf5 'Y'\cf0 )\
+        \{\
+            \cf2 //Delete from bottom\cf0 \
+            \cf9 deleteBottom\cf0 ();\
+            \cf9 display\cf0 ();\
+        \}\
+        \
+        \cf6 cout\cf0 <<\cf7 "\\nDelete given node y/n "\cf0 ;\
+        \cf6 cin\cf0 >>cch;\
+        \cf3 if\cf0 (cch == \cf5 'y'\cf0  || cch == \cf5 'Y'\cf0 )\
+        \{\
+            \cf6 cout\cf0 <<\cf7 "Enter data to be deleted "\cf0 ;\
+            \cf3 int\cf0  data;\
+            \cf6 cin\cf0 >>data;\
+            \cf9 deleteGivenNode\cf0 (data);\
+            \cf9 display\cf0 ();\
+        \}\
+        \cf6 cout\cf0 <<\cf7 "\\nWould you like to delete linked List node y/n "\cf0 ;\
+        \cf6 cin\cf0 >>ch;\
+    \}\
+    \
+    \cf2 //Reversing Linked List\cf0 \
+    \cf6 cout\cf0 <<\cf7 "\\nWould you like to reverse linked List y/n "\cf0 ;\
+    \cf6 cin\cf0 >>ch;\
+    \cf3 if\cf0 (ch == \cf5 'y'\cf0  || ch == \cf5 'Y'\cf0 )\
+    \{\
+        \cf9 reverse\cf0 ();\
+        \cf9 display\cf0 ();\
+    \}\
+    \
+    \cf2 //Rabbit moves 2 times fast and tortoise only once\cf0 \
+    \cf6 cout\cf0 <<\cf7 "\\nWould you like Tortoise to traverse half of the linked list and rabbit to traverse full y/n "\cf0 ;\
+    \cf6 cin\cf0 >>ch;\
+    \cf3 if\cf0 (ch == \cf5 'y'\cf0  || ch == \cf5 'Y'\cf0 )\
+    \{\
+        \cf9 TwiceRabbitTortoise\cf0 ();\
+    \}\
+    \
+    \cf6 cout\cf0 <<\cf7 "\\nWould you like to detect a loopy linked list y/n "\cf0 ;\
+    \cf6 cin\cf0  >>ch;\
+    \cf3 if\cf0 (ch == \cf5 'y'\cf0  || ch ==\cf5 'Y'\cf0 )\
+    \{\
+        \cf2 //Creating a loopy linked list\cf0 \
+        \cf4 LinkedList\cf0  *lastR;\
+        \cf4 R1\cf0 ->\cf4 data\cf0  = \cf5 10\cf0 ;\
+        \cf4 R1\cf0 ->\cf4 link\cf0  = \cf3 NULL\cf0 ;\
+        lastR = \cf4 R1\cf0 ;\
+        \cf3 int\cf0  r = \cf5 10\cf0 ;\
+        \cf3 while\cf0 (r > \cf5 0\cf0 )\
+        \{\
+            r--;\
+            \cf4 LinkedList\cf0  *NewNode;\
+            NewNode = \cf3 new\cf0  \cf4 LinkedList\cf0 ;\
+            NewNode->\cf4 data\cf0  = r;\
+            NewNode->\cf4 link\cf0  = \cf4 R1\cf0 ;\
+            \cf4 R1\cf0  = NewNode;\
+        \}\
+        \cf2 //Display loopless linked list\cf0 \
+        \cf6 cout\cf0 <<\cf8 endl\cf0 ;\
+        \cf4 LinkedList\cf0  *ptr;\
+        ptr = \cf4 R1\cf0 ;\
+        \cf3 while\cf0  (ptr != \cf3 NULL\cf0 )\
+        \{\
+            \cf6 cout\cf0 <<ptr->\cf4 data\cf0 <<\cf7 " "\cf0 ;\
+            ptr = ptr->\cf4 link\cf0 ;\
+        \}\
+        \
+        \cf2 //Adding the loop\cf0 \
+        \cf3 int\cf0  loop = \cf5 5\cf0 ;\
+        ptr = \cf4 R1\cf0 ;\
+        \cf3 while\cf0 (loop >=\cf5 0\cf0 )\
+        \{\
+            loop--;\
+            ptr = ptr->\cf4 link\cf0 ;\
+        \}\
+        lastR->\cf4 link\cf0  = ptr;\
+        \cf9 RabbitTortoiseLoopDetection\cf0 ();\
+    \}\
+    \
+    \cf6 cout\cf0 <<\cf7 "\\nWould you like to find nth node from last y/n "\cf0 ;\
+    \cf6 cin\cf0 >>ch;\
+    \cf3 if\cf0 (ch == \cf5 'y'\cf0  || ch == \cf5 'Y'\cf0 )\
+    \{\
+        \cf3 int\cf0  n;\
+        \cf6 cout\cf0 <<\cf7 "Enter value of n "\cf0 ;\
+        \cf6 cin\cf0 >>n;\
+        \cf9 nthNodeFromLast\cf0 (n);\
+    \}\
+\
+        \
+\}}

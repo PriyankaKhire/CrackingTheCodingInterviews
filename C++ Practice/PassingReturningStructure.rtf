@@ -1,0 +1,32 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red170\green13\blue145;\red63\green110\blue116;\red28\green0\blue207;
+\red38\green71\blue75;\red92\green38\blue153;\red46\green13\blue110;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 struct\cf0  Structure\
+\{\
+    \cf2 int\cf0  a;\
+\};\
+\
+\cf3 Structure\cf0  func(\cf3 Structure\cf0  something)\
+\{\
+    \cf2 struct\cf0  \cf3 Structure\cf0  anything;\
+    anything = something;\
+    \cf2 return\cf0  anything;\
+\}\
+\
+\cf2 int\cf0  main()\
+\{\
+    \cf3 Structure\cf0  b;\
+    \
+    b.\cf3 a\cf0  = \cf4 10\cf0 ;\
+    \
+    \cf3 Structure\cf0  c;\
+    \
+    c = \cf5 func\cf0 (b);\
+    \
+    \cf6 cout\cf0 <<c.\cf3 a\cf0 <<\cf7 endl\cf0 ;\
+\}}

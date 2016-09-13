@@ -1,0 +1,35 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red92\green38\blue153;
+\red196\green26\blue22;\red63\green110\blue116;\red38\green71\blue75;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 //Overriding\cf0 \
+\cf2 //It means that if you have a virtual function in a base class, you can write a function with the same signature in the derived class. The function in the derived class overrides the function of the base.\cf0 \
+\
+\cf3 class\cf0  Base\
+\{\
+\cf3 public\cf0 :\
+    \cf3 virtual\cf0  \cf3 void\cf0  function()\
+    \{\
+        \cf4 cout\cf0 <<\cf5 "Function of BASE class\\n"\cf0 ;\
+    \}\
+\};\
+\
+\cf3 class\cf0  Derived : \cf3 public\cf0  \cf6 Base\cf0 \
+\{\
+\cf3 public\cf0 :\
+    \cf3 virtual\cf0  \cf3 void\cf0  function()\
+    \{\
+        \cf4 cout\cf0 <<\cf5 "Function of DERIVED class\\n"\cf0 ;\
+    \}\
+\};\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf6 Derived\cf0  Dobj;\
+    \cf6 Base\cf0  *Bobj = &Dobj;\
+    Bobj->\cf7 function\cf0 ();\
+\}}

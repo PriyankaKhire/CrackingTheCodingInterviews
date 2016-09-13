@@ -1,0 +1,40 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red28\green0\blue207;
+\red92\green38\blue153;\red196\green26\blue22;\red46\green13\blue110;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 // Integer to binary conversion\cf0 \
+\cf2 //i.e 2 is 10\cf0 \
+\cf2 //Basic operation is to divide and store remainder in bottom up approach\cf0 \
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf3 int\cf0  remainder;\
+    \cf3 int\cf0  number = \cf4 156\cf0 ;\
+    \cf5 string\cf0  result = \cf6 ""\cf0 ;\
+    \
+    \
+    \cf3 while\cf0 (number > \cf4 0\cf0 )\
+    \{\
+        remainder = number%\cf4 2\cf0 ;\
+        result += \cf7 to_string\cf0 (remainder);\
+        number = number/\cf4 2\cf0 ;\
+    \}\
+\
+    \cf3 unsigned\cf0  \cf3 long\cf0  length = result.\cf7 length\cf0 ()-\cf4 1\cf0 ;\
+    \
+    \cf2 //Reverse the string\cf0 \
+    \cf3 for\cf0 (\cf3 int\cf0  i =\cf4 0\cf0 ; i<length/\cf4 2\cf0 ; i++)\
+    \{\
+        \cf2 //Swap result[i] with result[n-i]\cf0 \
+        \cf3 char\cf0  temp = result[\cf7 i\cf0 ];\
+        result[\cf7 i\cf0 ] = result[\cf7 length\cf0 -\cf7 i\cf0 ];\
+        result[\cf7 length\cf0 -\cf7 i\cf0 ] = temp;\
+    \}\
+    \
+    \cf5 cout\cf0 <<result<<\cf7 endl\cf0 ;\
+    \
+\}}

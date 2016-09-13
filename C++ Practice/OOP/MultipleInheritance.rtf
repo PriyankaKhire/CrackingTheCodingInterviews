@@ -1,0 +1,121 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red63\green110\blue116;
+\red28\green0\blue207;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 //Multiple Inheritance\cf0 \
+\
+\cf3 class\cf0  GrandFather\
+\{\
+    \
+\cf3 private\cf0 :\
+    \cf3 int\cf0  GrandFatherPrivateMember1;\
+    \cf3 int\cf0  GrandFatherPrivateMember2;\
+    \
+\cf3 public\cf0 :\
+    \cf3 int\cf0  GrandFatherPublicMember1;\
+    \cf3 int\cf0  GrandFatherPublicMember2;                          \cf2 //     Grandfather\cf0 \
+                                                           \cf2 //         |\cf0 \
+\cf3 protected\cf0 :                                                 \cf2 //         \\/\cf0 \
+    \cf3 int\cf0  GrandFatherProtectedMember1;                       \cf2 //       Father  Mother\cf0 \
+    \cf3 int\cf0  GrandFatherProtectedMember2;                       \cf2 //         |       |\cf0 \
+\};                                                         \cf2 //         \\/      \\/\cf0 \
+                                                           \cf2 //             KID\cf0 \
+\cf3 class\cf0  Father : \cf3 public\cf0  \cf4 GrandFather\cf0 \
+\{\
+    \
+\cf3 private\cf0 :\
+    \cf3 int\cf0  FatherPrivateMember1;\
+    \cf3 int\cf0  FatherPrivateMember2;\
+    \
+\cf3 public\cf0 :\
+    \cf3 int\cf0  FatherPublicMember1;\
+    \cf3 int\cf0  FatherPublicMember2;\
+    \
+\cf3 protected\cf0 :\
+    \cf3 int\cf0  FatherProtectedMember1;\
+    \cf3 int\cf0  FatherProtectedMember2;\
+    \
+\};\
+\
+\cf3 class\cf0  Mother\
+\{\
+    \
+\cf3 private\cf0 :\
+    \cf3 int\cf0  MotherPrivateMember1;\
+    \cf3 int\cf0  MotherPrivateMember2;\
+    \
+\cf3 public\cf0 :\
+    \cf3 int\cf0  MotherPublicMember1;\
+    \cf3 int\cf0  MotherPublicMember2;\
+    \
+\cf3 protected\cf0 :\
+    \cf3 int\cf0  MotherProtectedMember1;\
+    \cf3 int\cf0  MotherProtectedMember2;\
+    \
+\};\
+\
+\cf3 class\cf0  Kid : \cf3 public\cf0  \cf4 Father\cf0 , \cf3 public\cf0  \cf4 Mother\cf0 \
+\
+\{\
+    \
+\cf3 private\cf0 :\
+    \cf3 int\cf0  KIDPrivateMember1;\
+    \cf3 int\cf0  KIDPrivateMember2;\
+    \
+\cf3 public\cf0 :\
+    \cf3 int\cf0  KIDPublicMember1;\
+    \cf3 int\cf0  KIDPublicMember2;\
+    \
+    \cf3 void\cf0  AccessingMomDadGrandDad()\
+    \{\
+        \cf2 //My members\cf0 \
+        \cf4 KIDPrivateMember1\cf0  = \cf5 101\cf0 ;\
+        \cf4 KIDPrivateMember2\cf0  = \cf5 202\cf0 ;\
+        \cf4 KIDProtectedMember1\cf0  = \cf5 1011\cf0 ;\
+        \cf4 KIDProtectedMember2\cf0  = \cf5 2022\cf0 ;\
+        \cf4 KIDPublicMember1\cf0  = \cf5 10111\cf0 ;\
+        \cf4 KIDPublicMember2\cf0  = \cf5 20222\cf0 ;\
+        \
+        \cf2 //Mom\cf0 \
+        \cf4 MotherProtectedMember1\cf0  = \cf5 11\cf0 ;\
+        \cf4 MotherProtectedMember2\cf0  = \cf5 12\cf0 ;\
+        \cf4 MotherPublicMember1\cf0  = \cf5 13\cf0 ;\
+        \cf4 MotherPublicMember2\cf0  = \cf5 14\cf0 ;\
+        \
+        \cf2 //Dad\cf0 \
+        \cf4 FatherPublicMember1\cf0  = \cf5 10\cf0 ;\
+        \cf4 FatherPublicMember2\cf0  = \cf5 20\cf0 ;\
+        \cf4 FatherProtectedMember1\cf0  = \cf5 30\cf0 ;\
+        \cf4 FatherProtectedMember2\cf0  = \cf5 40\cf0 ;\
+        \
+        \cf2 //GrandDad\cf0 \
+        \cf4 GrandFatherPublicMember1\cf0  = \cf5 1\cf0 ;\
+        \cf4 GrandFatherPublicMember2\cf0  = \cf5 2\cf0 ;\
+\
+        \
+    \}\
+    \
+\cf3 protected\cf0 :\
+    \cf3 int\cf0  KIDProtectedMember1;\
+    \cf3 int\cf0  KIDProtectedMember2;\
+\};\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf4 Kid\cf0  obj;\
+    obj.\cf4 GrandFatherPublicMember1\cf0  = \cf5 1\cf0 ;\
+    obj.\cf4 GrandFatherPublicMember2\cf0  = \cf5 2\cf0 ;\
+    \
+    obj.\cf4 FatherPublicMember1\cf0  = \cf5 10\cf0 ;\
+    obj.\cf4 FatherPublicMember2\cf0  = \cf5 20\cf0 ;\
+    \
+    obj.\cf4 MotherPublicMember1\cf0  = \cf5 11\cf0 ;\
+    obj.\cf4 MotherPublicMember2\cf0  = \cf5 12\cf0 ;\
+    \
+    obj.\cf4 KIDPublicMember1\cf0  = \cf5 101\cf0 ;\
+    obj.\cf4 KIDPublicMember2\cf0  = \cf5 202\cf0 ;\
+\}}

@@ -1,0 +1,167 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red170\green13\blue145;\red28\green0\blue207;
+\red92\green38\blue153;\red63\green110\blue116;\red46\green13\blue110;\red38\green71\blue75;\red196\green26\blue22;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf0 \CocoaLigature0 \
+\cf2 /*\
+BFS\
+ 1. Make first node as CurrentlyWorkingNode make it visited, add it to putput and add all it's adjacent unvisited nodes in queue\
+ 2. dequeue the first element and make it new CurrentlyWorkingNode and repeat steps\
+ 3. when queue is empty then return\
+*/\cf0 \
+\
+\cf3 static\cf0  \cf3 const\cf0  \cf3 int\cf0  N = \cf4 9\cf0 ;\
+\cf5 queue\cf0 <\cf3 int\cf0 > Q;\
+\cf3 int\cf0  visited[\cf6 N\cf0 ];\
+\cf3 int\cf0  output[\cf6 N\cf0 ];\
+\cf3 int\cf0  outputCount = \cf4 0\cf0 ;\
+\cf3 int\cf0  CurrentlyWorkingNode = \cf4 0\cf0 ;\
+\
+\cf3 void\cf0  BFS(\cf3 int\cf0  graph[N][\cf6 N\cf0 ])\
+\{\
+    \cf3 if\cf0 (!\cf6 Q\cf0 .\cf7 empty\cf0 ())\
+    \{\
+    \cf6 CurrentlyWorkingNode\cf0  = \cf6 Q\cf0 .\cf7 front\cf0 ();\
+    \cf6 Q\cf0 .\cf7 pop\cf0 ();\
+    \cf6 visited\cf0 [\cf6 CurrentlyWorkingNode\cf0 ] = \cf4 1\cf0 ;\
+    \cf6 output\cf0 [\cf6 outputCount\cf0 ] = \cf6 CurrentlyWorkingNode\cf0 ;\
+    \cf6 outputCount\cf0 ++;\
+    \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j<\cf6 N\cf0 ; j++)\
+    \{\
+        \cf3 if\cf0 (graph[\cf6 CurrentlyWorkingNode\cf0 ][j] == \cf4 1\cf0  && \cf6 visited\cf0 [j] == \cf4 0\cf0 )\
+        \{\
+            \cf6 Q\cf0 .\cf7 push\cf0 (j);\
+        \}\
+    \}\
+    \cf8 BFS\cf0 (graph);\
+    \}\
+    \cf3 else\cf0 \
+    \{\
+        \cf3 return\cf0 ;\
+    \}\
+\}\
+\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf3 int\cf0  graph[N][\cf6 N\cf0 ];\
+    \
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i<\cf6 N\cf0 ; i++)\
+    \{\
+        \cf6 visited\cf0 [i] = \cf4 0\cf0 ;\
+    \}\
+    \
+    \cf5 cout\cf0 <<\cf9 "Enter graph nodes\\n"\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i<\cf6 N\cf0 ; i++)\
+    \{\
+        \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j <\cf6 N\cf0 ; j++)\
+        \{\
+            \cf5 cin\cf0 >>graph[i][j];\
+        \}\
+    \}\
+    \
+    \cf5 cout\cf0 <<\cf9 "The graph is \\n"\cf0 ;\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i<\cf6 N\cf0 ; i++)\
+    \{\
+        \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j<\cf6 N\cf0 ; j++)\
+        \{\
+            \cf5 cout\cf0 <<graph[i][j]<<\cf9 " "\cf0 ;\
+        \}\
+        \cf5 cout\cf0 <<\cf7 endl\cf0 ;\
+    \}\
+    \
+    \
+    \cf6 CurrentlyWorkingNode\cf0  = \cf4 0\cf0 ;\
+    \cf6 visited\cf0 [\cf4 0\cf0 ] = \cf4 1\cf0 ;\
+    \cf6 output\cf0 [\cf6 outputCount\cf0 ] = \cf4 0\cf0 ;\
+    \cf6 outputCount\cf0 ++;\
+    \cf3 for\cf0 (\cf3 int\cf0  j = \cf4 0\cf0 ; j <\cf6 N\cf0 ; j++)\
+    \{\
+        \cf3 if\cf0 (graph[\cf4 0\cf0 ][j] == \cf4 1\cf0  && \cf6 visited\cf0 [j] == \cf4 0\cf0 )\
+        \{\
+            \cf6 Q\cf0 .\cf7 push\cf0 (j);\
+        \}\
+    \}\
+    \cf8 BFS\cf0 (graph);\
+    \
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0 ; i < \cf6 N\cf0 ; i++)\
+    \{\
+        \cf5 cout\cf0 <<\cf6 output\cf0 [i]<<\cf9 " "\cf0 ;\
+    \}\
+\}\
+\
+\cf2 /*\
+\
+ input:\
+ \
+ 0 1 0 0 0 0 0 0 1\
+ 1 0 0 0 0 0 0 0 0\
+ 0 0 0 1 1 1 0 0 1\
+ 0 0 1 0 0 0 0 0 0\
+ 0 0 1 0 0 0 0 1 0\
+ 0 0 1 0 0 0 1 0 0\
+ 0 0 0 0 0 1 0 1 1\
+ 0 0 0 0 1 0 1 0 0\
+ 1 0 1 0 0 0 1 0 0\
+ \
+ output:\
+ 0 1 8 2 6 3 4 5 7\
+\
+*/\
+\
+==================================================================================================================================================================\
+\
+\cf0 \
+\cf2 //A B C D E F G H S\cf0 \
+\cf2 //0 1 2 3 4 5 6 7 8\cf0 \
+\cf3 int\cf0  matrix[\cf4 9\cf0 ][\cf4 9\cf0 ] = \{\{\cf4 0\cf0 , \cf4 1\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 \},\
+    \{\cf4 1\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 \},\
+    \{\cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 , \cf4 1\cf0 , \cf4 1\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 \},\
+    \{\cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 \},\
+    \{\cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 , \cf4 0\cf0 \},\
+    \{\cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 , \cf4 0\cf0 , \cf4 0\cf0 \},\
+    \{\cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 \},\
+    \{\cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 , \cf4 0\cf0 , \cf4 1\cf0 , \cf4 0\cf0 , \cf4 0\cf0 \},\
+    \{\cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 0\cf0 , \cf4 1\cf0 , \cf4 0\cf0 , \cf4 0\cf0 \}\
+\};\
+\cf3 int\cf0  visited[\cf4 9\cf0 ];\
+\
+\cf5 queue\cf0 <\cf3 int\cf0 >BFSqueue;\
+\
+\cf3 void\cf0  BFS()\
+\{\
+    \cf3 if\cf0 (!\cf6 BFSqueue\cf0 .\cf7 empty\cf0 ())\
+    \{\
+        \cf3 int\cf0  front = \cf6 BFSqueue\cf0 .\cf7 front\cf0 ();\
+        \cf6 BFSqueue\cf0 .\cf7 pop\cf0 ();\
+        \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0  ; i < \cf4 9\cf0 ; i ++)\
+        \{\
+            \cf3 if\cf0 (\cf6 matrix\cf0 [front][i] == \cf4 1\cf0  && \cf6 visited\cf0 [i] == \cf4 0\cf0 )\
+            \{\
+                \cf6 visited\cf0 [i] = \cf4 1\cf0 ;\
+                \cf6 BFSqueue\cf0 .\cf7 push\cf0 (i);\
+                \cf5 cout\cf0 <<i<<\cf9 " "\cf0 ;\
+            \}\
+        \}\
+        \cf8 BFS\cf0 ();\
+    \}\
+\}\
+\
+\cf3 int\cf0  main()\
+\{\
+    \cf3 for\cf0 (\cf3 int\cf0  i = \cf4 0\cf0  ; i < \cf4 9\cf0 ; i++)\
+    \{\
+        \cf6 visited\cf0 [i] = \cf4 0\cf0 ;\
+    \}\
+    \cf6 BFSqueue\cf0 .\cf7 push\cf0 (\cf4 0\cf0 );\
+    \cf5 cout\cf0 <<\cf4 0\cf0 <<\cf9 " "\cf0 ;\
+    \cf6 visited\cf0 [\cf4 0\cf0 ] = \cf4 1\cf0 ;\
+    \cf8 BFS\cf0 ();\
+    \
+    \cf2 //A B S C G D E F H\cf0 \
+\}}

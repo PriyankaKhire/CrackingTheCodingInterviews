@@ -1,0 +1,541 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red170\green13\blue145;\red63\green110\blue116;\red38\green71\blue75;
+\red0\green116\blue0;\red28\green0\blue207;\red92\green38\blue153;\red196\green26\blue22;\red46\green13\blue110;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural
+
+\f0\fs22 \cf2 \CocoaLigature0 struct\cf0  AVLTree\
+\{\
+    \cf2 int\cf0  data;\
+    \cf2 int\cf0  balanceFactor;\
+    \cf3 AVLTree\cf0  *Llink;\
+    \cf3 AVLTree\cf0  *Rlink;\
+\};\
+\
+\cf3 AVLTree\cf0  *Root = \cf2 new\cf0  \cf3 AVLTree\cf0 ;\
+\
+\cf3 AVLTree\cf0  *Parent(\cf3 AVLTree\cf0  *child)\
+\{\
+    \cf2 if\cf0 (child != \cf2 NULL\cf0 )\
+    \{\
+        \cf2 if\cf0 (child == \cf3 Root\cf0 )\
+        \{\
+            \cf2 return\cf0  \cf2 NULL\cf0 ;\
+        \}\
+        \cf3 AVLTree\cf0  *ptr;\
+        ptr = \cf3 Root\cf0 ;\
+        \cf2 while\cf0 (ptr != \cf2 NULL\cf0 )\
+        \{\
+            \cf2 if\cf0 (ptr->\cf3 Llink\cf0  == child || ptr->\cf3 Rlink\cf0  == child)\
+            \{\
+                \cf2 break\cf0 ;\
+            \}\
+            \cf2 else\cf0 \
+                \cf2 if\cf0 (ptr->\cf3 data\cf0  > child->\cf3 data\cf0 )\
+                \{\
+                    ptr = ptr->\cf3 Llink\cf0 ;\
+                \}\
+            \cf2 else\cf0 \
+                \cf2 if\cf0 (ptr->\cf3 data\cf0  < child->\cf3 data\cf0 )\
+                \{\
+                    ptr = ptr->\cf3 Rlink\cf0 ;\
+                \}\
+        \}\
+        \
+        \cf2 if\cf0 (ptr != \cf2 NULL\cf0 )\
+        \{\
+            \cf2 return\cf0  ptr;\
+        \}\
+        \cf2 else\cf0 \
+        \{\
+            \cf2 return\cf0  \cf2 NULL\cf0 ;\
+        \}\
+    \}\
+    \cf2 else\cf0 \
+        \cf2 return\cf0  \cf2 NULL\cf0 ;\
+\}\
+\
+\cf2 void\cf0  LeftRotation(\cf3 AVLTree\cf0  *node)\
+\{\
+    \cf2 if\cf0 (node != \cf2 NULL\cf0 )\
+    \{\
+        \cf3 AVLTree\cf0  *A, *B, *C;\
+        A = node;\
+        B = A->\cf3 Llink\cf0 ;\
+        C = B->\cf3 Llink\cf0 ;\
+        \
+        \cf3 AVLTree\cf0  *paernt = \cf4 Parent\cf0 (A);\
+        \
+        B->\cf3 Rlink\cf0  = A;\
+        \
+        A->\cf3 Llink\cf0  = \cf2 NULL\cf0 ;\
+        A->\cf3 Rlink\cf0  = \cf2 NULL\cf0 ;\
+        \
+        \cf2 if\cf0 (node == \cf3 Root\cf0 )\
+        \{\
+            \cf3 Root\cf0  = B;\
+        \}\
+        \cf2 else\cf0 \
+        \{\
+            \cf2 if\cf0 (paernt->\cf3 Llink\cf0  == node)\
+            \{\
+                paernt->\cf3 Llink\cf0  = B;\
+            \}\
+            \cf2 else\cf0 \
+                \cf2 if\cf0 (paernt->\cf3 Rlink\cf0  == node)\
+                \{\
+                    paernt->\cf3 Rlink\cf0  = B;\
+                \}\
+        \}\
+    \}\
+\}\
+\
+\cf2 void\cf0  LeftLeftRotation(\cf3 AVLTree\cf0  *node)\
+\{\
+    \cf2 if\cf0 (node != \cf2 NULL\cf0 )\
+    \{\
+        \cf3 AVLTree\cf0  *A, *B, *C, *D, *E, *N1 = \cf2 NULL\cf0 , *N2 = \cf2 NULL\cf0 ;\
+        A = node;\
+        B = A->\cf3 Llink\cf0 ;\
+        C = A->\cf3 Rlink\cf0 ;\
+        D = B->\cf3 Llink\cf0 ;\
+        E = B->\cf3 Rlink\cf0 ;\
+        \
+        \cf2 if\cf0 (D->\cf3 Llink\cf0  != \cf2 NULL\cf0 )\
+        \{\
+            N1 = D->\cf3 Llink\cf0 ;\
+        \}\
+        \
+        \cf2 if\cf0 (D->\cf3 Rlink\cf0  != \cf2 NULL\cf0 )\
+        \{\
+            N2 = D->\cf3 Rlink\cf0 ;\
+        \}\
+        \
+        \cf3 AVLTree\cf0  *parent = \cf4 Parent\cf0 (A);\
+        \
+        \cf5 //Rotation\cf0 \
+        B->\cf3 Llink\cf0  = D;\
+        B->\cf3 Rlink\cf0  = A;\
+        \
+        D->\cf3 Llink\cf0  = N1;\
+        D->\cf3 Rlink\cf0  = N2;\
+        \
+        A->\cf3 Llink\cf0  = E;\
+        A->\cf3 Rlink\cf0  = C;\
+        \
+        \cf2 if\cf0 (node == \cf3 Root\cf0 )\
+        \{\
+            \cf3 Root\cf0  = B;\
+        \}\
+        \cf2 else\cf0 \
+        \{\
+            \cf5 //Make parent of A poin to B\cf0 \
+            \cf2 if\cf0 (parent->\cf3 Llink\cf0  == A)\
+            \{\
+                parent->\cf3 Llink\cf0  = B;\
+            \}\
+            \cf2 else\cf0 \
+                \cf2 if\cf0 (parent->\cf3 Rlink\cf0  == A)\
+                \{\
+                    parent->\cf3 Rlink\cf0  = B;\
+                \}\
+        \}\
+    \}\
+\}\
+\
+\
+\cf2 void\cf0  LeftRightRotation(\cf3 AVLTree\cf0  *node)\
+\{\
+    \cf2 if\cf0 (node != \cf2 NULL\cf0 )\
+    \{\
+        \cf3 AVLTree\cf0  *k3, *k1, *k2 = \cf2 NULL\cf0 , *A, *B = \cf2 NULL\cf0 , *N1 = \cf2 NULL\cf0 , *N2 = \cf2 NULL\cf0 ;\
+        k3 = node;\
+        k1 = k3->\cf3 Llink\cf0 ;\
+        A = k1->\cf3 Llink\cf0 ;\
+        \
+        \cf2 if\cf0 (k3->\cf3 Rlink\cf0  != \cf2 NULL\cf0 )\
+        \{\
+            B = k3->\cf3 Rlink\cf0 ;\
+        \}\
+        \
+        \cf2 if\cf0 (k1->\cf3 Rlink\cf0  != \cf2 NULL\cf0 )\
+        \{\
+            k2 = k1->\cf3 Rlink\cf0 ;\
+            \
+            \cf2 if\cf0 (k2->\cf3 Llink\cf0  != \cf2 NULL\cf0 )\
+            \{\
+                N1 = k2->\cf3 Llink\cf0 ;\
+            \}\
+            \cf2 if\cf0 (k2->\cf3 Rlink\cf0  != \cf2 NULL\cf0 )\
+            \{\
+                N2 = k2->\cf3 Rlink\cf0 ;\
+            \}\
+        \}\
+        \
+        \cf2 if\cf0 (k2 == \cf2 NULL\cf0  && B == \cf2 NULL\cf0  && N1 == \cf2 NULL\cf0  && N2 == \cf2 NULL\cf0 )\
+        \{\
+            \cf5 //Left Rotation\cf0 \
+            \cf4 LeftRotation\cf0 (k3);\
+            \cf2 return\cf0 ;\
+        \}\
+        \cf2 if\cf0 (N1 == \cf2 NULL\cf0  && N2 == \cf2 NULL\cf0  && (A->\cf3 Llink\cf0  != \cf2 NULL\cf0  || A->\cf3 Rlink\cf0  != \cf2 NULL\cf0 ))\
+        \{\
+            \cf5 //Left Left Rotation\cf0 \
+            \cf4 LeftLeftRotation\cf0 (k3);\
+            \cf2 return\cf0 ;\
+        \}\
+        \
+        \cf3 AVLTree\cf0  *parent = \cf4 Parent\cf0 (k3);\
+        \
+        \cf5 //Rotation\cf0 \
+        \
+        k2->\cf3 Llink\cf0  = k1;\
+        k2->\cf3 Rlink\cf0  = k3;\
+        \
+        k1->\cf3 Llink\cf0  = A;\
+        k1->\cf3 Rlink\cf0  = N1;\
+        \
+        k3->\cf3 Llink\cf0  = N2;\
+        k3->\cf3 Rlink\cf0  = B;\
+        \
+        \cf2 if\cf0 (node == \cf3 Root\cf0 )\
+        \{\
+            \cf3 Root\cf0  = k2;\
+        \}\
+        \cf2 else\cf0 \
+        \{\
+            \cf5 //Make parent of k3 point to k2\cf0 \
+            \cf2 if\cf0 (parent->\cf3 Llink\cf0  == k3)\
+            \{\
+                parent->\cf3 Llink\cf0  = k2;\
+            \}\
+            \cf2 else\cf0 \
+                \cf2 if\cf0 (parent->\cf3 Rlink\cf0  == k3)\
+                \{\
+                    parent->\cf3 Rlink\cf0  = k2;\
+                \}\
+        \}\
+        \
+    \}\
+\}\
+\
+\cf5 /*\
+              A                                                          D\
+             / \\                                                       /   \\\
+            C   B                                                     A     B\
+               / \\                  ===================>             / \\   / \\\
+              D   E                                                 C  N1 N2  E\
+             / \\\
+            N1  N2       <----- Right Left Rotation\
+ \
+ \
+             A                                                            B\
+            / \\                                                         /   \\\
+           C   B                                                       A     E\
+              / \\                  ===================>               / \\   / \\\
+             D   E                                                   C   D N1  N2\
+                / \\\
+               N1  N2    <------- Right Right Rotation\
+ \
+ \
+ \
+            A                                                              B\
+             \\                                                            / \\\
+              B              ==================>                         A   E\
+               \\\
+                E    <----- Right Rotation\
+ \
+ */\cf0 \
+\
+\cf2 void\cf0  RightRotation(\cf3 AVLTree\cf0  *node)\
+\{\
+    \cf2 if\cf0 (node != \cf2 NULL\cf0 )\
+    \{\
+        \cf3 AVLTree\cf0  *A, *B, *E;\
+        A = node;\
+        B = A->\cf3 Rlink\cf0 ;\
+        E = B->\cf3 Rlink\cf0 ;\
+        \
+        \cf3 AVLTree\cf0  *parent = \cf4 Parent\cf0 (A);\
+        \
+        \cf5 //Rotation\cf0 \
+        B->\cf3 Llink\cf0  = A;\
+        B->\cf3 Rlink\cf0  = E;\
+        \
+        A->\cf3 Rlink\cf0  = A->\cf3 Llink\cf0  = \cf2 NULL\cf0 ;\
+        \
+        \cf5 //Parent\cf0 \
+        \cf2 if\cf0 (node == \cf3 Root\cf0 )\
+        \{\
+            \cf3 Root\cf0  = B;\
+        \}\
+        \cf2 else\cf0 \
+        \{\
+            \cf2 if\cf0 (parent->\cf3 Rlink\cf0  == node)\
+            \{\
+                parent->\cf3 Rlink\cf0  = B;\
+            \}\
+            \cf2 else\cf0 \
+                \cf2 if\cf0 (parent->\cf3 Llink\cf0  == node)\
+                \{\
+                    parent->\cf3 Llink\cf0  = B;\
+                \}\
+        \}\
+    \}\
+\}\
+\
+\cf2 void\cf0  RightRightRotation(\cf3 AVLTree\cf0  *node)\
+\{\
+    \cf2 if\cf0 (node != \cf2 NULL\cf0 )\
+    \{\
+        \cf3 AVLTree\cf0  *A, *B, *C, *D, *E, *N1 = \cf2 NULL\cf0 , *N2 = \cf2 NULL\cf0 ;\
+        A = node;\
+        C = A->\cf3 Llink\cf0 ;\
+        B = A->\cf3 Rlink\cf0 ;\
+        D = B->\cf3 Llink\cf0 ;\
+        E = B->\cf3 Rlink\cf0 ;\
+        \
+        \cf2 if\cf0 (E->\cf3 Llink\cf0  != \cf2 NULL\cf0 )\
+        \{\
+            N1 = E->\cf3 Llink\cf0 ;\
+        \}\
+        \cf2 if\cf0 (E->\cf3 Rlink\cf0  != \cf2 NULL\cf0 )\
+        \{\
+            N2 = E->\cf3 Rlink\cf0 ;\
+        \}\
+        \
+        \cf3 AVLTree\cf0  *parent = \cf4 Parent\cf0 (node);\
+        \
+        \cf5 //Rotation\cf0 \
+        B->\cf3 Llink\cf0  = A;\
+        B->\cf3 Rlink\cf0  = E;\
+        \
+        A->\cf3 Llink\cf0  = C;\
+        A->\cf3 Rlink\cf0  = D;\
+        \
+        E->\cf3 Llink\cf0  = N1;\
+        E->\cf3 Rlink\cf0  = N2;\
+        \
+        \cf5 //Parent\cf0 \
+        \cf2 if\cf0 (node == \cf3 Root\cf0 )\
+        \{\
+            \cf3 Root\cf0  = B;\
+        \}\
+        \cf2 else\cf0 \
+        \{\
+            \cf2 if\cf0 (parent->\cf3 Llink\cf0  == node)\
+            \{\
+                parent->\cf3 Llink\cf0  = B;\
+            \}\
+            \cf2 else\cf0 \
+                \cf2 if\cf0 (parent->\cf3 Rlink\cf0  == node)\
+                \{\
+                    parent->\cf3 Rlink\cf0  = B;\
+                \}\
+        \}\
+    \}\
+\}\
+\
+\cf2 void\cf0  RightLeftRotation(\cf3 AVLTree\cf0  *node)\
+\{\
+    \cf2 if\cf0 (node != \cf2 NULL\cf0 )\
+    \{\
+        \cf3 AVLTree\cf0  *A, *B, *C = \cf2 NULL\cf0 , *D = \cf2 NULL\cf0 , *E, *N1 = \cf2 NULL\cf0 , *N2 = \cf2 NULL\cf0 ;\
+        A = node;\
+        B = A->\cf3 Rlink\cf0 ;\
+        \cf2 if\cf0 (A->\cf3 Llink\cf0  != \cf2 NULL\cf0 )\
+        \{\
+            C = A->\cf3 Llink\cf0 ;\
+        \}\
+        \cf2 if\cf0 (B->\cf3 Llink\cf0  != \cf2 NULL\cf0 )\
+        \{\
+            D = B->\cf3 Llink\cf0 ;\
+        \}\
+        E = B->\cf3 Rlink\cf0 ;\
+        \
+        \cf2 if\cf0 (C == \cf2 NULL\cf0  && D == \cf2 NULL\cf0 )\
+        \{\
+            \cf5 //Right Rotation\cf0 \
+            \cf4 RightRotation\cf0 (node);\
+            \cf2 return\cf0 ;\
+        \}\
+        \
+        \cf2 if\cf0 (E->\cf3 Llink\cf0  != \cf2 NULL\cf0  || E->\cf3 Rlink\cf0  != \cf2 NULL\cf0 )\
+        \{\
+            \cf5 //Right Right Rotation\cf0 \
+            \cf4 RightRightRotation\cf0 (node);\
+            \cf2 return\cf0 ;\
+        \}\
+        \
+        \cf2 if\cf0 (D->\cf3 Rlink\cf0  != \cf2 NULL\cf0 )\
+        \{\
+            N2 = D->\cf3 Rlink\cf0 ;\
+        \}\
+        \
+        \cf2 if\cf0 (D->\cf3 Llink\cf0  != \cf2 NULL\cf0 )\
+        \{\
+            N1 = D->\cf3 Llink\cf0 ;\
+        \}\
+        \
+        \cf3 AVLTree\cf0  *parent = \cf4 Parent\cf0 (node);\
+        \
+        \cf5 //Rotation\cf0 \
+        D->\cf3 Llink\cf0  = A;\
+        D->\cf3 Rlink\cf0  = B;\
+        \
+        A->\cf3 Rlink\cf0  = N1;\
+        A->\cf3 Llink\cf0  = C;\
+        \
+        B->\cf3 Rlink\cf0  = E;\
+        B->\cf3 Llink\cf0  = N2;\
+        \
+        \cf5 //Parent point to new root that is D\cf0 \
+        \cf2 if\cf0 (node == \cf3 Root\cf0 )\
+        \{\
+            \cf3 Root\cf0  = D;\
+        \}\
+        \cf2 else\cf0 \
+        \{\
+            \cf2 if\cf0 (parent->\cf3 Llink\cf0  == node)\
+            \{\
+                parent->\cf3 Llink\cf0  = D;\
+            \}\
+            \cf2 else\cf0 \
+                \cf2 if\cf0 (parent->\cf3 Rlink\cf0  == node)\
+                \{\
+                    parent->\cf3 Rlink\cf0  = D;\
+                \}\
+        \}\
+        \
+    \}\
+\}\
+\
+\cf2 int\cf0  height(\cf3 AVLTree\cf0  *node)\
+\{\
+    \cf2 if\cf0 (node != \cf2 NULL\cf0 )\
+    \{\
+        \cf2 int\cf0  leftHeight = \cf6 0\cf0 ;\
+        \cf2 int\cf0  rightHeight = \cf6 0\cf0 ;\
+        \
+        leftHeight = \cf4 height\cf0 (node->\cf3 Llink\cf0 );\
+        rightHeight = \cf4 height\cf0 (node->\cf3 Rlink\cf0 );\
+        \
+        \cf2 if\cf0 (leftHeight > rightHeight)\
+        \{\
+            \cf2 return\cf0  leftHeight+\cf6 1\cf0 ;\
+        \}\
+        \cf2 else\cf0 \
+        \{\
+            \cf2 return\cf0  rightHeight+\cf6 1\cf0 ;\
+        \}\
+    \}\
+    \cf2 else\cf0 \
+    \{\
+        \cf2 return\cf0  -\cf6 1\cf0 ;\
+    \}\
+\}\
+\
+\cf2 void\cf0  BalanceFactor(\cf3 AVLTree\cf0  *node)\
+\{\
+    \cf2 if\cf0 (node != \cf2 NULL\cf0 )\
+    \{\
+        \cf4 BalanceFactor\cf0 (node->\cf3 Llink\cf0 );\
+        \cf2 int\cf0  Bfactor = \cf4 height\cf0 (node->\cf3 Llink\cf0 ) - \cf4 height\cf0 (node->\cf3 Rlink\cf0 );\
+        node->\cf3 balanceFactor\cf0  = Bfactor;\
+        \cf2 if\cf0 (Bfactor == \cf6 2\cf0 )\
+        \{\
+            \cf7 cout\cf0 <<\cf8 "For Node = "\cf0 <<node->\cf3 data\cf0 <<\cf8 " Tree is left heavy\\n"\cf0 ;\
+            \cf4 LeftRightRotation\cf0 (node);\
+        \}\
+        \cf2 if\cf0 (Bfactor == -\cf6 2\cf0 )\
+        \{\
+            \cf7 cout\cf0 <<\cf8 "For Node = "\cf0 <<node->\cf3 data\cf0 <<\cf8 " Tree is right heavy\\n"\cf0 ;\
+            \cf4 RightLeftRotation\cf0 (node);\
+        \}\
+        \cf4 BalanceFactor\cf0 (node->\cf3 Rlink\cf0 );\
+    \}\
+\}\
+\
+\
+\cf2 void\cf0  addnode(\cf2 int\cf0  data)\
+\{\
+    \cf2 if\cf0 (\cf3 Root\cf0 ->\cf3 data\cf0  == -\cf6 999\cf0  && \cf3 Root\cf0 ->\cf3 Llink\cf0  == \cf2 NULL\cf0  && \cf3 Root\cf0 ->\cf3 Rlink\cf0  == \cf2 NULL\cf0  && \cf3 Root\cf0 ->\cf3 balanceFactor\cf0  == \cf6 0\cf0 )\
+    \{\
+        \cf3 Root\cf0 ->\cf3 data\cf0  = data;\
+    \}\
+    \cf2 else\cf0 \
+    \{\
+        \cf3 AVLTree\cf0  *Leaf;\
+        Leaf = \cf2 new\cf0  \cf3 AVLTree\cf0 ;\
+        Leaf->\cf3 data\cf0  = data;\
+        Leaf->\cf3 Rlink\cf0  = \cf2 NULL\cf0 ;\
+        Leaf->\cf3 Llink\cf0  = \cf2 NULL\cf0 ;\
+        Leaf->\cf3 balanceFactor\cf0  = \cf6 0\cf0 ;\
+        \
+        \cf3 AVLTree\cf0  *ptr, *prev;\
+        ptr = \cf3 Root\cf0 ;\
+        prev = ptr;\
+        \cf2 while\cf0 (ptr != \cf2 NULL\cf0 )\
+        \{\
+            prev = ptr;\
+            \cf2 if\cf0 (ptr->\cf3 data\cf0  > data)\
+            \{\
+                ptr = ptr->\cf3 Llink\cf0 ;\
+            \}\
+            \cf2 else\cf0 \
+            \{\
+                ptr = ptr->\cf3 Rlink\cf0 ;\
+            \}\
+        \}\
+        \
+        \cf2 if\cf0 (prev->\cf3 data\cf0  > data)\
+        \{\
+            prev->\cf3 Llink\cf0  = Leaf;\
+        \}\
+        \cf2 else\cf0 \
+        \{\
+            prev->\cf3 Rlink\cf0  = Leaf;\
+        \}\
+        \cf4 BalanceFactor\cf0 (\cf3 Root\cf0 );\
+    \}\
+\}\
+\
+\cf2 void\cf0  inorder(\cf3 AVLTree\cf0  *node)\
+\{\
+    \cf2 if\cf0 (node != \cf2 NULL\cf0 )\
+    \{\
+        \cf4 inorder\cf0 (node->\cf3 Llink\cf0 );\
+        \cf2 if\cf0 (\cf4 Parent\cf0 (node) != \cf2 NULL\cf0 )\
+        \{\
+            \cf7 cout\cf0 <<\cf8 "Parent = "\cf0 <<\cf4 Parent\cf0 (node)->\cf3 data\cf0 ;\
+        \}\
+        \cf2 else\cf0 \
+        \{\
+            \cf7 cout\cf0 <<\cf8 "Parent = NULL"\cf0 ;\
+        \}\
+        \cf7 cout\cf0 <<\cf8 " of Node = "\cf0 <<node->\cf3 data\cf0 <<\cf8 " Balance Factor = "\cf0 <<node->\cf3 balanceFactor\cf0 <<\cf9 endl\cf0 ;\
+        \cf4 inorder\cf0 (node->\cf3 Rlink\cf0 );\
+    \}\
+\}\
+\
+\cf2 int\cf0  main()\
+\{\
+    \cf3 Root\cf0 ->\cf3 data\cf0  = -\cf6 999\cf0 ;\
+    \cf3 Root\cf0 ->\cf3 Llink\cf0  = \cf2 NULL\cf0 ;\
+    \cf3 Root\cf0 ->\cf3 Rlink\cf0  = \cf2 NULL\cf0 ;\
+    \cf3 Root\cf0 ->\cf3 balanceFactor\cf0  = \cf6 0\cf0 ;\
+    \cf4 addnode\cf0 (\cf6 10\cf0 );\
+    \cf4 addnode\cf0 (\cf6 5\cf0 );\
+    \cf4 addnode\cf0 (\cf6 15\cf0 );\
+    \cf4 addnode\cf0 (\cf6 13\cf0 );\
+    \cf4 addnode\cf0 (\cf6 17\cf0 );\
+    \cf4 addnode\cf0 (\cf6 12\cf0 );\
+    \cf4 addnode\cf0 (\cf6 14\cf0 );\
+    \cf4 addnode\cf0 (\cf6 18\cf0 );\
+    \cf4 inorder\cf0 (\cf3 Root\cf0 );\
+    \cf7 cout\cf0 <<\cf9 endl\cf0 ;\
+    \cf7 cout\cf0 <<\cf8 "Height = "\cf0 <<\cf4 height\cf0 (\cf3 Root\cf0 )<<\cf9 endl\cf0 ;\
+\}}
